@@ -1,0 +1,17 @@
+Library circular
+=================
+
+Version 0.1, 2004/05/24 Released the version
+
+Version 0.1, 2003/12/23 Pre-released version of the circular package
+Fixed a consistency for range.circular function
+
+Version 0.1, 2003/12/03
+Pre-released version of the circular package build on the R port of CircStats.
+
+Claudio Agostinelli
+Department of Statistics
+University Ca' Foscari of Venice
+Italy
+http://www.dst.unive.it/~claudio
+<claudio@unive.it>

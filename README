@@ -1,0 +1,10 @@
+  Version 0.1 2004/05/24
+
+  This is the circular package build over the R port of the CircStats package 
+  by Ulric Lund <ulund@calpoly.edu> from "Topics in circular Statistics" (2001) S. Rao Jammalamadaka and A. SenGupta, World Scientific.
+
+  See STATUS for the changes.
+
+Ulric Lund <ulund@calpoly.edu>
+Claudio Agostinelli <claudio@unive.it>
+
