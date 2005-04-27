@@ -11,10 +11,11 @@
 #   rose.diag function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: September, 22, 2003                               #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: April, 11, 2005                                   #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1-2                                           #
+#   Version 0.1-4                                           #
+#                                                           #
 #############################################################
 
 rose.diag <- function(x, pch = 16, axes = TRUE, shrink = 1, bins, ticks = TRUE, tcl=0.025, col, tol = 0.04, uin, xlim=c(-1, 1), ylim=c(-1, 1), prop = 1, main=NULL, ...) {
@@ -90,7 +91,9 @@ rose.diag <- function(x, pch = 16, axes = TRUE, shrink = 1, bins, ticks = TRUE, 
 
     for (iseries in 1:nseries) {
       
-    x <- xx[,iseries]
+        x <- xx[,iseries]
+# Add to remove NA values from each series
+        x <- na.omit(x)
         x <- as.circular(x)    
         x <- conversion.circular(x, units="radians")
         if (rotation=="clock") x <- -x

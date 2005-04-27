@@ -11,14 +11,21 @@
 #   plot.edf function                                       #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: July, 29, 2003                                    #
-#   Version: 0.1                                            #
+#   Date: April, 11, 2005                                   #
+#   Version: 0.2                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
 plot.edf <- function(x, type = "s", xlim = c(0, 2 * pi), ylim = c(0, 1), ...) {
+    # Handling missing values
+    x <- na.omit(x)
+    if (length(x)==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+    }    
+    
     x <- as.circular(x)
     x <- conversion.circular(x, units="radians")
     attr(x, "circularp") <- attr(x, "class") <- NULL

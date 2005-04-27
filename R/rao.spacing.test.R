@@ -11,14 +11,21 @@
 #   rao.spacing.test function                               #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: July, 26, 2003                                    #
-#   Version: 0.1                                            #
+#   Date: April, 11, 2005                                   #
+#   Version: 0.2                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
 rao.spacing.test <- function(x, alpha = 0) {
+
+    # Handling missing values
+    x <- na.omit(x)
+    if (length(x)==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+    }  
     x <- as.circular(x)
     xcircularp <- circularp(x)
     units <- xcircularp$units

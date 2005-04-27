@@ -141,10 +141,10 @@ ticks.circular <- function(x, template=c("none", "geographics"), zero, rotation,
 #   plot.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: November, 18, 2003                                #
-#   Version: 0.2-5                                          #
+#   Date: April, 10, 2005                                   #
+#   Version: 0.2-6                                          #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
@@ -221,41 +221,41 @@ plot.circular <- function(x, pch = 16, cex = 1, stack = FALSE, axes = TRUE, sep 
 
     for (iseries in 1:nseries) {
       
-     x <- xx[,iseries]
+         x <- xx[,iseries]
+     if (n <- length(x <- na.omit(x))) {         
          x <- as.circular(x)    
          x <- conversion.circular(x, units="radians")
-     n <- length(x)
-
-     if (!stack) {
+        
+         if (!stack) {
              if (rotation=="clock") x <- -x
              x <- x + zero 
              z <- cos(x)
              y <- sin(x)
          r <- 1+(iseries-1)*sep*shrink
          points.default(z*r, y*r, cex=cex, pch=pch[iseries], col = col[iseries], ...)
-     } else {
-         bins.count <- c(1:bins)
-         xmod <- x %% (2 * pi)
-         for (i in 1:bins) {
-          bins.count[i] <- sum(xmod <= i * arc & xmod > (i - 1) * arc)
-         }
-         mids <- seq(arc/2, 2 * pi - pi/bins, length = bins) + pos.bins[iseries]
+         } else {
+             bins.count <- c(1:bins)
+             xmod <- x %% (2 * pi)
+             for (i in 1:bins) {
+                  bins.count[i] <- sum(xmod <= i * arc & xmod > (i - 1) * arc)
+             }
+             mids <- seq(arc/2, 2 * pi - pi/bins, length = bins) + pos.bins[iseries]
              if (rotation=="clock") mids <- -mids
              mids <- mids + zero
  
-         index <- cex*sep
-         for (i in 1:bins) {
-          if (bins.count[i] != 0) {
-              for (j in 0:(bins.count[i] - 1)) {
-               r <- 1 + j * index
-               z <- r * cos(mids[i])
-               y <- r * sin(mids[i])
-               points.default(z, y, cex=cex, pch=pch[iseries], col=col[iseries], ...)
-              }
-           }
-          }
+             index <- cex*sep
+             for (i in 1:bins) {
+                if (bins.count[i] != 0) {
+                  for (j in 0:(bins.count[i] - 1)) {
+                    r <- 1 + j * index
+                    z <- r * cos(mids[i])
+                    y <- r * sin(mids[i])
+                    points.default(z, y, cex=cex, pch=pch[iseries], col=col[iseries], ...)
+                  }
+                }
+             }
+         } }
      }
-    }
 return(invisible(list(zero=zero, rotation=rotation, next.points=nseries*sep)))
 }
 

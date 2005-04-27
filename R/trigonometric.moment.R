@@ -11,18 +11,24 @@
 #   trigonometric.moment function                           #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: July, 24, 2003                                    #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: April, 12, 2005                                    #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1                                             #
+#   Version 0.2                                             #
 #############################################################
 
 trigonometric.moment <- function(x, p = 1, center = FALSE) {
+    x <- unlist(x)
+    # Handling missing values
+    x <- na.omit(x)
+    if ((n <- length(x))==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+    }      
     x <- as.circular(x)
     xcircularp <- circularp(x)
     units <- xcircularp$units
     x <- conversion.circular(x, units="radians")
-    n <- length(x)
     attr(x, "circularp") <-  NULL
 
     sinr <- sum(sin(x))

@@ -11,16 +11,20 @@
 #   mean.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: November, 19, 2003                                #
-#   Version: 0.2-1                                          #
+#   Date: April, 11, 2005                                   #
+#   Version: 0.3                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
 mean.circular <- function(x, na.rm=FALSE, ...) {
-  if (na.rm) 
+   if (na.rm) 
        x <- x[!is.na(x)]
+   if (length(x)==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+   }
    x <- as.circular(x)
    xcircularp <- attr(x, "circularp")
    unitsp <- xcircularp$units

@@ -29,7 +29,7 @@ Creates a plot of circular data points on the current graphics device.  Data poi
 \item{tcl}{length of the ticks.}
 \item{tcl.text}{The position of the axis labels.}
 \item{col}{color of the points. The values are recycled if needed.}
-\item{tol}{proportion of white space at the margins of plot}
+\item{tol}{proportion of white space at the margins of plot.}
 \item{uin}{desired values for the units per inch parameter. If of length
   1, the desired units per inch on the x axis.}
 \item{xlim, ylim}{the ranges to be encompassed by the x and y

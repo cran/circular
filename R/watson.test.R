@@ -11,14 +11,22 @@
 #   watson.test function                                    #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: July, 27, 2003                                    #
-#   Version: 0.1                                            #
+#   Date: April, 12, 2005                                   #
+#   Version: 0.2                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
 watson.test <- function(x, alpha = 0, dist = c("uniform", "vonmises")) {
+
+    # Handling missing values
+    x <- na.omit(x)
+    if (length(x)==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+    }      
+
     dist <- match.arg(dist)
     x <- as.circular(x)
     xcircularp <- circularp(x)

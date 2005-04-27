@@ -11,20 +11,28 @@
 #   pp.plot function                                        #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: July, 24, 2003                                    #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: April, 11, 2005                                   #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1                                             #
+#   Version 0.2                                             #
 #############################################################
 
 pp.plot <- function(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distribution", ylab = "Empirical Distribution", ...) {
-        x <- as.circular(x)
-        xcircularp <- circularp(x)
-        units <- xcircularp$units
-        x <- conversion.circular(x, units="radians")
 
-        res <- mle.vonmises(x)
-        mu <- res$mu
+    # Handling missing values
+    x <- na.omit(x)
+    if (length(x)==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+    }
+  
+    x <- as.circular(x)
+    xcircularp <- circularp(x)
+    units <- xcircularp$units
+    x <- conversion.circular(x, units="radians")
+
+    res <- mle.vonmises(x)
+    mu <- res$mu
     kappa <- res$kappa
 
     n <- length(x)

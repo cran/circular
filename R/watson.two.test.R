@@ -11,14 +11,27 @@
 #   watson.two.test function                                #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: July, 27, 2003                                    #
-#   Version: 0.1                                            #
+#   Date: April, 12, 2005                                   #
+#   Version: 0.2                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
 watson.two.test <- function(x, y, alpha = 0) {
+
+    # Handling missing values
+    x <- na.omit(x)
+    if ((n1 <- length(x))==0) {
+        warning("'x': No observations (at least after removing missing values)")
+        return(NULL)
+    }      
+    y <- na.omit(y)
+    if ((n2 <- length(y))==0) {
+        warning("'y': No observations (at least after removing missing values)")
+        return(NULL)
+    }      
+
     x <- as.circular(x)
     x <- conversion.circular(x, units="radians")
     attr(x, "circularp") <- attr(x, "class") <- NULL
@@ -26,8 +39,6 @@ watson.two.test <- function(x, y, alpha = 0) {
     y <- conversion.circular(y, units="radians")
     attr(y, "circularp") <- attr(y, "class") <- NULL
 
-    n1 <- length(x)
-    n2 <- length(y)
     n <- n1 + n2
     x <- cbind(sort(x %% (2 * pi)), rep(1, n1))
     y <- cbind(sort(y %% (2 * pi)), rep(2, n2))

@@ -36,9 +36,9 @@ If alpha is specified, critical values are determined from a table of simulated 
 \references{
 Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Section 7.4, World Scientific Press, Singapore.
 
-Rao, J.S. (1976). Some tests based on arc-lengths for the circle. Sankhya, The Indian Journal of Statistics, Serial B(4), 38, 329–338.
+Rao, J.S. (1976). Some tests based on arc-lengths for the circle. Sankhya, The Indian Journal of Statistics, Serial B(4), 38, 329-338.
 
-Russell, G.S. and Levitin, D.J. (1995).  An expanded table of probability values for Rao's Spacing Test.  Communications in Statistics - Simulation and Computation, 24, 4, 879–888.
+Russell, G.S. and Levitin, D.J. (1995).  An expanded table of probability values for Rao's Spacing Test.  Communications in Statistics - Simulation and Computation, 24, 4, 879-888.
 }
 
 \seealso{

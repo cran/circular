@@ -15,7 +15,7 @@ rcardioid(n, mu = 0, rho = 0, units = c("radians", "degrees"), \dots)
 \arguments{
   \item{x}{a vector. The object is coerced to class \code{\link{circular}}.}
 \item{n}{number of observations.}  
-\item{mu}{mean direction of the distribution.}
+\item{mu}{mean direction of the distribution (in the same 'units' of 'x').}
 \item{rho}{concentration parameter of the distribution. Absolute value of \code{rho} must be less than 0.5.}
 \item{units}{units of measure desired.}
 \item{\dots}{parameters passed to \code{\link{circular}}.}

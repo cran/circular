@@ -11,14 +11,20 @@
 #   mle.vonmises function                                   #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: September, 22, 2003                               #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: April, 10, 2005                                   #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-3                                           #
+#   Version 0.2-4                                           #
 #############################################################
 
 mle.vonmises <- function(x, mu, kappa, bias=FALSE) {
 
+    # Handling missing values
+    x <- na.omit(x)
+    if (length(x)==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+    }    
     x <- as.circular(x)
     xcircularp <- circularp(x)
     units <- xcircularp$units

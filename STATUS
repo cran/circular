@@ -1,6 +1,15 @@
 Library circular
 =================
 
+Version 0.3, 2005/04/27
+All the functions handle NA values. Most of them by removing NA (without ask). When more than one variable is needed only complete cases are considered.
+
+Added functions: aov.circular, equal.kappa.test, lsfit.circle
+
+Modified the function lm.circular so that now circular-circular and circular-linear regression are available
+
+Version 0.2, 2004/12/25 Added function windrose
+
 Version 0.1, 2004/05/24 Released the version
 
 Version 0.1, 2003/12/23 Pre-released version of the circular package

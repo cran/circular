@@ -11,13 +11,21 @@
 #   mle.wrappedcauchy function                              #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: July, 31, 2003                                    #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: April, 11, 2005                                   #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1-1                                           #
+#   Version 0.1-2                                           #
 #############################################################
 
 mle.wrappedcauchy <- function(x, mu, rho, tol = 1e-015, max.iter = 100) {
+
+    # Handling missing values
+    x <- na.omit(x)
+    if (length(x)==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+    }
+
     if (length(tol)==1) tol <- rep(tol, 2)
     if (length(tol) > 2) stop("'tol' must have less than 2 elements")
     x <- as.circular(x)

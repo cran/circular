@@ -11,17 +11,20 @@
 #   rho.circular function                                   #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: July, 24, 2003                                    #
-#   Version: 0.1                                            #
+#   Date: April, 11, 2005                                   #
+#   Version: 0.2                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
 rho.circular <- function(x, na.rm=FALSE) {
     if (na.rm) 
         x <- x[!is.na(x)]
-    if (any(is.na(x))) return(NA)
+    if (any(is.na(x))) {
+        warning("No observations (at least after removing missing values)")
+        return(NA)
+    }
 
     n <- length(x)
     x <- as.circular(x)
@@ -29,5 +32,6 @@ rho.circular <- function(x, na.rm=FALSE) {
     
     sinr <- sum(sin(x))
     cosr <- sum(cos(x))
-    sqrt(sinr^2 + cosr^2)/n
+    result <- sqrt(sinr^2 + cosr^2)/n
+    return(result)
 }

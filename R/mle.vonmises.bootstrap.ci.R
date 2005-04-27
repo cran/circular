@@ -11,16 +11,22 @@
 #   mle.vonmises.bootstrap.ci function                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: August, 1, 2003                                   #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: April, 11, 2005                                   #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1-1                                           #
+#   Version 0.2                                             #
 #############################################################
 
 mle.vonmises.bootstrap.ci <- function(x, mu, bias = FALSE, alpha = 0.05, reps = 1000) {
-
-  if (require(boot)) {
-
+  
+  # Handling missing values
+  x <- na.omit(x)
+  if (length(x)==0) {
+      warning("No observations (at least after removing missing values)")
+      return(NULL)
+  }
+  
+  if (require(boot)) {    
       x <- as.circular(x)
       xcircularp <- circularp(x)
       units <- xcircularp$units

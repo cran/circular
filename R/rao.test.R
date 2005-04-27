@@ -11,10 +11,10 @@
 #   rao.test function                                       #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: July, 25, 2003                                    #
-#   Version: 0.1                                            #
+#   Date: April, 12, 2005                                    #
+#   Version: 0.2                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -41,17 +41,20 @@ rao.test <- function(..., alpha = 0) {
              attr(x[[i]], "circularp") <- attr(x[[i]], "class") <- NULL
         }
         if (!any(c(0, 0.01, 0.025, 0.05, 0.1, 0.15)==alpha)) stop("'alpha' must be one of the following values: 0, 0.01, 0.025, 0.05, 0.1, 0.15")
+
+    # Handling missing values
+    x <- lapply(x, na.omit)
     n <- unlist(lapply(x, length))
     k <- length(x)
     c.data <- lapply(x, cos)
     s.data <- lapply(x, sin)
-    x <- unlist(lapply(c.data, mean))
-    y <- unlist(lapply(s.data, mean))
-    s.co <- unlist(lapply(c.data, var))
-    s.ss <- unlist(lapply(s.data, var))
+    x <- unlist(lapply(c.data, mean.default))
+    y <- unlist(lapply(s.data, mean.default))
+    s.co <- unlist(lapply(c.data, var.default))
+    s.ss <- unlist(lapply(s.data, var.default))
     s.cs <- c(1:k)
     for(i in 1:k) {
-        s.cs[i] <- var(c.data[[i]], s.data[[i]])
+        s.cs[i] <- var.default(c.data[[i]], s.data[[i]])
     }
     s.polar <- 1/n * (s.ss/x^2 + (y^2 * s.co)/x^4 - (2 * y * s.cs)/x^3)
     tan <- y/x

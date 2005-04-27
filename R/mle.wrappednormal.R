@@ -11,6 +11,13 @@
 
 mle.wrappednormal <- function(x, mu, rho, sd, K, tol=1e-5, min.sd=1e-3, min.k=10, max.iter=100, verbose=FALSE) {
 
+    # Handling missing values
+    x <- na.omit(x)
+    if (length(x)==0) {
+        warning("No observations (at least after removing missing values)")
+        return(NULL)
+    }
+    
     x <- as.circular(x)
     xcircularp <- circularp(x)
     units <- xcircularp$units
