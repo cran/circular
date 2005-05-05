@@ -1,10 +1,10 @@
 Title: Circular Statistics
 Package: circular
-Version: 0.3-1
+Version: 0.3-2
 Author: Ulric Lund <ulund@calpoly.edu>, Claudio Agostinelli <claudio@unive.it>
 Maintainer: Claudio Agostinelli <claudio@unive.it>
 Date: 2005-05-05
 Depends: boot
 Description: Circular Statistics, from "Topics in circular Statistics" (2001) S. Rao Jammalamadaka and A. SenGupta, World Scientific.
 License: GNU GPL version 2.
-Packaged: Tue May  3 12:04:21 2005; claudio
+Packaged: Thu May  5 09:36:33 2005; claudio

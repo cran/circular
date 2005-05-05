@@ -92,11 +92,10 @@ windrose(sample, breaks=breaks, main="Change the rotation", shrink=res$shrink)
 sample <- data.frame(dir=circular(dir, units="degrees", template="geographics"), mag=mag)
 windrose(sample, breaks=breaks, main="Use the template 'geographics'", shrink=res$shrink)
 
-x11()
 ## do the same plot but in radians
 dir <- conversion.circular(dir)
 windrose(x=dir, y=mag, xlim=c(-1.3, 1.3))
-x11()
+
 ## magnify some part of the plot
 windrose(x=dir, y=mag, xlim=c(0, 1.3))
 }
