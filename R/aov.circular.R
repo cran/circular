@@ -11,8 +11,8 @@
 #   aov.circular function                                   #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 13, 2005                                   #
-#   Version: 0.1-2                                          #
+#   Date: April, 30, 2005                                   #
+#   Version: 0.1-3                                          #
 #                                                           #
 #   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
@@ -88,8 +88,8 @@ aov.circular <- function(x, group, kappa=NULL, method=c("F.test", "LRT"), F.mod=
 
     if (method=="F.test") { 
         result$df <- df 
-        result$SSE <- SS
-        result$MSE <- MS
+        result$SS <- SS
+        result$MS <- MS
         result$statistic <- F.stat
     } else {
         result$df <- grps-1
@@ -106,8 +106,8 @@ aov.circular <- function(x, group, kappa=NULL, method=c("F.test", "LRT"), F.mod=
 #   print.aov.circular function                             #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 13, 2005                                   #
-#   Version: 0.2                                            #
+#   Date: April, 30, 2005                                   #
+#   Version: 0.2-1                                          #
 #                                                           #
 #   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
@@ -117,8 +117,8 @@ print.aov.circular <- function(x, digits = max(3, getOption("digits") - 3), ...)
     cat("\nCall:\n",deparse(x$call),"\n\n",sep="") 
  
     if (x$method=="F.test") {
-        result.matrix <- cbind(x$df, x$SSE, x$MSE, c(x$statistic,NA,NA), c(x$p.value,NA,NA))
-        dimnames(result.matrix) <- list(c("Between","Within","Total"),c("df", "SSE", "MSE", "F", "p"))
+        result.matrix <- cbind(x$df, x$SS, x$MS, c(x$statistic,NA,NA), c(x$p.value,NA,NA))
+        dimnames(result.matrix) <- list(c("Between","Within","Total"),c("df", "SS", "MS", "F", "p"))
         cat("\n", "Circular Analysis of Variance: High Concentration F-Test", "\n", "\n")
         print(result.matrix, digits=digits)
         cat("\n \n")

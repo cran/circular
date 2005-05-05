@@ -1,5 +1,8 @@
 Library circular
 =================
+Version 0.3-1, 2005/05/05
+
+Remove the alias density and density.default and the corresponding documentation. Fix a problem in the documentation of lsfit.circle. Change MSE and SSE to MS and SS in aov.circular
 
 Version 0.3, 2005/04/27
 All the functions handle NA values. Most of them by removing NA (without ask). When more than one variable is needed only complete cases are considered.

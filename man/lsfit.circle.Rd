@@ -71,12 +71,9 @@ res
 
 plot(res)
 
-x11()
 par(mfcol=c(1,2))
 plot(res$angles)
 hist(res$radius)
-
-x11()
 
 windrose(x=res$angles, y=res$radius)
 }
