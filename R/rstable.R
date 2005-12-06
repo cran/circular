@@ -114,7 +114,7 @@ if (beta==0) {
            rngstab <- c(rngstab, (scale * (X + beta * log (scale) / (pi/2))))
        } else {
            t <- beta * tan ((pi/2) * alpha)
-           B <- atan (t) / alpha
+           B <- atan(t) / alpha
            S <-  (1 + t * t)^(1/(2 * alpha))
 
            X <-  S * sin (alpha * (u + B)) / (cos (u)^(1 / alpha)) * (cos (u - alpha * (u + B)) / v)^((1 - alpha) / alpha)

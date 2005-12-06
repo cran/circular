@@ -11,8 +11,8 @@
 #   mean.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 11, 2005                                   #
-#   Version: 0.3                                            #
+#   Date: December, 6, 2005                                   #
+#   Version: 0.3-1                                            #
 #                                                           #
 #   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
@@ -39,7 +39,7 @@ mean.circular <- function(x, na.rm=FALSE, ...) {
        cosr <- sum(cos(x))
 
        if (sqrt((sinr^2 + cosr^2))/length(x) > .Machine$double.eps) {
-           circmean <- atan(sinr, cosr)
+           circmean <- atan2(sinr, cosr)
        } else {
            circmean <- NA
        }

@@ -11,10 +11,10 @@
 #   trigonometric.moment function                           #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: April, 12, 2005                                    #
+#   Date: December, 6, 2005                                    #
 #   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2                                             #
+#   Version 0.2-1                                             #
 #############################################################
 
 trigonometric.moment <- function(x, p = 1, center = FALSE) {
@@ -33,10 +33,10 @@ trigonometric.moment <- function(x, p = 1, center = FALSE) {
 
     sinr <- sum(sin(x))
     cosr <- sum(cos(x))
-    circmean <- atan(sinr, cosr)
+    circmean <- atan2(sinr, cosr)
     sin.p <- sum(sin(p * (x - circmean * center)))/n
     cos.p <- sum(cos(p * (x - circmean * center)))/n
-    mu.p <- atan(sin.p, cos.p)
+    mu.p <- atan2(sin.p, cos.p)
     rho.p <- sqrt(sin.p^2 + cos.p^2)
     if (units=="degrees") mu.p <- mu.p/pi*180
     attr(mu.p, "circularp") <- xcircularp

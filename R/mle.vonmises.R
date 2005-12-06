@@ -35,7 +35,7 @@ mle.vonmises <- function(x, mu, kappa, bias=FALSE) {
     cosr <- sum(cos(x))
     est.mu <- FALSE 
     if (missing(mu)) {  
-        mu <- atan(sinr, cosr)
+        mu <- atan2(sinr, cosr)
         est.mu <- TRUE
     } else {
         if (units=="degrees") mu <- mu/180*pi

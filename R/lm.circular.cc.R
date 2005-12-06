@@ -11,8 +11,8 @@
 #   lm.circular.cc function                                 #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 10, 2005                                   #
-#   Version: 0.1-2                                          #
+#   Date: December, 6, 2005                                   #
+#   Version: 0.1-3                                          #
 #                                                           #
 #   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
@@ -49,7 +49,7 @@ lm.circular.cc <- function(y, x, order = 1, level = 0.05) {
     g1.sq <- t(cos.fit) %*% cos.fit
     g2.sq <- t(sin.fit) %*% sin.fit
     rho <- sqrt((g1.sq + g2.sq)/n)
-    y.fitted <- atan(sin.fit, cos.fit)
+    y.fitted <- atan2(sin.fit, cos.fit)
     Y1 <- cy
     Y2 <- sy
     ones <- matrix(1, n, 1)

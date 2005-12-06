@@ -11,10 +11,10 @@
 #   mle.wrappedcauchy function                              #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: April, 11, 2005                                   #
+#   Date: December, 6, 2005                                   #
 #   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1-2                                           #
+#   Version 0.1-3                                           #
 #############################################################
 
 mle.wrappedcauchy <- function(x, mu, rho, tol = 1e-015, max.iter = 100) {
@@ -62,7 +62,7 @@ mle.wrappedcauchy <- function(x, mu, rho, tol = 1e-015, max.iter = 100) {
     }
     mu.const <- sqrt(mu1.new^2 + mu2.new^2)
     rho <- (1 - sqrt(1 - mu.const^2))/mu.const
-    mu <- atan(mu2.new, mu1.new) %% (2 * pi)
+    mu <- atan2(mu2.new, mu1.new) %% (2 * pi)
     if (units=="degrees") {
         mu <- mu/pi*180
     }

@@ -3,10 +3,10 @@
 #   mle.wrappednormal function                              #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: July, 31, 2003                                    #
+#   Date: December, 6, 2003                                    #
 #   Copyright (C) 2003 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1-2                                           #
+#   Version 0.1-3                                           #
 #############################################################
 
 mle.wrappednormal <- function(x, mu, rho, sd, K, tol=1e-5, min.sd=1e-3, min.k=10, max.iter=100, verbose=FALSE) {
@@ -29,7 +29,7 @@ mle.wrappednormal <- function(x, mu, rho, sd, K, tol=1e-5, min.sd=1e-3, min.k=10
 
     est.mu <- FALSE 
     if (missing(mu)) {  
-        mu <- atan(sinr, cosr)
+        mu <- atan2(sinr, cosr)
         est.mu <- TRUE
     }
     est.rho <- FALSE

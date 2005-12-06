@@ -133,8 +133,7 @@ Statistical Conference.  VSP: Utrecht, Netherlands.
 \examples{
 # Generate a data set of dependent circular variables.
 x <- circular(runif(50, 0, 2*pi))
-y <- atan(0.15*cos(x) + 0.25*sin(x), 0.35*sin(x)) + rvonmises(n=50, mu=0,
-kappa=5)
+y <- atan2(0.15*cos(x) + 0.25*sin(x), 0.35*sin(x)) + rvonmises(n=50, mu=0, kappa=5)
 
 # Fit a circular-circular regression model.
 circ.lm <- lm.circular(y, x, order=1)

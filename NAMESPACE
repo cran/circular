@@ -1,0 +1,209 @@
+useDynLib(circular)
+          
+#Export directive
+
+# functions
+export(
+# file A1.R
+ A1,
+# file A1inv.R
+ A1inv,
+# file I.0.R
+ I.0,
+# file I.1.R
+ I.1,
+# file I.p.R
+ I.p,
+# file aov.circular.R
+ aov.circular,
+# file as.circular.R
+ as.circular,
+# file as.data.frame.circular.R
+ as.data.frame.circular,
+# file cardioid.R
+ rcardioid, dcardioid,
+# file change.point.R
+ change.point,
+# file circular.R
+ circular, conversion.circular, circularp, "circularp<-", is.circular, 
+# file cor.circular.R
+ cor.circular,
+# file deg.R
+ deg,
+# file equal.kappa.test.R
+ equal.kappa.test,
+# file kuiper.test.R
+ kuiper.test,
+# file lm.circular.R
+ lm.circular,
+# file lsfit.circle.R
+ lsfit.circle,
+# file mle.vonmises.R
+ mle.vonmises,
+# file mle.vonmises.bootstrap.ci.R
+ mle.vonmises.bootstrap.ci,
+# file mle.wrappedcauchy.R
+ mle.wrappedcauchy,
+# file mle.wrappednormal.R
+ mle.wrappednormal,
+# file plot.circular.R
+ ticks.circular,
+# file plot.edf.R
+ plot.edf, lines.edf,
+# file pp.plot.R
+ pp.plot,
+# file rad.R
+ rad,
+# file rao.spacing.test.R
+ rao.spacing.test,
+# file rao.test.R
+ rao.test,
+# file rayleigh.test.R
+ rayleigh.test,
+# file rho.circular.R
+ rho.circular,
+# file rose.diag.R
+ rose.diag,
+# file rstable.R
+ rstable,
+# file triangular.R
+ rtriangular, dtriangular,
+# file trigonometric.moment.R
+ trigonometric.moment,
+# file vonmises.R
+ rvonmises, dvonmises, pvonmises, rmixedvonmises, dmixedvonmises,
+# file watson.test.R
+ watson.test,
+# file watson.two.test.R
+ watson.two.test,
+# file windrose.R
+ windrose,
+# file wrappedcauchy.R
+ rwrappedcauchy, dwrappedcauchy,
+# file wrappednormal.R
+ rwrappednormal, dwrappednormal,
+# file wrappedstable.R
+ rwrappedstable 
+)
+
+## unexported functions
+#export(
+## file lm.circular.cc.R
+# lm.circular.cc,
+## file lm.circular.cl.R
+# lm.circular.cl
+#)
+
+# methods
+export(
+# file density.circular.R
+ density.circular,
+# file mean.circular.R
+ mean.circular,
+# file plot.circular.R
+ axis.circular, plot.circular, points.circular,
+# file plot.lsfit.circle.R
+ plot.lsfit.circle,
+# file range.circular.R
+ range.circular,
+# file var.circular.R
+ var, var.default, var.data.frame, var.circular
+)
+
+
+## unexported methods
+#export(
+## file aov.circular.R
+# print.aov.circular,
+## file circular.R
+# print.circular,
+## file equal.kappa.test.R
+# print.equal.kappa.test,
+## file kuiper.test.R
+# print.kuiper.test,
+## file lm.circular.cl.R
+# print.lm.circular.cl,
+## file lsfit.circle.R
+# print.lsfit.circle,
+## file mle.vonmises.R
+# print.mle.vonmises,
+## file mle.vonmises.bootstrap.ci.R
+# print.mle.vonmises.bootstrap.ci,
+## file mle.wrappedcauchy.R
+# print.mle.wrappedcauchy,
+## file mle.wrappednormal.R
+# print.mle.wrappednormal,
+## file rao.spacing.test.R
+# print.rao.spacing.test,
+## file rao.test.R
+# print.rao.test,
+## file rayleigh.test.R
+# print.rayleigh.test,
+## file summary.circular.R
+# summary.circular,
+## file watson.test.R
+# print.watson.test,
+## file watson.two.test.R
+# print.watson.two.test
+#)
+
+#S3methods directive
+
+#[
+S3method("[", circular)
+
+#axis
+S3method(axis, circular)
+
+#density
+S3method(density, circular)
+
+#lines
+S3method(lines, density.circular)
+###S3method(lines, edf)
+
+#mean
+S3method(mean, circular)
+
+#print
+S3method(print, aov.circular)
+S3method(print, circular)
+S3method(print, density.circular)
+S3method(print, equal.kappa.test)
+S3method(print, kuiper.test)
+S3method(print, lm.circular.cl)
+S3method(print, lsfit.circle)
+S3method(print, mle.vonmises)
+S3method(print, mle.vonmises.bootstrap.ci)
+S3method(print, mle.wrappedcauchy)
+S3method(print, mle.wrappednormal)
+S3method(print, rao.spacing.test)
+S3method(print, rao.test)
+S3method(print, rayleigh.test)
+S3method(print, watson.test)
+S3method(print, watson.two.test)
+
+#plot
+S3method(plot, density.circular)
+S3method(plot, circular)
+###S3method(plot, edf)
+S3method(plot, lsfit.circle)
+
+
+#points
+S3method(points, circular)
+
+#range
+S3method(range, circular)
+
+#summary
+S3method(summary, circular)
+
+#var
+S3method(var, default)
+#S3method(var, matrix)
+S3method(var, data.frame)
+S3method(var, circular)
+
+
+

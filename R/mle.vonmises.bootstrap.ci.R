@@ -11,10 +11,10 @@
 #   mle.vonmises.bootstrap.ci function                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: April, 11, 2005                                   #
+#   Date: December, 6, 2005                                   #
 #   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2                                             #
+#   Version 0.2-1                                             #
 #############################################################
 
 mle.vonmises.bootstrap.ci <- function(x, mu, bias = FALSE, alpha = 0.05, reps = 1000) {
@@ -35,7 +35,7 @@ mle.vonmises.bootstrap.ci <- function(x, mu, bias = FALSE, alpha = 0.05, reps = 
       if (missing(mu)) {
           sinr <- sum(sin(x))
           cosr <- sum(cos(x))
-          mu <- atan(sinr, cosr)
+          mu <- atan2(sinr, cosr)
       } else {
           attr(mu, "circularp") <- xcircularp
           attr(mu, "class") <- "circular"
@@ -45,7 +45,7 @@ mle.vonmises.bootstrap.ci <- function(x, mu, bias = FALSE, alpha = 0.05, reps = 
       mle.vonmises.mu <- function(x, i) {
           sinr <- sum(sin(x[i]))
           cosr <- sum(cos(x[i]))
-          mu <- atan(sinr, cosr)
+          mu <- atan2(sinr, cosr)
           return(mu)
       }
 

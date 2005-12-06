@@ -11,8 +11,8 @@
 #   lm.circular.cl function                                 #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 27, 2005                                   #
-#   Version: 0.1-4                                          #
+#   Date: December, 6, 2005                                   #
+#   Version: 0.1-5                                          #
 #                                                           #
 #   Copyright (C) 2005 Claudio Agostinelli                  #
 #                                                           #
@@ -46,7 +46,7 @@ lm.circular.cl <- function(y, x, init, verbose=FALSE, tol=1e-10) {
     S <- sum(sin(y-2*atan(x%*%betaPrev)))/n
     C <- sum(cos(y-2*atan(x%*%betaPrev)))/n
     R <- sqrt(S^2 + C^2)
-    mu <- atan(S,C)
+    mu <- atan2(S,C)
     k  <- A1inv(R)
     diff <- tol+1
     iter <- 0
@@ -64,7 +64,7 @@ lm.circular.cl <- function(y, x, init, verbose=FALSE, tol=1e-10) {
         S <- sum(sin(y-2*atan(x%*%betaPrev)))/n
         C <- sum(cos(y-2*atan(x%*%betaPrev)))/n
         R <- sqrt(S^2 + C^2)
-        mu <- atan(S,C)
+        mu <- atan2(S,C)
         k  <- A1inv(R)
         
         if (verbose){
