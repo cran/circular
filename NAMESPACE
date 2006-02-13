@@ -72,6 +72,8 @@ export(
  trigonometric.moment,
 # file vonmises.R
  rvonmises, dvonmises, pvonmises, rmixedvonmises, dmixedvonmises,
+# file var.circular.R 
+### var,
 # file watson.test.R
  watson.test,
 # file watson.two.test.R

@@ -47,7 +47,7 @@ Stephens, M. (1970).  Use of the Kolmogorov-Smirnov, Cramer-von Mises and relate
 \code{\link{rayleigh.test}} and \code{\link{watson.test}}
 }
 
-\exammples{
+\examples{
 # Generate data from the uniform distribution on the circle.
 data <- circular(runif(100, 0, 2*pi))
 kuiper.test(data)

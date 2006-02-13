@@ -1,7 +1,7 @@
 
 var <- function(x, ...) UseMethod("var")
 
-var.default <- function(x, y = NULL, na.rm = FALSE, use, ...) base::var(x=x, y=y, na.rm=na.rm, use=use)
+var.default <- function(x, y = NULL, na.rm = FALSE, use, ...) stats::var(x=x, y=y, na.rm=na.rm, use=use)
 
 #var.matrix <- function(x, ...) {
 #    apply(x, 2, var, ...)

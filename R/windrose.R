@@ -18,14 +18,14 @@
 #   windrose function                                       #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 12, 2005                                   #
-#   Version: 0.2                                            #
+#   Date: January, 06, 2006                                 #
+#   Version: 0.3                                            #
 #                                                           #
-#   Copyright (C) 2005 Claudio Agostinelli                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
-windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, ...){
+windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, ...){
 
 ###### internal function used to plot circles
    circles<- function(rad, sector=c(0, 2*pi), lty=2, col="white", border=NA, fill = FALSE) { ## draws circle, radius in units of plot
@@ -39,6 +39,11 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
       lines(x, y, col = 1, lty = lty)
    }
 ####
+
+   if (!is.null(cir.ind) && (cir.ind > 1 | cir.ind <= 0)) {
+       cir.ind <- 0.05
+       warning("'cir.ind' must be in (0, 1]")
+   }  
 
    if (any(is.null(y))) {
        if (is.data.frame(x) && NCOL(x)==2) {
@@ -102,7 +107,7 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
 
    if (any(is.null(breaks))) {
        step <- 2*pi/bins
-       breaks <- seq(0, 2*pi, by=step)
+       breaks <- circular(seq(0, 2*pi, by=step), units="radians")
    } else {
        breaks <- as.circular(breaks)
        breaks <- conversion.circular(breaks, units="radians")    
@@ -114,6 +119,7 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
        } else {
            breaks.orig <- unique(c(breaks.orig, 2*pi))
        }
+   breaks.orig <- circular(breaks.orig, units="radians")
    step.orig <- diff(breaks.orig) 
 
    if (rotation=="clock") breaks <- -breaks
@@ -128,27 +134,27 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
        step <- diff(breaks) # the step for the breaks which include zero degrees is the first one
 
 
-### rm NA ~ calms ###
-#### remove na's and count calms
+### rm calms ###
+#### count calms
 #### following NWS protocol, when dir == 0 weather calm
 
    no <- length(x)
    calm <- sum(x == 0)
-   notmis <- !is.na(x) & x!=0
-   x <- x[notmis]
+   notcalm <- x!=0
+   x <- x[notcalm]
    x <- conversion.circular(x, units="radians")
    if (rotation=="clock") x <- -x
    x <- x + zero 
    x <- x%%(2*pi)
    x[x >= breaks[bins+1]] <- x[x >= breaks[bins+1]]-2*pi
-   y <- y[notmis]
+   y <- y[notcalm]
 
 ###   x[(x+step/2)%%(2*pi)==0] <- 2*pi # Values like 359 go to Sector 0
    plot(c(-1.2,1.2), c(-1.2,1.2), xlab='', ylab='', main=main, xaxt='n', yaxt='n', pch=' ', xlim=xlim, ylim=ylim)
    counts <- hist(x, breaks=breaks ,plot=FALSE, right=right)$counts #use hist for
 
-   mids.orig <- breaks.orig[1:bins]+step.orig/2
-   mids <- breaks[1:bins]+step/2  # midpoints
+   mids.orig <- circular(breaks.orig[1:bins]+step.orig/2, units="radians")
+   mids <- circular(breaks[1:bins]+step/2, units="radians")  # midpoints
    if (plot.mids) {
        for (i in 1:bins) { 
             lines(c(0, mids.size*cos(mids[i])), c(0, mids.size*sin(mids[i])), lty=2) 
@@ -204,11 +210,18 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
 
    ##  circles
    if (!is.null(cir.ind)) {
+       equalstep <- max(abs(diff(step))) <= 10*.Machine$double.eps
        max.plt <- maxlength.orig^2 - osize^2
-       max.plt <- floor(max.plt/cir.ind)*cir.ind  ## sets max plotted area
-       max.plt<- seq(cir.ind, max.plt, by = cir.ind)
-       rad <- sqrt(max.plt+osize^2)/maxlength
-       if (max(abs(diff(step))) <= 10*.Machine$double.eps) {
+       if (equalstep & label.freq) max.plt <- max.plt*step[1]
+       cir.ind <- min(cir.ind, max.plt)
+       max.plt <- floor(max.plt/cir.ind)*cir.ind  ## sets max plotted area      
+       max.plt <- seq(cir.ind, max.plt, by = cir.ind)
+       if (equalstep & label.freq) {
+           rad <- sqrt(max.plt/step[1]+osize^2)/maxlength
+       } else {
+           rad <- sqrt(max.plt+osize^2)/maxlength     
+       }
+       if (equalstep) {
            text(0, rad, paste(round(max.plt * 100, digits=digits), "%", sep = ""), cex = 0.9*cex, pos = 3, font = 3, offset=0.2)
        } else {
            text(0, rad, paste(round(max.plt, digits=digits), sep = ""), cex = 0.9*cex, pos = 3, font = 3, offset=0.2)

@@ -1,5 +1,9 @@
 Library circular
 =================
+
+Version 0.3-4, 2006/02/13
+Add an argument to windrose, rewrite small part of it. Fix typos in kuiper.test.Rd, extract.Rd and lm.circular.Rd. Now, var.default definition in var.circular.R point to stats::var and not to base::var 
+
 Version 0.3-3, 2005/12/06
 Add NAMESPACE file. Functions now use atan2 instead of atan when two arguments. summary.circular is fixed.
 

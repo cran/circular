@@ -15,7 +15,10 @@
 	 indicate the proportion of time wind comes from a given
 	 direction. Bands on the windrose indicate the proportions of
 	 winds of each magnitude.}
-       \usage{windrose(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, ...)
+       \usage{windrose(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose',
+              cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, 
+              ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), 
+              ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, ...)
 }
 
 \arguments{
@@ -35,7 +38,7 @@
          \item{ticks}{if TRUE ticks are added to the plot. The function \code{\link{ticks.circular}} is used.}
          \item{tcl}{length of the ticks.}
          \item{tcl.text}{The position of the axis labels.}
-         \item{cex}{point character size.  See help on \code{\lonk{par}}.}
+         \item{cex}{point character size.  See help on \code{\link{par}}.}
          \item{digits}{number of digits used to print axis values and other numbers.}
          \item{num.ticks}{number of tick marks draw.}
          \item{tol}{proportion of white space at the margins of plot}
@@ -43,7 +46,7 @@
          \item{xlim, ylim}{the ranges to be encompassed by the x and y axes. Useful for centering the plot.}
          \item{right}{logical; if TRUE, the pedals are right-closed (left open) intervals.}
          \item{shrink}{maximum length of the pedals, it can be used to plot several graphics with the same scale.}
-
+         \item{label.freq}{logical; if TRUE, the relative frequencies are used in the magnitude instead of intensities, when the breaks are equally spaced.}
          \item{\dots}{further parameters ignored for now.}
 }
 

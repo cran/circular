@@ -23,7 +23,7 @@ x[i, j, \dots , drop=TRUE]
 
 \author{Claudio Agostinelli}
 
-\example{
+\examples{
 x <- circular(matrix(rwrappednormal(n=100, mu=0), nrow=5))
 dim(x)
 x[1,]
