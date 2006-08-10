@@ -45,4 +45,12 @@ Russell, G.S. and Levitin, D.J. (1995).  An expanded table of probability values
 \code{\link{range.circular}}, \code{\link{kuiper.test}}, \code{\link{rayleigh.test}} and \code{\link{watson.test}}
 }
 
+\examples{
+x <- circular(runif(200, 0, 2*pi))
+rao.spacing.test(x)
+
+x <- rvonmises(100, circular(0), 20)
+rao.spacing.test(x)
+}
+
 \keyword{htest}

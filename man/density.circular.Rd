@@ -9,15 +9,15 @@
 }
 
 \usage{
-\method{density}{circular}(x, z, bw, adjust = 1, type = c("K", "L"),
-     kernel = c("vonmises", "wrappednormal"), na.rm = FALSE, from = 0,
-     to = 2 * pi, n = 512, K = 10, \dots)
+\method{density}{circular}(x, z=NULL, bw, adjust = 1, type = c("K", "L"),
+     kernel = c("vonmises", "wrappednormal"), na.rm = FALSE, from = circular(0),
+     to = circular(2 * pi), n = 512, K = NULL, min.k=10, control.circular=list(), \dots)
 \method{print}{density.circular}(x, digits = NULL, \dots)
 }
 
 \arguments{
-  \item{x}{the data from which the estimate is to be computed.}
-  \item{z}{the points where the density is estimated. If missing
+  \item{x}{the data from which the estimate is to be computed. The object is coerced to class \code{circular}.}
+  \item{z}{the points where the density is estimated. If \code{NULL}
     equally spaced points are used according to the parameters
     \code{from}, \code{to} and \code{n}.}
   \item{bw}{the smoothing bandwidth to be used. When the \code{kernel}
@@ -32,10 +32,12 @@
   \item{na.rm}{logical; if \code{TRUE}, missing values are removed from
     \code{x}. If \code{FALSE} any missing values cause an error.}
   \item{from, to}{the left and right-most
-    points of the grid at which the density is to be estimated. }
+    points of the grid at which the density is to be estimated. The objects are coerced to class \code{circular}.}
   \item{n}{the number of equally spaced points at which the density is
           to be estimated.}
   \item{K}{number of terms to be used in approximating the density.}
+  \item{min.k}{minimum number of terms used in approximating the density.}
+  \item{control.circular}{the attribute of the resulting objects (\code{x} component).}
   \item{digits}{integer indicating the precision to be used.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -45,7 +47,7 @@
   underlying structure is a list containing the following components.
   \item{data}{original dataset.}
   \item{x}{the \code{n} coordinates of the points where the density is
-    estimated.}
+    estimated. It is a circular objects with coordinate system setting using \code{control.circular}.}
   \item{y}{the estimated density values.}
   \item{bw}{the bandwidth used.}
   \item{N}{the sample size after elimination of missing values.}
@@ -70,13 +72,13 @@ with Spherical Data, Biometrika, 74, 4, 751--762.
 
 \author{Claudio Agostinelli}
 
-\seealso{\code{\link{plot.density.circular}}
-  and \code{\link{lines.density.circular}}}
+\seealso{\code{\link{plot.density.circular}} and \code{\link{lines.density.circular}}}
 
 \examples{
-x <- rvonmises(n=100, mu=pi, kappa=2)
-res25 <- density(x, bw=25)
-plot(res25, points.plot=TRUE, xlim=c(-1.5,1))
+x <- rvonmises(n=100, mu=circular(pi), kappa=2)
+res25 <- density(x, bw=25, control.circular=list(units="degrees"))
+circularp(res25$x)
+plot(res25, points.plot=TRUE, xlim=c(-1.6,1))
 res50 <- density(x, bw=25, adjust=2)
 lines(res50, col=2)
 }

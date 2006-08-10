@@ -10,7 +10,7 @@
 #                                                           #
 #############################################################
 
-as.data.frame.circular <- function(x, row.names=NULL, optional=FALSE) {
+as.data.frame.circular <- function(x, row.names=NULL, optional=FALSE, ...) {
     if (is.matrix(x)) {
         if (!is.null(xcircularp <- circularp(x))) {
             typep <- xcircularp$type

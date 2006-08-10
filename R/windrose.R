@@ -18,15 +18,16 @@
 #   windrose function                                       #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: January, 06, 2006                                 #
-#   Version: 0.3                                            #
+#   Date: March, 010, 2006                                  #
+#   Version: 0.4                                            #
 #                                                           #
 #   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
-windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, ...){
+windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), ylim=c(-1.2, 1.2), uin=NULL, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, calm=c("0", "NA"), ...) {
 
+   calm <- match.arg(calm)
 ###### internal function used to plot circles
    circles<- function(rad, sector=c(0, 2*pi), lty=2, col="white", border=NA, fill = FALSE) { ## draws circle, radius in units of plot
       ## internal function for windrose
@@ -58,16 +59,30 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
        if (is.data.frame(x)) {
            if (NCOL(x) > 1) x <- x[,1]
        } 
-       x <- as.vector(x)
    }
 
-   # Handling missing values
+### rm calms ###
+#### count calms
+#### following NWS protocol, when dir == 0 weather calm, we allows also to set cam==NA
+   
+   no <- length(x)
+   if (calm=="NA") {
+       calmcalm <- sum(is.na(x))
+       notcalm <- !is.na(x)
+   } else {
+       calmcalm <- sum(x == calm)
+       notcalm <- x!=calm
+   }
+   x <- x[notcalm]
+   y <- y[notcalm]
+  
+   # Handling missing values in any case
    ok <- complete.cases(x, y)
    x <- x[ok]
    y <- y[ok]
     
    if (length(y)==0) {
-       warning("No observations (at least after removing missing values)")
+       warning("No observations (at least after removing missing values and calm winds)")
        return(NULL)
    }
    
@@ -82,7 +97,7 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
    modulo <- xcircularp$modulo
    zero <- xcircularp$zero
    rotation <- xcircularp$rotation
- 
+   
    op <- par(mar = c(1,1,2,1))
    mai <- par("mai") 
    on.exit(par(op))
@@ -94,7 +109,7 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
    oldpin <- par("pin") - c(mai[2]+mai[4], mai[1]+mai[3])
    xuin <- oxuin <- oldpin[1]/diff(xlim)
    yuin <- oyuin <- oldpin[2]/diff(ylim)
-   if (missing(uin)) {
+   if (is.null(uin)) {
        if (yuin > xuin) xuin <- yuin
        else yuin <- xuin
    } else {
@@ -110,51 +125,29 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
        breaks <- circular(seq(0, 2*pi, by=step), units="radians")
    } else {
        breaks <- as.circular(breaks)
-       breaks <- conversion.circular(breaks, units="radians")    
    }
-   breaks.orig <- breaks
-   breaks.orig <- sort(unique(breaks.orig%%(2*pi)))
-       if (breaks.orig[1]!=0) {
-           breaks.orig <- c(breaks.orig[length(breaks.orig)]-2*pi, breaks.orig)
-       } else {
-           breaks.orig <- unique(c(breaks.orig, 2*pi))
-       }
-   breaks.orig <- circular(breaks.orig, units="radians")
-   step.orig <- diff(breaks.orig) 
+   breaks <- conversion.circular(breaks, units="radians", zero=0, rotation="counter", modulo="2pi")
+   attr(breaks, "class") <- attr(breaks, "circularp") <-  NULL
+   breaks <- sort(unique(breaks))
+   if (breaks[1]!=0) {
+       breaks <- c(breaks[length(breaks)]-2*pi, breaks)
+   } else {
+       breaks <- c(breaks, 2*pi)
+   }
+   attr(breaks, "class") <- attr(breaks, "circularp") <-  NULL
+   
+   bins <- length(breaks)-1
+   step <- diff(breaks) # the step for the breaks which include zero degrees is the first one
+   
+   x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
+   attr(x, "class") <- attr(x, "circularp") <-  NULL
 
-   if (rotation=="clock") breaks <- -breaks
-   breaks <- breaks + zero
-   breaks <- sort(unique(breaks%%(2*pi)))
-       if (breaks[1]!=0) {
-           breaks <- c(breaks[length(breaks)]-2*pi, breaks)
-       } else {
-           breaks <- unique(c(breaks, 2*pi))
-       }
-       bins <- length(breaks)-1
-       step <- diff(breaks) # the step for the breaks which include zero degrees is the first one
-
-
-### rm calms ###
-#### count calms
-#### following NWS protocol, when dir == 0 weather calm
-
-   no <- length(x)
-   calm <- sum(x == 0)
-   notcalm <- x!=0
-   x <- x[notcalm]
-   x <- conversion.circular(x, units="radians")
-   if (rotation=="clock") x <- -x
-   x <- x + zero 
-   x <- x%%(2*pi)
    x[x >= breaks[bins+1]] <- x[x >= breaks[bins+1]]-2*pi
-   y <- y[notcalm]
-
+ 
 ###   x[(x+step/2)%%(2*pi)==0] <- 2*pi # Values like 359 go to Sector 0
    plot(c(-1.2,1.2), c(-1.2,1.2), xlab='', ylab='', main=main, xaxt='n', yaxt='n', pch=' ', xlim=xlim, ylim=ylim)
    counts <- hist(x, breaks=breaks ,plot=FALSE, right=right)$counts #use hist for
-
-   mids.orig <- circular(breaks.orig[1:bins]+step.orig/2, units="radians")
-   mids <- circular(breaks[1:bins]+step/2, units="radians")  # midpoints
+   mids <- breaks[1:bins]+step/2 # midpoints
    if (plot.mids) {
        for (i in 1:bins) { 
             lines(c(0, mids.size*cos(mids[i])), c(0, mids.size*sin(mids[i])), lty=2) 
@@ -184,12 +177,15 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
    for(j in J:1){  
       data1<- x[y <= j*increment]
       OUT[j,] <- counts <- hist(data1, breaks=breaks, plot=FALSE, right=right)$counts #use hist for
-
-   
       for (i in 1:bins) {
            w1 <- breaks[i]  ## in radians, the locations of the upper and lower lines
            w2 <- breaks[i+1]
-           rad <- sqrt(counts[i]/(step[i]*length(x)) + osize^2)/maxlength
+
+           if (counts[i]) {
+               rad <- sqrt(counts[i]/(step[i]*length(x)) + osize^2)/maxlength
+           } else {
+               rad <- 0
+           }
            xx <- rad*c(0,cos(w1),cos(w2),0) ## increase length by percent equal to bin with 
            yy <- rad*c(0,sin(w1),sin(w2),0)
            polygon(xx, yy, xpd=FALSE, col = fill.col[j], border=NA)
@@ -221,7 +217,7 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
        } else {
            rad <- sqrt(max.plt+osize^2)/maxlength     
        }
-       if (equalstep) {
+       if (equalstep & label.freq) {
            text(0, rad, paste(round(max.plt * 100, digits=digits), "%", sep = ""), cex = 0.9*cex, pos = 3, font = 3, offset=0.2)
        } else {
            text(0, rad, paste(round(max.plt, digits=digits), sep = ""), cex = 0.9*cex, pos = 3, font = 3, offset=0.2)
@@ -248,8 +244,8 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
 
    OUT <- round(new/sum(OUT[m,]),3)
    colnamesout <- rep("", bins)
-   breaks <- conversion.circular(breaks.orig, units=units)
-   mids <- conversion.circular(mids.orig, units=units)
+   breaks <- conversion.circular(circular(breaks), units=units)
+   mids <- conversion.circular(circular(mids), units=units)
    for (i in 1:bins) {
         if (right) {
             colnamesout[i] <- paste("(", round(breaks[i], digits=digits), ", ", round(breaks[i+1], digits=digits), "]", sep="")
@@ -258,11 +254,11 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
         }
    }
    colnames(OUT) <- colnamesout
-   rownames(OUT) <- paste( "From ", 0:(J-1)*increment,  " to ", 1:J * increment, sep = "")
+   rownames(OUT) <- paste( "(", 0:(J-1)*increment,  ",", 1:J * increment, "]", sep = "")
 
    result$table <- OUT
    result$number.obs <- no
-   result$number.calm <- calm
+   result$number.calm <- calmcalm
    result$breaks <- breaks
    result$mids <- mids
    result$shrink <- shrink

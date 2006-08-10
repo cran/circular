@@ -36,8 +36,8 @@ Jammalamadaka, S. and Sarma, Y. (1988).  A correlation coefficient for angular v
 
 \examples{
 # Generate two circular data sets, and compute their correlation.
-x <- rvonmises(n=50, mu=0, kappa=3)
-y <- x + rvonmises(n=50, mu=pi, kappa=10)
+x <- rvonmises(n=50, mu=circular(0), kappa=3)
+y <- x + rvonmises(n=50, mu=circular(pi), kappa=10)
 cor.circular(x, y, test=TRUE)
 }
 

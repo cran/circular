@@ -1,12 +1,3 @@
-% *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* 
-% ** Copyright UCAR (c) 1992 - 2004 
-% ** University Corporation for Atmospheric Research(UCAR) 
-% ** National Center for Atmospheric Research(NCAR) 
-% ** Research Applications Program(RAP) 
-% ** P.O.Box 3000, Boulder, Colorado, 80307-3000, USA 
-% ** 2004/28/6 11:31:8 
-% *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* 
-
 \name{windrose}
 \alias{windrose}
 \title{Windrose Generator}
@@ -18,7 +9,7 @@
        \usage{windrose(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose',
               cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, 
               ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), 
-              ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, ...)
+              ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, calm=c("0", "NA"), ...)
 }
 
 \arguments{
@@ -47,13 +38,14 @@
          \item{right}{logical; if TRUE, the pedals are right-closed (left open) intervals.}
          \item{shrink}{maximum length of the pedals, it can be used to plot several graphics with the same scale.}
          \item{label.freq}{logical; if TRUE, the relative frequencies are used in the magnitude instead of intensities, when the breaks are equally spaced.}
+         \item{calm}{"0" or "NA", see details below.}
          \item{\dots}{further parameters ignored for now.}
 }
 
 \details{Following the convention of the National Weather Service, winds
   with a direction of 0 are considered calm, while winds with a
   direction of 360 degrees (2*pi radians) are assumed to be from the north.  Calm winds
-  are excluded from the wind rose creation.
+  are excluded from the wind rose creation. We allow, in direction, to use \code{NA} to indicate calm wind (argument \code{calm}). 
 
   This wind rose preserve areas of pedals, that is counts are proportional to the area of the pedals rather than to the length of the pedals. This is also for the slides created for the magnitudes.
 }
@@ -85,7 +77,7 @@ sample <- data.frame(dir=dir, mag=mag)
 par(mfrow=c(2,2))
 res <- windrose(sample)
 ## we join two pedals and keep the same shrink (scale of the plot)
-breaks <- seq(0, 2 * pi, by = pi/6)
+breaks <-circular(seq(0, 2 * pi, by = pi/6))
 breaks <- breaks[-2]
 windrose(sample, breaks=breaks, main="The same but with two pedals joined", shrink=res$shrink)
 ## change the rotation

@@ -9,21 +9,22 @@ Wrapped Cauchy distribution:  mean and concentration parameter.
 }
 
 \usage{
-mle.wrappedcauchy(x, mu, rho, tol = 1e-15, max.iter = 100)
-\method{print}{mle.wrappedcauchy}(x,
-        digits = max(3, getOption("digits") - 3), \dots)
+mle.wrappedcauchy(x, mu = NULL, rho = NULL, tol = 1e-15, 
+        max.iter = 100, control.circular = list())
+\method{print}{mle.wrappedcauchy}(x, digits = max(3, getOption("digits") - 3), \dots)
 }
 
 \arguments{
   \item{x}{a vector. The object is coerced to class
     \code{\link{circular}}.}
-  \item{mu}{if missing the maximum likelihood estimate of the mean
-    direction is calculated.}
-  \item{rho}{if missing the maximum likelihood estimate of the
+  \item{mu}{if \code{NULL} the maximum likelihood estimate of the mean
+    direction is calculated otherwise it is coerced to an object of class \code{circular}.}
+  \item{rho}{if \code{NULL} the maximum likelihood estimate of the
     concentration parameter is calculated.}
   \item{tol}{precision of the estimation.}
   \item{max.iter}{maximum number of iterations.}
-   \item{digits}{integer indicating the precision to be used.}
+  \item{control.circular}{the attribute of the resulting objects (\code{mu})}
+  \item{digits}{integer indicating the precision to be used.}
   \item{\dots}{further arguments passed to or from other methods.}
  }
 
@@ -31,7 +32,7 @@ mle.wrappedcauchy(x, mu, rho, tol = 1e-15, max.iter = 100)
   Returns a list with the following components:
 
   \item{call}{the match.call().}
-  \item{mu}{the estimate of the mean direction or the value supplied.}
+  \item{mu}{the estimate of the mean direction or the value supplied as an object of class \code{circular}.}
   \item{rho}{the estimate of the concentration parameter or the
     value supplied}
   \item{convergence}{TRUE if convergence is achieved.}
@@ -49,9 +50,9 @@ mle.wrappedcauchy(x, mu, rho, tol = 1e-15, max.iter = 100)
 }
 
 \examples{
-x <- rwrappednormal(n=50, mu=0, rho=0.5)
-mle.wrappednormal(x) # estimation of mu and rho
-mle.wrappednormal(x, mu=0) # estimation of rho only
+x <- rwrappedcauchy(n=50, mu=circular(0), rho=0.5)
+mle.wrappedcauchy(x) # estimation of mu and rho
+mle.wrappedcauchy(x, mu=circular(0)) # estimation of rho only
 }
 
 \keyword{htest}

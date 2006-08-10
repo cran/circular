@@ -7,7 +7,7 @@ Computes the circular range of a data set and performs a test of uniformity if s
 }
 
 \usage{
-range.circular(x, test=FALSE, na.rm = FALSE, finite = FALSE, ...)
+range.circular(x, test=FALSE, na.rm = FALSE, finite = FALSE, control.circular=list(), ...)
 }
 
 \arguments{
@@ -17,11 +17,12 @@ range.circular(x, test=FALSE, na.rm = FALSE, finite = FALSE, ...)
 \item{na.rm}{logical, indicating if \code{\link{NA}}'s should be omitted.}
 \item{finite}{logical, indicating if all non-finite elements should be
   omitted.}
+\item{control.circular}{}
 \item{\ldots}{further parameter passed from/to the method.}
 }
 
 \value{
-Returns the circular range.  If the significance test is requested the p-value of the test is returned as p.value.
+Returns the circular range as a \code{circular} object.  If the significance test is requested the p-value of the test is returned as p.value.
 }
 
 \details{
@@ -40,7 +41,7 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 }
 
 \examples{
-data <- rvonmises(n=50, mu=0, kappa=2)
+data <- rvonmises(n=50, mu=circular(0), kappa=2)
 range(data, test=TRUE)
 data <- circular(runif(50, 0, 2*pi))
 range(data, test=TRUE)

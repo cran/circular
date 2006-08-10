@@ -44,4 +44,13 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 Rao, J.S. (1967). Large sample tests for the homogeneity of angular data, Sankhya, Ser, B., 28.
 }
 
+\examples{
+x <- rvonmises(100, circular(0), kappa=10)
+y <- rvonmises(100, circular(0), kappa=10)
+
+rao.test(x, y)
+
+}
+
+
 \keyword{htest}

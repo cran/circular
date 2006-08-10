@@ -8,7 +8,7 @@
 
 \usage{
 aov.circular(x, group, kappa = NULL,
-    method = c("F.test", "LRT"), F.mod = TRUE)
+    method = c("F.test", "LRT"), F.mod = TRUE, control.circular=list())
 \method{print}{aov.circular}(x, digits = max(3, getOption("digits") - 3), ...)
 }
 
@@ -22,6 +22,7 @@ aov.circular(x, group, kappa = NULL,
     likelihood ratio test.}
   \item{F.mod}{logical; if \code{TRUE}, the AOV F-statistic is modified by a factor of 1+3/8k 
     to improve its approximate F distribution. Default is \code{TRUE}.}
+  \item{control.circular}{the coordinate system used in the output for the objects \code{mu} and \code{mu.all}. See \code{\link{circular}} for details.}
   \item{digits}{the number of digits to be printed.}
   \item{\dots}{additional arguments.}
 }
@@ -29,8 +30,8 @@ aov.circular(x, group, kappa = NULL,
 \value{
   An object of class \code{aov.circular} with the folowing components:
 
-  \item{mu}{mean direction for each sample.}
-  \item{mu.all}{mean direction of all samples combined.}
+  \item{mu}{mean direction for each sample with class \code{circular}.}
+  \item{mu.all}{mean direction of all samples combined with class \code{circular}.}
   \item{kappa}{concentration parameter for each sample.}
   \item{kappa.all}{concentration parameter for all samples combined.}
   \item{rho}{mean resultant length for each sample.}
@@ -83,12 +84,10 @@ Report 190, Department of Statistics, Stanford University.
 \author{Claudio Agostinelli and Ulric Lund}
 
 \examples{
-
-x <- c(rvonmises(50, 0, 1), rvonmises(100, pi/3, 10))
+x <- c(rvonmises(50, circular(0), 1), rvonmises(100, circular(pi/3), 10))
 group <- c(rep(0, 50), rep(1, 100))
 
 aov.circular(x, group)
 aov.circular(x, group, method="LRT")
-
 }
 \keyword{models}

@@ -62,7 +62,7 @@ Wiley and Sons, England.
 
 \examples{
 
-x <- c(rvonmises(50, 0, 1), rvonmises(100, pi/3, 10))
+x <- c(rvonmises(50, circular(0), 1), rvonmises(100, circular(pi/3), 10))
 group <- c(rep(0, 50), rep(1, 100)) 
 
 equal.kappa.test(x, group)

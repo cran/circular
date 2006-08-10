@@ -52,76 +52,61 @@
 #
 ###############################################################################
 
-
 rstable <- function(n, scale = 1, index = stop("no index arg"), skewness = 0) {
-
-alpha <- index
-beta <- skewness
-
-if (alpha > 2 | alpha <= 0) {stop("rstable is not define for index outside the interval 0 < index <= 2\n")}
-
-if (beta > 1 | beta < -1) {stop("rstable is not define for skewness outside the interval -1 <= skewness <= 1\n")}
-
-if (beta==0) {
-
+##    alpha <- index
+##    beta <- skewness
+    if (index > 2 | index <= 0)
+       stop("rstable is not define for index outside the interval 0 < index <= 2\n")
+    if (skewness > 1 | skewness < -1)
+       {stop("rstable is not define for skewness outside the interval -1 <= skewness <= 1\n")}
+    if (skewness==0) {
 ## cauchy case
-  if (alpha == 1) { 
-      return(scale*rcauchy(n, location = 0, scale = 1))
-  }
-
+       if (index == 1) { 
+          return(scale*rcauchy(n, location = 0, scale = 1))
+       }
 ## gaussian case
-  if (alpha == 2) { 
-      return(rnorm(n, mean = 0, sd = sqrt(2)*scale)) 
-  }
-
+       if (index == 2) { 
+          return(rnorm(n, mean = 0, sd = sqrt(2)*scale)) 
+       }
 ## general case
-
-  rngstab <- vector(length=0)
-  for (i in 1:n) {
-       u <- 0 
-       while (u == 0 | u == 1) {
+       rngstab <- vector(length=0)
+       for (i in 1:n) {
+          u <- 0 
+          while (u == 0 | u == 1) {
               u <-  pi * (runif(1, min=0, max=1) - 0.5)
-       }
-
-       v <- 0
-       while (v == 0) {
+          }
+          v <- 0
+          while (v == 0) {
               v <- rexp(1,rate=1)   
+          }
+          t <-  sin (index * u) / (cos (u)^(1 / index))
+          s <- (cos ((1 - index) * u) / v)^((1 - index) / index)
+          rngstab <- c(rngstab, t*s)
        }
-
-       t <-  sin (alpha * u) / (cos (u)^(1 / alpha))
-       s <- (cos ((1 - alpha) * u) / v)^((1 - alpha) / alpha)
-  rngstab <- c(rngstab, t*s)
-  }
-
-  return (scale * rngstab);
-} else {
-
-   rngstab <- vector(length=0)
-   for (i in 1:n) {
-
-       u <- 0 
-       while (u == 0 | u == 1) {
+       return (scale * rngstab);
+    } else {
+       rngstab <- vector(length=0)
+       for (i in 1:n) {
+          u <- 0 
+          while (u == 0 | u == 1) {
               u <-  pi * (runif(1, min=0, max=1) - 0.5)
-       }
-
-       v <- 0
-       while (v == 0) {
+          }
+          v <- 0
+          while (v == 0) {
               v <- rexp(1,rate=1)   
-       }
-
-       if (alpha == 1) {
-           X <-  (((pi/2) + beta * u) * tan (u) - beta * log ((pi/2) * v * cos (u) / ((pi/2) + beta * u))) / (pi/2)
-           rngstab <- c(rngstab, (scale * (X + beta * log (scale) / (pi/2))))
-       } else {
-           t <- beta * tan ((pi/2) * alpha)
-           B <- atan(t) / alpha
-           S <-  (1 + t * t)^(1/(2 * alpha))
-
-           X <-  S * sin (alpha * (u + B)) / (cos (u)^(1 / alpha)) * (cos (u - alpha * (u + B)) / v)^((1 - alpha) / alpha)
-          rngstab <- c(rngstab, (scale * X))
-      }
-  }
-return(rngstab)
+          }
+          if (index == 1) {
+             X <-  (((pi/2) + skewness * u) * tan (u) - skewness * log ((pi/2) * v * cos (u) / ((pi/2) + skewness * u))) / (pi/2)
+             rngstab <- c(rngstab, (scale * (X + skewness * log (scale) / (pi/2))))
+           } else {
+              t <- skewness * tan ((pi/2) * index)
+              B <- atan(t) / index
+              S <-  (1 + t * t)^(1/(2 * index))
+              X <-  S * sin (index * (u + B)) / (cos (u)^(1 / index)) * (cos (u - index * (u + B)) / v)^((1 - index) / index)
+              rngstab <- c(rngstab, (scale * X))
+           }
+        }
+        return(rngstab)
+    }
 }
 
-}

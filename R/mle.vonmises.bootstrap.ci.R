@@ -11,110 +11,120 @@
 #   mle.vonmises.bootstrap.ci function                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: December, 6, 2005                                   #
-#   Copyright (C) 2005 Claudio Agostinelli                  #
+#   Date: August, 10, 2006                                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-1                                             #
+#   Version 0.3-2                                           #
 #############################################################
 
-mle.vonmises.bootstrap.ci <- function(x, mu, bias = FALSE, alpha = 0.05, reps = 1000) {
-  
+mle.vonmises.bootstrap.ci <- function(x, mu=NULL, bias = FALSE, alpha = 0.05, reps = 1000, control.circular=list()) {
+
+  if (!require(boot))
+     stop("To use this function you have to install the package 'boot' \n")
+
   # Handling missing values
   x <- na.omit(x)
   if (length(x)==0) {
       warning("No observations (at least after removing missing values)")
       return(NULL)
   }
+  if (is.circular(x)) {
+     datacircularp <- circularp(x)     
+  } else
+     if (is.circular(mu)) {
+        datacircularp <- circularp(mu)     
+     } else {
+        datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+     }
+
+  dc <- control.circular
+  if (is.null(dc$type))
+     dc$type <- datacircularp$type
+  if (is.null(dc$units))
+     dc$units <- datacircularp$units
+  if (is.null(dc$template))
+     dc$template <- datacircularp$template
+  if (is.null(dc$modulo))
+     dc$modulo <- datacircularp$modulo
+  if (is.null(dc$zero))
+     dc$zero <- datacircularp$zero
+  if (is.null(dc$rotation))
+     dc$rotation <- datacircularp$rotation
+
+  x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
+  attr(x, "class") <- attr(x, "circularp") <- NULL
+  if (is.null(mu)) {
+     sinr <- sum(sin(x))
+     cosr <- sum(cos(x))
+     mu <- atan2(sinr, cosr)
+  } else {
+     mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter", modulo="2pi")
+     attr(mu, "class") <- attr(mu, "circularp") <- NULL
+  }
+
+  result <- MleVonmisesBootstrapCiRad(x, mu, bias, alpha, reps)
   
-  if (require(boot)) {    
-      x <- as.circular(x)
-      xcircularp <- circularp(x)
-      units <- xcircularp$units
-      x <- conversion.circular(x, units="radians")
+  result$mu <- conversion.circular(circular(result$mu), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
+  result$mu.ci <- conversion.circular(circular(result$mu.ci), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
 
-      if (missing(mu)) {
-          sinr <- sum(sin(x))
-          cosr <- sum(cos(x))
-          mu <- atan2(sinr, cosr)
-      } else {
-          attr(mu, "circularp") <- xcircularp
-          attr(mu, "class") <- "circular"
-          mu <- conversion.circular(mu, units="radians")
-      }
-    
-      mle.vonmises.mu <- function(x, i) {
-          sinr <- sum(sin(x[i]))
-          cosr <- sum(cos(x[i]))
-          mu <- atan2(sinr, cosr)
-          return(mu)
-      }
-
-      mle.vonmises.kappa <- function(x, i, mu, bias) {
-          n <- length(x[i])
-          V <- mean(cos(x[i] - mu))
-          if (V > 0) {
-              kappa <- A1inv(V)
-          } else {
-              kappa <- 0
-          }
-          if (bias == TRUE) {
-              if (kappa < 2) {
-                  kappa <- max(kappa - 2 * (n * kappa)^-1, 0)
-              } else {
-                  kappa <- ((n - 1)^3 * kappa)/(n^3 + n)
-              }
-          }
-          return(kappa)
-      }
-      
-      mean.bs <- boot(data = x, statistic = mle.vonmises.mu, R = reps, stype="i")
-
-      mean.reps <- mean.bs$t
-      mean.reps <- sort(mean.reps %% (2 * pi))
-      B <- reps
-      spacings <- c(diff(mean.reps), mean.reps[1] - mean.reps[B] + 2 * pi)
-      max.spacing <- (1:B)[spacings == max(spacings)]
-      off.set <- 2 * pi - mean.reps[max.spacing + 1]
-      if (max.spacing != B)
-      mean.reps2 <- mean.reps + off.set
-      else mean.reps2 <- mean.reps
-      mean.reps2 <- sort(mean.reps2 %% (2 * pi))
-      mean.ci <- quantile(mean.reps2, c(alpha/2, 1 - alpha/2))
-      if (max.spacing != B)
-      mean.ci <- mean.ci - off.set
-    
-      
-      kappa.bs <- boot(data = x, statistic = mle.vonmises.kappa, R = reps, stype="i", mu=mu, bias = bias)
-      kappa.reps <- kappa.bs$t
-
-      kappa.ci <- quantile(kappa.reps, c(alpha/2, 1 - alpha/2))
-
-      if (units=="degrees") {
-          mean.reps <- mean.reps/pi*180
-          mean.ci <- mean.ci/pi*180
-      }
-      attr(mean.reps, "circularp") <- xcircularp
-      attr(mean.reps, "class") <- "circular"
-      attr(mean.ci, "circularp") <- xcircularp
-      attr(mean.ci, "class") <- "circular"
-
-      result <- list()
-      result$call <- match.call()
-      result$mu.ci <- mean.ci
-      result$mu <- c(mean.reps)
-      result$kappa.ci <- kappa.ci
-      result$kappa <- c(kappa.reps)
-      result$alpha <- alpha
-      class(result) <- "mle.vonmises.bootstrap.ci"
-      return(result)
-
-   } else {
-       stop("To use this function you have to install the package 'boot' \n")
-   }
-
+  result$call <- match.call()
+  result$alpha <- alpha
+  class(result) <- "mle.vonmises.bootstrap.ci"
+  return(result)
 }
 
+MleVonmisesBootstrapCiRad <- function(x, mu, bias, alpha, reps) {
+  mean.bs <- boot(data = x, statistic = MleVonmisesMuRad, R = reps, stype="i")
+  mean.reps <- mean.bs$t
+  mean.reps <- sort(mean.reps %% (2 * pi))
+  spacings <- c(diff(mean.reps), mean.reps[1] - mean.reps[reps] + 2 * pi)
+  max.spacing <- (1:reps)[spacings == max(spacings)]
+  off.set <- 2 * pi - mean.reps[max.spacing + 1]
+  if (max.spacing != reps)
+     mean.reps2 <- mean.reps + off.set
+  else
+    mean.reps2 <- mean.reps
+  mean.reps2 <- sort(mean.reps2 %% (2 * pi))
+  mean.ci <- quantile(mean.reps2, c(alpha/2, 1 - alpha/2))
+  if (max.spacing != reps)
+    mean.ci <- mean.ci - off.set
+      
+  kappa.bs <- boot(data = x, statistic = MleVonmisesKappaRad, R = reps, stype="i", mu=mu, bias = bias)
+  kappa.reps <- kappa.bs$t
+  kappa.ci <- quantile(kappa.reps, c(alpha/2, 1 - alpha/2))
+  result <- list()
+  result$mu.ci <- mean.ci
+  result$mu <- c(mean.reps)
+  result$kappa.ci <- kappa.ci
+  result$kappa <- c(kappa.reps)
+  return(result)
+}
 
+MleVonmisesMuRad <- function(x, i) {
+   sinr <- sum(sin(x[i]))
+   cosr <- sum(cos(x[i]))
+   mu <- atan2(sinr, cosr)
+   return(mu)
+}
+
+MleVonmisesKappaRad <- function(x, i, mu, bias) {
+   n <- length(x[i])
+   V <- mean(cos(x[i] - mu))
+   if (V > 0) {
+      kappa <- A1inv(V)
+   } else {
+      kappa <- 0
+   }
+   if (bias == TRUE) {
+      if (kappa < 2) {
+         kappa <- max(kappa - 2 * (n * kappa)^-1, 0)
+      } else {
+         kappa <- ((n - 1)^3 * kappa)/(n^3 + n)
+      }
+   }
+   return(kappa)
+}
+      
 #############################################################
 #                                                           #
 #   print.mle.vonmises.bootstrap.ci function                #

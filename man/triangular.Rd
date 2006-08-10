@@ -9,7 +9,7 @@ Density and random generation for the Triangular circular distribution.
 
 \usage{
 dtriangular(x, rho)
-rtriangular(n, rho, units=c("radians", "degrees"), \dots)
+rtriangular(n, rho, control.circular=list())
 }
 
 \arguments{
@@ -17,8 +17,7 @@ rtriangular(n, rho, units=c("radians", "degrees"), \dots)
 \item{n}{number of observations.}  
 \item{rho}{concentration parameter of the distribution.  rho must be
   between 0 and \eqn{4/pi^2}.}
-\item{units}{units of measure desired.}
-\item{\dots}{parameters passed to \code{\link{circular}}.}
+\item{control.circular}{the attribute of the resulting object.}
 }
 
 \value{
@@ -31,5 +30,17 @@ random deviates.
 \references{
 Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Section 2.2.3, World Scientific Press, Singapore.
 }
+
+\examples{
+
+data1 <- rtriangular(100, 0.3, control.circular=list(units="degrees"))
+plot(data1)
+
+ff <- function(x) dtriangular(x, rho=0.3)
+curve.circular(ff, shrink=1.2, join=TRUE)
+
+}
+
+
 
 \keyword{distribution}

@@ -7,7 +7,7 @@ Generates pseudo-random numbers from a wrapped stable distribution.
 }
 
 \usage{
-rwrappedstable(n, scale=1, index, skewness, units=c("radians", "degrees"), \dots)
+rwrappedstable(n, scale=1, index, skewness, control.circular=list())
 }
 
 \arguments{
@@ -15,8 +15,7 @@ rwrappedstable(n, scale=1, index, skewness, units=c("radians", "degrees"), \dots
   \item{scale}{the scale of the distribution.}
 \item{index}{number from the interval (0, 2]. An index of 2 corresponds to the normal, 1 to the Cauchy.  Smaller values mean longer tails.}
 \item{skewness}{number giving the modified skewness. Negative values correspond to skewness to the left (the median is smaller than the mean, if it exists), and positive values correspond to skewness to the right (the median is larger than the mean). The absolute value of skewness should not exceed 1.}
-\item{units}{units of measure desired.}
-\item{\dots}{parameters passed to \code{\link{circular}}.}
+\item{control.circular}{the attribute of the resulting object.}
 }
 
 \value{

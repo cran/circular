@@ -7,15 +7,13 @@ Creates a plot of circular data points on the current graphics device.  Data poi
 }
 
 \usage{
-\method{plot}{circular}(x, pch = 16, cex = 1, stack = FALSE, axes = TRUE, sep = 0.025, 
-    shrink = 1, bins, ticks = FALSE, tcl = 0.025, tcl.text = 0.125, col, tol = 0.04, 
-    uin, xlim = c(-1, 1), ylim = c(-1, 1), main = NULL, digits=2, ...)
+\method{plot}{circular}(x, pch = 16, cex = 1, stack = FALSE, axes = TRUE, sep = 0.025, shrink = 1, bins = NULL, ticks = FALSE, tcl = 0.025, tcl.text = 0.125, col = NULL, tol = 0.04, uin = NULL, xlim = c(-1, 1), ylim = c(-1, 1), digits = 2, units = NULL, template = NULL, zero = NULL, rotation = NULL, main = "", xlab = "", ylab = "", ...)
 }
 
 \arguments{
 \item{x}{a vector, matrix or data.frame. The object is coerced to class \code{\link{circular}}.}
 \item{pch}{point character to use.  See help on \code{\link{par}}.}
-\item{cex}{point character size.  See help on par.}
+\item{cex}{point character size.  See help on \code{\link{par}}.}
 \item{stack}{logical; if \code{TRUE}, points are stacked on the perimeter of the circle.  Otherwise, all points are plotted on the perimeter of the circle.  Default is \code{FALSE}.}
 \item{axes}{logical; if \code{TRUE} axes are plotted according to properties of \code{x}.}
 \item{sep}{constant used to specify the distance between stacked points,
@@ -34,8 +32,12 @@ Creates a plot of circular data points on the current graphics device.  Data poi
   1, the desired units per inch on the x axis.}
 \item{xlim, ylim}{the ranges to be encompassed by the x and y
   axes. Useful for centering the plot.}
-\item{main}{title of the plot.}
 \item{digits}{number of digits used to print axis values.}
+\item{main, xlab, ylab}{title, x label and y label of the plot.}
+\item{units}{the units used in the plot.}
+\item{template}{the template used in the plot.}
+\item{zero}{the zero used in the plot.}
+\item{rotation}{the rotation used in the plot.}
 \item{\dots}{futher parameters passed to \code{\link{plot.default}}.}
 }
 
@@ -49,21 +51,27 @@ recommended. When stacking the points, if there are many points in a particular 
 \author{Claudio Agostinelli and Ulric Lund}
 
 \seealso{
-\code{\link{axis.circular}}, \code{\link{ticks.circular}} and \code{\link{rose.diag}}.
+\code{\link{axis.circular}}, \code{\link{ticks.circular}}, \code{\link{points.circular}}, \code{\link{lines.circular}}, \code{\link{rose.diag}}, \code{\link{windrose}} and \code{\link{curve.circular}}.
 }
 
 \value{
-a list with information on the plot: zero, rotation and next.points.
+A list with information on the plot: zero, rotation and next.points.
 }
 
 \examples{
 # Generate 100 observations from a von Mises distribution.
 # with mean direction 0 and concentration 3.
-data.vm <- rvonmises(n=100, mu=0, kappa=3) 
+data.vm <- rvonmises(n=100, mu=circular(0), kappa=3) 
+
 # Plot data set. All points do not fit on plot.
 plot(data.vm, stack=TRUE, bins=150) 
+
 # Shrink the plot so that all points fit.
 plot(data.vm, stack=TRUE, bins=150, shrink=1.5) 
+
+# Recentering the figure in a different place
+plot(data.vm, stack=TRUE, bins=150, xlim=c(-1,1.2), ylim=c(-1,0)) 
+
 }
 
 \keyword{hplot}

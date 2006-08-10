@@ -1,23 +1,23 @@
 
-###############################################################
-#                                                             #
-#       Original Splus: Ulric Lund                            #
-#       E-mail: ulund@calpoly.edu                             #
-#                                                             #
-###############################################################
+#############################################################
+#                                                           #
+#       Original Splus: Ulric Lund                          #
+#       E-mail: ulund@calpoly.edu                           #
+#                                                           #
+#############################################################
 
 #############################################################
 #                                                           #
 #   pp.plot function                                        #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: April, 11, 2005                                   #
-#   Copyright (C) 2005 Claudio Agostinelli                  #
+#   Date: August, 10, 2006                                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2                                             #
+#   Version 0.2-1                                           #
 #############################################################
 
-pp.plot <- function(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distribution", ylab = "Empirical Distribution", ...) {
+pp.plot <- function(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distribution", ylab = "Empirical Distribution", control.circular=list(), ...) {
 
     # Handling missing values
     x <- na.omit(x)
@@ -25,27 +25,42 @@ pp.plot <- function(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distributi
         warning("No observations (at least after removing missing values)")
         return(NULL)
     }
-  
-    x <- as.circular(x)
-    xcircularp <- circularp(x)
-    units <- xcircularp$units
-    x <- conversion.circular(x, units="radians")
+    if (is.circular(x)) {
+       datacircularp <- circularp(x)
+    } else {
+       datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+    }
 
-    res <- mle.vonmises(x)
-    mu <- res$mu
-    kappa <- res$kappa
+    dc <- control.circular
+    if (is.null(dc$type))
+       dc$type <- datacircularp$type
+    if (is.null(dc$units))
+       dc$units <- datacircularp$units
+    if (is.null(dc$template))
+       dc$template <- datacircularp$template
+    if (is.null(dc$modulo))
+       dc$modulo <- datacircularp$modulo
+    if (is.null(dc$zero))
+       dc$zero <- datacircularp$zero
+    if (is.null(dc$rotation))
+       dc$rotation <- datacircularp$rotation
 
-    n <- length(x)
-    x <- sort(x %% (2 * pi))
-    z <- (1:n)/(n + 1)
+    x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
+    attr(x, "class") <- attr(x, "circularp") <- NULL
     
-    y <- pvonmises(q=x, mu=mu, kappa=kappa, tol=tol)
+    res <- MlevonmisesRad(x)
+    
+    mu <- res[1]
+    kappa <- res[4]
+    n <- length(x)
+#    x <- sort(x %% (2 * pi))
+    x <- sort(x)
+    z <- (1:n)/(n + 1)
+    y <- PvonmisesRad(q=x, mu=mu, kappa=kappa, tol=tol)
     
     plot.default(z, y, xlab=xlab, ylab=ylab, ...)
     if (ref.line)
         abline(0, 1)
-        if (units=="degrees") mu <- mu/pi*180
-        attr(mu, "circularp") <- xcircularp
-        attr(mu, "class") <- "circular"
+    mu <- conversion.circular(circular(res[1]), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
     invisible(list(mu=mu, kappa=kappa))
 }

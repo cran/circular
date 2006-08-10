@@ -13,11 +13,12 @@ circularp(x) <- value
 
 \arguments{
   \item{x}{a vector or a matrix of circular data.}
-  \item{value}{a vector of length 6.}
+  \item{value}{a vector of length 6 or a list with six components: type, units,
+     template, modulo, zero and rotation.}
 }
 
 \details{
-     The \code{circularp} attribute is a list of five elements: type, units,
+     The \code{circularp} attribute is a list of six elements: type, units,
      template, modulo, zero and rotation; see \code{\link{circular}} for
      their meaning.
 
@@ -29,5 +30,15 @@ circularp(x) <- value
 \author{Claudio Agostinelli}
 
 \seealso{\code{\link{circular}}}
+
+\examples{
+x <- pi
+circularp(x) # now NULL
+circularp(x) <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+circularp(x)
+x
+class(x) <- "circular" # now we set also the class so that print.circular is used
+x
+}
 
 \keyword{misc }

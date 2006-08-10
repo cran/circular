@@ -4,7 +4,7 @@
 #   lm.circular function                                    #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 27, 2005                                #
+#   Date: April, 27, 2005                                   #
 #   Version: 0.2                                            #
 #                                                           #
 #   Copyright (C) 2005 Claudio Agostinelli                  #

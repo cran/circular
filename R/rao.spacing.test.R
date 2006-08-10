@@ -1,20 +1,20 @@
 
-###############################################################
-#                                                             #
-#       Original Splus: Ulric Lund                            #
-#       E-mail: ulund@calpoly.edu                             #
-#                                                             #
-###############################################################
+#############################################################
+#                                                           #
+#       Original Splus: Ulric Lund                          #
+#       E-mail: ulund@calpoly.edu                           #
+#                                                           #
+#############################################################
 
 #############################################################
 #                                                           #
 #   rao.spacing.test function                               #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 11, 2005                                   #
-#   Version: 0.2                                            #
+#   Date: May, 31, 2006                                     #
+#   Version: 0.3-1                                          #
 #                                                           #
-#   Copyright (C) 2005 Claudio Agostinelli                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -22,28 +22,37 @@ rao.spacing.test <- function(x, alpha = 0) {
 
     # Handling missing values
     x <- na.omit(x)
-    if (length(x)==0) {
+    if ((n <- length(x))==0) {
         warning("No observations (at least after removing missing values)")
         return(NULL)
     }  
-    x <- as.circular(x)
-    xcircularp <- circularp(x)
-    units <- xcircularp$units
-    x <- conversion.circular(x, units="degrees")
+    if (!any(c(0, 0.01, 0.025, 0.05, 0.1, 0.15)==alpha))
+       stop("'alpha' must be one of the following values: 0, 0.01, 0.025, 0.05, 0.1, 0.15")
+
+    x <- conversion.circular(x, units="degrees", zero=0, rotation="counter", modulo="2pi")
     attr(x, "circularp") <- attr(x, "class") <- NULL
-    if (!any(c(0, 0.01, 0.025, 0.05, 0.1, 0.15)==alpha)) stop("'alpha' must be one of the following values: 0, 0.01, 0.025, 0.05, 0.1, 0.15")
-    x <- sort(x %% 360)
-    n <- length(x)
- if (n < 4) {
-     warning("Sample size too small")
-     U <- NA
- } else {
-    spacings <- c(diff(x), x[1] - x[n] + 360)
-    U <- 1/2 * sum(abs(spacings - 360/n))
- }
-    result <- list(statistic=U, alpha=alpha, n=n)
+
+    statistic <- RaoSpacingTestDeg(x)
+    result <- list()
+    result$call <- match.call()
+    result$statistic <- statistic
+    result$alpha <- alpha
+    result$n <- n
     class(result) <- "rao.spacing.test"
     return(result)
+}
+
+RaoSpacingTestDeg <- function(x) {
+    x <- sort(x %% 360)
+    n <- length(x)
+    if (n < 4) {
+       warning("Sample size too small")
+       U <- NA
+    } else {
+       spacings <- c(diff(x), x[1] - x[n] + 360)
+       U <- 1/2 * sum(abs(spacings - 360/n))
+    }
+    return(U)
 }
 
 #############################################################

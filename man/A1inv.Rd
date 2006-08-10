@@ -43,7 +43,7 @@ values by Gumbel, Greenwood and Durand (1953).
 
 \examples{
 #Generate data from a von Mises distribution
-data <- rvonmises(n=50, mu=pi, kappa=4)
+data <- rvonmises(n=50, mu=circular(pi), kappa=4)
 #Estimate the concentration parameter
 s <- sum(sin(data))
 c <- sum(cos(data))

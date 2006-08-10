@@ -3,47 +3,63 @@
 #   density.circular function                               #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: November, 19, 2003                                #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   date: August, 10, 2006                                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1-5                                           #
+#   Version 0.2-2                                           #
 #                                                           #
 #############################################################
 
-density.circular <- function(x, z, bw, adjust = 1, type = c("K", "L"), kernel = c("vonmises", "wrappednormal"), na.rm = FALSE, from=0, to=2*pi, n=512, K=10, ...) {
+density.circular <- function(x, z=NULL, bw, adjust = 1, type = c("K", "L"), kernel= c("vonmises", "wrappednormal"), na.rm = FALSE, from=circular(0), to=circular(2*pi), n=512, K=NULL, min.k=10, control.circular=list(), ...) {
 
     name <- deparse(substitute(x))
-    xx <- x
-    x <- as.circular(x)
-
-    xcircularp <- circularp(x)
-    type <- xcircularp$type
-    units <- xcircularp$units
-    template <- xcircularp$template
-    zero <- xcircularp$zero
-    rotation <- xcircularp$rotation
-    
-    x <- conversion.circular(x, units="radians")
-  
-    kernel <- match.arg(kernel)
-
-    if (!is.numeric(n))
-        stop("argument must be numeric")
-    n <- round(n)
-    if (n <=0)
-         stop("argument must be integer and positive")     
+    data <- x
 
     if (!is.numeric(from))
-        stop("argument must be numeric")      
+        stop("argument 'from' must be numeric")      
     if (!is.numeric(to))
-        stop("argument must be numeric")      
+        stop("argument 'to' must be numeric")      
     if (!is.finite(from)) 
         stop("non-finite `from'")
     if (!is.finite(to)) 
         stop("non-finite `to'")
-    
+    if (!is.numeric(n))
+        stop("argument 'n' must be numeric")
+    n <- round(n)
+    if (n <=0)
+         stop("argument 'n' must be integer and positive")         
     if (!is.numeric(x)) 
-        stop("argument must be numeric")
+        stop("argument 'x' must be numeric")
+    if (!is.null(z) && is.circular(z)) {
+       datacircularp <- circularp(z)
+    } else if (is.circular(x))
+              datacircularp <- circularp(x)
+    else {
+       datacircularp <- type(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+    }
+    dc <- control.circular
+    if (is.null(dc$type))
+       dc$type <- datacircularp$type
+    if (is.null(dc$units))
+       dc$units <- datacircularp$units
+    if (is.null(dc$template))
+       dc$template <- datacircularp$template
+    if (is.null(dc$modulo))
+       dc$modulo <- datacircularp$modulo
+    if (is.null(dc$zero))
+       dc$zero <- datacircularp$zero
+    if (is.null(dc$rotation))
+       dc$rotation <- datacircularp$rotation
+
+    x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
+    attr(x, "class") <- attr(x, "circularp") <- NULL
+    from <- conversion.circular(from, units="radians", zero=0, rotation="counter")
+    attr(from, "class") <- attr(from, "circularp") <- NULL
+    to <- conversion.circular(to, units="radians", zero=0, rotation="counter")
+    attr(to, "class") <- attr(to, "circularp") <- NULL
+
+    kernel <- match.arg(kernel)
+
     x <- as.vector(x)
     x.na <- is.na(x)
     if (any(x.na)) {
@@ -52,21 +68,17 @@ density.circular <- function(x, z, bw, adjust = 1, type = c("K", "L"), kernel = 
         else stop("x contains missing values")
     }
     
-    nx <- length(x)
     x.finite <- is.finite(x)
     if (any(!x.finite)) {
         x <- x[x.finite]
-        nx <- sum(x.finite)
     }
-
-    if (missing(z)) {
-        z <- zz <- circular(seq(from=from, to=to, length=n), units="radians", type=type, template=template, zero=zero, rotation=rotation)
-        
+    nx <- length(x)
+    
+    if (is.null(z)) {
+        z <- circular(seq(from=from, to=to, length=n))
     } else {
-        z <- zz <- as.circular(z)
-        z <- conversion.circular(z, units="radians")
         if (!is.numeric(z))
-            stop("argument 'z' must be numeric")
+           stop("argument 'z' must be numeric")
         namez <- deparse(substitute(z))
         z <- as.vector(z)
         z.na <- is.na(z)
@@ -77,160 +89,188 @@ density.circular <- function(x, z, bw, adjust = 1, type = c("K", "L"), kernel = 
                 stop("z contains missing values")
             }
         }
-    
-        nz <- length(z)
         z.finite <- is.finite(z)
         if (any(!z.finite)) {
             z <- z[z.finite]
-            nz <- sum(z.finite)
         }
     }
+    zz <- conversion.circular(z, dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
+    z <- conversion.circular(z, units="radians", zero=0, rotation="counter")
+    attr(z, "class") <- attr(z, "circularp") <- NULL
 
     bw <- adjust * bw
     if (!is.numeric(bw))
-        stop("argument must be numeric")        
+        stop("argument 'bw' and 'adjust' must be numeric")        
     if (!is.finite(bw)) 
         stop("non-finite `bw'")
     if (bw <= 0) 
         stop("`bw' is not positive.")
+    
+    y <- DensityCircularRad(x, z, bw, kernel)
 
-    if (kernel=="vonmises") {
-        y <- sapply(z, dvonmises, mu=x, kappa=bw)
-    } else if (kernel=="wrappednormal") {
-        y <- sapply(z, dwrappednormal, mu=x, sd=bw, K=K)
-    } else {
-        stop("other kernels not implemented yet")
-    }
-    y <- apply(y, 2, sum)/nx
-
-    if (units=="degrees") xx <- conversion.circular(xx, units="degrees")
-
-    structure(list(data = xx, x = zz, y = y, bw = bw, n = nx, kernel=kernel, call = match.call(), data.name=name, has.na = FALSE), class = "density.circular")
+    structure(list(data = data, x = zz, y = y, bw = bw, n = nx, kernel=kernel, call = match.call(), data.name=name, has.na = FALSE), class = "density.circular")
 } 
+
+DensityCircularRad <- function(x, z, bw, kernel, K=NULL, min.k=10) {
+   nx <- length(x)
+   if (kernel=="vonmises") {
+       y <- sapply(z, DvonmisesRad, mu=x, kappa=bw)
+   } else if (kernel=="wrappednormal") {
+       rho <- exp(-bw^2/2)
+       y <- sapply(z, DwrappednormalRad, mu=x, rho=rho, K=K, min.k=min.k)
+   } else {
+       stop("other kernels not implemented yet")
+   }
+   y <- apply(y, 2, sum)/nx
+   return(y)
+}
 
 #############################################################
 #                                                           #
 #   plot.density.circular function                          #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: August, 01, 2003                                  #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: June, 07, 2006                                    #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-1                                           #
+#   Version 0.4-1                                           #
 #                                                           #
 #############################################################
 
-plot.density.circular <- function(x, main = NULL, xlab = NULL, ylab = "Density circular", type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, plot.type = c("circle", "line"), axes=TRUE, ticks=TRUE, bins, shrink=1, tcl=0.025, tol = 0.04, uin, xlim=c(-1, 1), ylim=c(-1, 1), ...) {
+plot.density.circular <- function(x, main = NULL, xlab = NULL, ylab ="Density circular", type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, points.cex=1, plot.type = c("circle", "line"), axes=TRUE, ticks=TRUE, bins=NULL, shrink=1, tcl=0.025,  tcl.text=0.125, sep=0.025, tol = 0.04, digits=2, cex=1, uin=NULL, xlim=NULL, ylim=NULL, join=FALSE, nosort=FALSE, units=NULL, template=NULL, zero=NULL, rotation=NULL, ...) {
+   xcircularp <- attr(x$x, "circularp")
+   if (is.null(xcircularp))
+      stop("the component 'x' of the object must be of class circular")
+##   type <- xcircularp$type
+   modulo <- xcircularp$modulo
+   if (is.null(units)) 
+      units <- xcircularp$units
+   if (is.null(template))
+      template <- xcircularp$template
+   if (template=="geographics") {
+      zero <- pi/2
+      rotation <- "clock"
+   } else {
+      if (is.null(zero))
+         zero <- xcircularp$zero
+      if (is.null(rotation))
+         rotation <- xcircularp$rotation
+   }
+   next.points <- 0
+   x$x <- conversion.circular(x$x, units="radians", modulo="2pi")
+   x$data <- conversion.circular(x$data, units="radians", modulo="2pi")
+   attr(x$x, "class") <- attr(x$x, "circularp") <- NULL
+   attr(x$data, "class") <- attr(x$data, "circularp") <- NULL
 
-    x$x <- conversion.circular(x$x, units="radians")
-    x$data <- conversion.circular(x$data, units="radians")
-  
-    plot.type <- match.arg(plot.type)
-    if (missing(bins)) {
-	bins <- NROW(x)
-    } else {
-	bins <- round(bins)
-	if (bins<=0) stop("bins must be non negative")
-    }
+   plot.type <- match.arg(plot.type)
+
+   if (is.null(xlab))
+      xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
+   if (is.null(main))
+      main <- deparse(x$call)
+#### as scatter plot
+   if (plot.type == "line") {     
+      if (is.null(xlim))
+         xlim <- range(c(x$x, x$data))
+      if (is.null(ylim))
+         ylim <- range(x$y)
+      
+      xorder <- order(x$x)
+      x$x <- x$x[xorder]
+      x$y <- x$y[xorder]
+      
+      plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, ...)
+      if (zero.line) 
+         abline(h = 0, lwd = 0.1, col = "gray")
+      if (points.plot)
+         points(x$data, rep(min(x$y), length(x$data)), col=points.col, pch=points.pch, cex=points.cex)
+      return(NULL)
+   } else {
+#### as circular plot
+      if (is.null(xlim))
+         xlim <- c(-1, 1)
+      if (is.null(ylim))
+         ylim <- c(-1, 1)
+      if (is.null(bins)) {
+         bins <- NROW(x)
+      } else {
+         bins <- round(bins)
+         if (bins<=0)
+            stop("'bins' must be non negative")
+      }
     
-    if (is.null(xlab)) 
-        xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
-    if (is.null(main)) 
-        main <- deparse(x$call)
+      CirclePlotRad(xlim, ylim, uin, shrink, tol, 1000, main=main, xlab=xlab, ylab=ylab)
 
-    if (plot.type == "line") {
-        xorder <- order(x$x)
-        x$x <- x$x[xorder]
-        x$y <- x$y[xorder] 
-        plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, ...)
-        if (zero.line) 
-            abline(h = 0, lwd = 0.1, col = "gray")
-        if (points.plot)
-            points(x$data, rep(min(x$y),length(x$data)), col=points.col, pch=points.pch)
-    } else {
-        x$x <- as.circular(x$x)
-        xcircularp <- attr(x$x, "circularp")
-        xtype <- xcircularp$type
-        units <- xcircularp$units
-        template <- xcircularp$template
-        modulo <- xcircularp$modulo
-        zero <- xcircularp$zero
-        rotation <- xcircularp$rotation
-    
-        x$x <- conversion.circular(x$x, units="radians")
+      if (axes) {
+	 axis.circular(units = units, template=template, modulo = modulo, zero=zero, rotation=rotation, digits=digits, cex=cex, tcl=tcl, tcl.text=tcl.text)
+      }
+      if (ticks) {
+         at <- circular((0:bins)/bins*2*pi, zero=zero, rotation=rotation)
+         ticks.circular(at, tcl=tcl)
+      }
 
-        xlim <- shrink * xlim
-        ylim <- shrink * ylim
-        midx <- 0.5 * (xlim[2] + xlim[1])
-        xlim <- midx + (1 + tol) * 0.5 * c(-1, 1) * (xlim[2] - xlim[1])
-        midy <- 0.5 * (ylim[2] + ylim[1])
-        ylim <- midy + (1 + tol) * 0.5 * c(-1, 1) * (ylim[2] - ylim[1])
-        oldpin <- par("pin")
-        xuin <- oxuin <- oldpin[1]/diff(xlim)
-        yuin <- oyuin <- oldpin[2]/diff(ylim)
-       if (missing(uin)) {
-           if (yuin > xuin) yuin <- xuin
-           else xuin <- yuin
-       } else {
-           if (length(uin) == 1) uin <- uin * c(1, 1)
-           if (any(c(xuin, yuin) < uin)) stop("uin is too large to fit plot in")
-           xuin <- uin[1]; yuin <- uin[2]
-       }
-       xlim <- midx + oxuin/xuin * c(-1, 1) * diff(xlim) * 0.5
-       ylim <- midy + oyuin/yuin * c(-1, 1) * diff(ylim) * 0.5
-       plot(cos(seq(0, 2 * pi, length = 1000)), sin(seq(0, 2 * pi, length = 1000)), axes = FALSE, xlab = "", ylab = "", main = "", type = "l", xlim=xlim, ylim=ylim, xaxs="i", yaxs="i")
- 
-        if (rotation=="clock") x$x <- -x$x
-        x$x <- x$x + zero
-            
-        if (axes) {
-	    axis.circular(units = units, template=template, modulo = modulo, zero=zero, rotation=rotation)
-        }
- 
-        if (ticks) {
-            at <- (0:bins)/bins*2*pi
-            if (rotation=="clock") at <- -at
-            at <- at + zero
+      if (rotation=="clock")
+         x$x <- -x$x
+      x$x <- x$x+zero
+      x$x <- x$x%%(2*pi)
+      LinesCircularRad(x=x$x, y=x$y, join=join, nosort=nosort, ...)
 
-            ticks.circular(circular(x=at, type="angles", units="radians", modulo="asis", zero=zero, rotation=rotation), tcl=tcl)
-        }
-
-        z <- (x$y+1)*cos(x$x)
-        y <- (x$y+1)*sin(x$x)
-        xorder <- order(x$x)
-        z <- z[xorder]
-        y <- y[xorder] 
-        lines(x=z, y=y, type = type, ...)
-        if (points.plot) {
-            points.circular(x$data, col=points.col, pch=points.pch)
-        }
-    }
+      if (points.plot) {
+         next.points <- sep
+         if (rotation=="clock")
+            x$data <- -x$data
+         x$data <- x$data+zero
+         x$data <- x$data%%(2*pi)
+         PointsCircularRad(x$data, bins, FALSE, points.col, points.pch, 1, 1, sep, next.points, shrink, points.cex)
+      }
+      return(invisible(list(zero=zero, rotation=rotation, next.points=next.points)))
+   }
 }
+
 
 #############################################################
 #                                                           #
 #   lines.density.circular function                         #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: July, 23, 2003                                    #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: June, 07, 2006                                    #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1                                             #
+#   Version 0.2-1                                           #
 #                                                           #
 #############################################################
 
-lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, plot.type = c("circle", "line"), bins, shrink=1, tcl=0.025, ...) {
-
-    x$x <- conversion.circular(x$x, units="radians")
-    x$data <- conversion.circular(x$data, units="radians")
+lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, points.cex=1, plot.type = c("circle", "line"), bins=NULL, shrink=1, tcl=0.025, sep=0.025, join=TRUE, nosort=FALSE, plot.info=NULL, zero=NULL, rotation=NULL, ...) {
+   xcircularp <- attr(x$x, "circularp")
+   if (is.null(xcircularp))
+      stop("the component 'x' of the object must be of class circular")
+##   type <- xcircularp$type
+   modulo <- xcircularp$modulo
+   if (is.null(plot.info)) {
+      if (is.null(zero))
+         zero <- xcircularp$zero
+      if (is.null(rotation))
+         rotation <- xcircularp$rotation
+      next.points <- 0
+   } else {
+      zero <- plot.info$zero
+      rotation <- plot.info$rotation
+      next.points <- plot.info$next.points
+   }
   
-    plot.type <- match.arg(plot.type)
-    if (missing(bins)) {
-	bins <- NROW(x)
-    } else {
-	bins <- round(bins)
-	if (bins<=0) stop("bins must be non negative")
-    }
+   x$x <- conversion.circular(x$x, units="radians")
+   x$data <- conversion.circular(x$data, units="radians")
+   attr(x$x, "circularp") <- attr(x$x, "class") <- NULL
+   attr(x$data, "circularp") <- attr(x$data, "class") <- NULL
+  
+   plot.type <- match.arg(plot.type)
+   if (is.null(bins)) {
+       bins <- NROW(x)
+   } else {
+       bins <- round(bins)
+       if (bins<=0)
+          stop("bins must be non negative")
+   }
     
     if (plot.type == "line") {
         xorder <- order(x$x)
@@ -240,32 +280,23 @@ lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=
         if (zero.line) 
             abline(h = 0, lwd = 0.1, col = "gray")
         if (points.plot)
-            points(x$data, rep(min(x$y),length(x$data)), col=points.col, pch=points.pch)
+            points.default(x$data, rep(min(x$y),length(x$data)), col=points.col, pch=points.pch)
     } else {
-        x$x <- as.circular(x$x)
-        xcircularp <- attr(x$x, "circularp")
-        xtype <- xcircularp$type
-        units <- xcircularp$units
-        template <- xcircularp$template
-        modulo <- xcircularp$modulo
-        zero <- xcircularp$zero
-        rotation <- xcircularp$rotation
-    
-        x$x <- conversion.circular(x$x, units="radians")
-
-        if (rotation=="clock") x$x <- -x$x
-        x$x <- x$x + zero
-            
-        z <- (x$y+1)*cos(x$x)
-        y <- (x$y+1)*sin(x$x)
-        xorder <- order(x$x)
-        z <- z[xorder]
-        y <- y[xorder] 
-        lines(x=z, y=y, type = type, ...)
-        if (points.plot) {
-            points.circular(x$data, col=points.col, pch=points.pch)
-        }
+      if (rotation=="clock")
+         x$x <- -x$x
+      x$x <- x$x+zero
+      x$x <- x$x%%(2*pi)
+      LinesCircularRad(x=x$x, y=x$y, join=join, nosort=nosort, ...)
+      if (points.plot) {
+         if (rotation=="clock")
+            x$data <- -x$data
+         x$data <- x$data+zero
+         x$data <- x$data%%(2*pi)
+         next.points <- next.points+sep
+         PointsCircularRad(x$data, bins, FALSE, points.col, points.pch, 1, 1, sep, next.points, shrink, points.cex)
+      }
     }
+    return(invisible(list(zero=zero, rotation=rotation, next.points=next.points)))
 }
 
 

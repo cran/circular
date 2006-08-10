@@ -5,7 +5,7 @@
 Draw tick-marks in a circular plot.
 }
 \usage{
-ticks.circular(x, template = c("none", "geographics"), zero, rotation, tcl = 0.025, col, \dots)
+ticks.circular(x, template = c("none", "geographics"), zero = NULL, rotation = NULL, tcl = 0.025, col = NULL, \dots)
 }
 
 \arguments{
@@ -14,7 +14,7 @@ ticks.circular(x, template = c("none", "geographics"), zero, rotation, tcl = 0.0
 \item{template}{either \code{none} or \code{geographics}.}
 \item{zero}{the zero of the plot (in radians).}
 \item{rotation}{the rotation of the plot.}
-\item{col}{color for the tick marks. If missing, function uses `par("col.axis")'. }
+\item{col}{color for the tick marks. If \code{NULL}, function uses `par("col.axis")'. }
 \item{tcl}{The length of tick marks.}
 \item{\dots}{parameters passed to \code{line.default}.}
 }
@@ -22,7 +22,7 @@ ticks.circular(x, template = c("none", "geographics"), zero, rotation, tcl = 0.0
 \author{Claudio Agostinelli}
 
 \seealso{
-  \code{\link{plot.circular}} and \code{\link{axis.circular}}
+  \code{\link{plot.circular}} and \code{\link{axis.circular}}.
 }
 
 \keyword{hplot}

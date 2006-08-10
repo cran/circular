@@ -7,7 +7,7 @@ Returns the mean direction of a vector of circular data.
 }
  
 \usage{
-\method{mean}{circular}(x, na.rm=FALSE, \dots)
+\method{mean}{circular}(x, na.rm=FALSE, control.circular=list(), \dots)
 }
 
 \arguments{
@@ -15,11 +15,12 @@ Returns the mean direction of a vector of circular data.
     \code{\link{circular}}.}
   \item{na.rm}{logical, indicating if \code{\link{NA}}'s should be
 	omitted.}
+  \item{control.circular}{the attribute of the resulting object.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 
 \value{
-Returns the mean direction of the data.
+Returns the mean direction of the data as an object of class \code{circular} with the attribute given by \code{control.circular} or from \code{x} if missed in \code{control.circular}.
 }
 
 \details{
@@ -43,7 +44,7 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 
 \examples{
 # Compute the mean direction of a random sample of observations.
-data <- circular(runif(50, 0, pi))
+data <- circular(runif(50, circular(0), pi))
 mean(data)
 }
 

@@ -8,7 +8,8 @@ Add points to a plot of circular data points on the current graphics device.
 
 \usage{
 points.circular(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, shrink = 1, 
-    bins, col, next.points, plot.info, zero, rotation, ...)
+    bins = NULL, col = NULL, next.points = NULL, plot.info = NULL, zero = NULL, 
+    rotation = NULL, ...)
 }
 
 \arguments{
@@ -24,12 +25,12 @@ points.circular(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, shrink = 1,
 \item{bins}{if \code{stack==TRUE}, bins is the number of arcs to partition the circle with.}
 \item{col}{color of the points. The values are recycled if needed.}
 \item{next.points}{if \code{stack=FALSE}, the distance from the circle
-  the next dataset is plotted. This overrides the information in \code{plot.info}.}
+  the next dataset is plotted. Ingored if \code{plot.info} is provided.}
 \item{plot.info}{an object from \code{\link{plot.circular}} that
   contains information on the \code{zero}, the \code{rotation} and \code{next.points}.}
-\item{zero}{the zero of the plot. This overrides the information in \code{plot.info}.}
-\item{rotation}{the rotation of the plot. This overrides the information in \code{plot.info}.}
-\item{...}{futher parameters passed to \code{\link{plot.default}}.}
+\item{zero}{the zero of the plot. Ignored if \code{plot.info} is provided.}
+\item{rotation}{the rotation of the plot. Ignored if \code{plot.info} is provided.}
+\item{...}{futher parameters passed to \code{\link{points.default}}.}
 }
 
 \details{
@@ -39,14 +40,18 @@ recommended. When stacking the points, if there are many points in a particular 
 
 \author{Claudio Agostinelli}
 
+\value{
+A list with information on the plot: zero, rotation and next.points.
+}
+
 \seealso{
-\code{\link{plot.circular}}.
+\code{\link{plot.circular}} and \code{\link{lines.circular}}.
 }
 
 \examples{
-data.1 <- rvonmises(n=100, mu=0, kappa=3)
-data.2 <- rvonmises(n=100, mu=pi/3, kappa=3) 
-res <- plot(data.1, stack=FALSE, bins=150, shrink=1.5, col=1) 
+data.1 <- rvonmises(n=100, mu=circular(0), kappa=3)
+data.2 <- rvonmises(n=100, mu=circular(pi/3), kappa=3) 
+res <- plot(data.1, stack=FALSE, col=1) 
 points(data.2, plot.info=res, col=2)
 }
 

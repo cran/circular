@@ -1,41 +1,46 @@
 
-###############################################################
-#                                                             #
-#       Original Splus: Ulric Lund                            #
-#       E-mail: ulund@calpoly.edu                             #
-#                                                             #
-###############################################################
+#############################################################
+#                                                           #
+#       Original Splus: Ulric Lund                          #
+#       E-mail: ulund@calpoly.edu                           #
+#                                                           #
+#############################################################
 
 #############################################################
 #                                                           #
 #   watson.test function                                    #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 12, 2005                                   #
-#   Version: 0.2                                            #
+#   Date: May, 31, 2006                                     #
+#   Version: 0.3-1                                          #
 #                                                           #
-#   Copyright (C) 2005 Claudio Agostinelli                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
 watson.test <- function(x, alpha = 0, dist = c("uniform", "vonmises")) {
-
     # Handling missing values
     x <- na.omit(x)
     if (length(x)==0) {
         warning("No observations (at least after removing missing values)")
         return(NULL)
-    }      
-
+    }
     dist <- match.arg(dist)
-    x <- as.circular(x)
-    xcircularp <- circularp(x)
-    units <- xcircularp$units
-    x <- conversion.circular(x, units="radians")
+    x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
     attr(x, "circularp") <- attr(x, "class") <- NULL
-    if (!any(c(0, 0.01, 0.025, 0.05, 0.1)==alpha)) stop("'alpha' must be one of the following values: 0, 0.01, 0.025, 0.05, 0.10")
-    n <- length(x)
+    if (!any(c(0, 0.01, 0.025, 0.05, 0.1)==alpha))
+       stop("'alpha' must be one of the following values: 0, 0.01, 0.025, 0.05, 0.10")
+    result <- WatsonTestRad(x, dist)
+    result$call <- match.call()
+    result$n <- length(x)
+    result$alpha <- alpha
+    result$dist <- dist
+    class(result) <-"watson.test"
+    return(result)
+}
 
+WatsonTestRad <- function(x, dist) {
+    n <- length(x)
     if (dist == "uniform") {
     u <- sort(x)/(2 * pi)
     u.bar <- mean.default(u)
@@ -43,14 +48,14 @@ watson.test <- function(x, alpha = 0, dist = c("uniform", "vonmises")) {
     sum.terms <- (u - u.bar - (2 * i - 1)/(2 * n) + 0.5)^2
     u2 <- sum(sum.terms) + 1/(12 * n)
     u2 <- (u2 - 0.1/n + 0.1/(n^2)) * (1 + 0.8/n)
-        result <- list(statistic=u2, alpha=alpha, n=n, dist=dist, row=NA)
+        result <- list(statistic=u2, row=NA)
     } else {
-        res <- mle.vonmises(x, bias=FALSE)
-    mu.hat <- res$mu
-    kappa.hat <- res$kappa
+        res <- MlevonmisesRad(x, bias=FALSE)
+    mu.hat <- res[1]
+    kappa.hat <- res[4]
     x <- (x - mu.hat) %% (2 * pi)
     x <- matrix(x, ncol = 1)
-    z <- apply(x, 1, pvonmises, mu=0, kappa=kappa.hat)
+    z <- apply(x, 1, PvonmisesRad, mu=0, kappa=kappa.hat, tol=1e-020)
     z <- sort(z)
     z.bar <- mean.default(z)
     i <- 1:n
@@ -58,7 +63,7 @@ watson.test <- function(x, alpha = 0, dist = c("uniform", "vonmises")) {
     Value <- sum(sum.terms) - n * (z.bar - 0.5)^2 + 1/(12 * n)                
     if (kappa.hat < 0.25)
         row <- 1
-    else if (kappa.hat < 0.75)
+        else if (kappa.hat < 0.75)
             row <- 2
         else if (kappa.hat < 1.25)
             row <- 3
@@ -69,9 +74,8 @@ watson.test <- function(x, alpha = 0, dist = c("uniform", "vonmises")) {
         else if (kappa.hat < 5)
             row <- 6
         else row <- 7   
-        result <- list(statistic=Value, alpha=alpha, n=n, dist=dist, row=row)
+        result <- list(statistic=Value, row=row)
     }
-    class(result) <-"watson.test"
     return(result)
 }
 
@@ -154,3 +158,4 @@ print.watson.test <- function(x, digits=4, ...) {
            }
     invisible(x)
 }
+

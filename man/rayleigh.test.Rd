@@ -7,18 +7,18 @@
 Performs a Rayleigh test of uniformity, assessing the significance of
 the mean resultant length.  The alternative hypothesis is a unimodal
 distribution with unknown mean direction and unknown mean resultant
-length if \code{mu} is missing otherwise the alternative hypothesis is a unimodal distribution with a specified mean direction and unknown mean resultant length.  
+length if \code{mu} is \code{NULL} otherwise the alternative hypothesis is a unimodal distribution with a specified mean direction and unknown mean resultant length.  
 }
 
 \usage{
-rayleigh.test(x, mu)
+rayleigh.test(x, mu = NULL)
 \method{print}{rayleigh.test}(x, digits=4, \dots)
 }
 
 \arguments{
   \item{x}{a vector. The object is coerced to class
     \code{\link{circular}}.}
-  \item{mu}{Specified mean direction in alternative hypothesis.}
+  \item{mu}{Specified mean direction in alternative hypothesis as a \code{circular} object.}
     \item{digits}{integer indicating the precision to be used.}
 	\item{\dots}{further arguments passed to or from other methods.}
   }
@@ -41,11 +41,11 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 
 
 \examples{
-x <- rvonmises(n=25, mu=pi, kappa=2)
+x <- rvonmises(n=25, mu=circular(pi), kappa=2)
 # General alternative
 rayleigh.test(x)
 # Specified alternative
-rayleigh.test(x, mu=0)
+rayleigh.test(x, mu=circular(0))
 }
 
 \keyword{htest}

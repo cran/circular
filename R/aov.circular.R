@@ -1,25 +1,26 @@
 
-###############################################################
-#                                                             #
-#       Original Splus: Ulric Lund                            #
-#       E-mail: ulund@calpoly.edu                             #
-#                                                             #
-###############################################################
+#############################################################
+#                                                           #
+#       Original Splus: Ulric Lund                          #
+#       E-mail: ulund@calpoly.edu                           #
+#                                                           #
+#############################################################
 
 #############################################################
 #                                                           #
 #   aov.circular function                                   #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 30, 2005                                   #
-#   Version: 0.1-3                                          #
+#   Date: August, 10, 2006                                  #
+#   Version: 0.2-1                                          #
 #                                                           #
-#   Copyright (C) 2005 Claudio Agostinelli                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
-aov.circular <- function(x, group, kappa=NULL, method=c("F.test", "LRT"), F.mod=TRUE){
+aov.circular <- function(x, group, kappa=NULL, method=c("F.test", "LRT"), F.mod=TRUE, control.circular=list()) {
 
+    method <- match.arg(method)  
     # Handling missing values
     ok <- complete.cases(x, group)
     x <- x[ok]
@@ -28,77 +29,87 @@ aov.circular <- function(x, group, kappa=NULL, method=c("F.test", "LRT"), F.mod=
         warning("No observations or no groups (at least after removing missing values)")
         return(NULL)
     }
-    
-    x <- as.circular(x)
-    xcircularp <- circularp(x)
-    units <- xcircularp$units
-    x <- conversion.circular(x, units="radians")
-    x <- x%%(2*pi)
-    method <- match.arg(method)
-    ns        <- tapply(x, group, FUN=length)
-    resultant <- tapply(x, group, FUN=function(x) rho.circular(x)*length(x))
-    mean.dirs <- tapply(x, group, FUN=mean.circular)
-    kappas    <- tapply(x, group, FUN=function(x) mle.vonmises(x)$kappa)
-    grps <- length(resultant)
-    n <- length(group)
-    res.all <- rho.circular(x)*n
-    mean.dir.all <- mean.circular(x)
-    kappa.all <- mle.vonmises(x)$kappa
-
-    if (method=="F.test"){
-        if (!is.null(kappa))
-            warning("Specified value of kappa is not used in the F-test")
-        sum.res <- sum(resultant)
-        df <- c(grps-1, n-grps, n-1)
-        SS <- c(sum.res - res.all, n-sum.res, n-res.all) 
-        MS <- SS/df
-        if (F.mod==TRUE) {
-            F.stat <- (1+3/(8*kappa.all))*MS[1]/MS[2]
-        } else {
-            F.stat <- MS[1]/MS[2]
-        }
-        p.value <- 1-pf(F.stat, grps-1,n-grps)
+    if (is.circular(x)) {
+       datacircularp <- circularp(x)     
     } else {
-        if (is.null(kappa))
-            kappa <- kappa.all
-        stat1 <- 1-1/(4*kappa)*A1(kappa)*(sum(1/ns)-1/n)
-        stat2 <- 2*kappa*sum(resultant*(1-cos(mean.dirs-mean.dir.all)))
-        chisq.stat <- stat1*stat2
-        p.value <- 1-pchisq(chisq.stat, grps-1)
-       
+       datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
     }
-    mean.dir.all <- conversion.circular(mean.dir.all, units=units)
-    if (units=="degrees") {
-        mean.dirs <- mean.dirs/pi*180
-        
-    }
+
+    dc <- control.circular
+    if (is.null(dc$type))
+       dc$type <- datacircularp$type
+    if (is.null(dc$units))
+       dc$units <- datacircularp$units
+    if (is.null(dc$template))
+       dc$template <- datacircularp$template
+    if (is.null(dc$modulo))
+       dc$modulo <- datacircularp$modulo
+    if (is.null(dc$zero))
+       dc$zero <- datacircularp$zero
+    if (is.null(dc$rotation))
+       dc$rotation <- datacircularp$rotation
     
-    attr(mean.dirs, "circularp") <- xcircularp
-    attr(mean.dirs, "class") <- "circular"
- 
-    result <- list()
+    x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
+    attr(x, "class") <- attr(x, "circularp") <- NULL
+
+    result <- AovCircularRad(x, group, kappa=NULL, method, F.mod)
+    result$mu <- conversion.circular(circular(result$mu), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
+    result$mu.all <- conversion.circular(circular(result$mu.all), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation) 
     result$call <- match.call()
-    result$mu <- mean.dirs 
-    result$mu.all <- mean.dir.all
-    result$kappa <- kappas 
-    result$kappa.all <- kappa.all
-    result$rho <- resultant
-    result$rho.all <- res.all
-    result$method <- method
-
-    if (method=="F.test") { 
-        result$df <- df 
-        result$SS <- SS
-        result$MS <- MS
-        result$statistic <- F.stat
-    } else {
-        result$df <- grps-1
-        result$statistic <- chisq.stat
-    }
-
-    result$p.value <- p.value
     class(result) <- "aov.circular"
     return(result)
+}
+
+AovCircularRad <- function(x, group, kappa=NULL, method, F.mod) {
+### x must be in radians, modulo 2pi
+   ns        <- tapply(x, group, FUN=length)
+   resultant <- tapply(x, group, FUN=function(x) RhoCircularRad(x)*length(x))
+   mean.dirs <- tapply(x, group, FUN=MeanCircularRad)
+   kappas    <- tapply(x, group, FUN=function(x) MlevonmisesRad(x)[4])
+   grps <- length(resultant)
+   n <- length(group)
+   res.all <- RhoCircularRad(x)*n
+   mean.dir.all <- MeanCircularRad(x)
+   kappa.all <- MlevonmisesRad(x)[4]
+
+   if (method=="F.test"){
+      if (!is.null(kappa))
+         warning("Specified value of kappas is not used in the F-test")
+      sum.res <- sum(resultant)
+      df <- c(grps-1, n-grps, n-1)
+      SS <- c(sum.res - res.all, n-sum.res, n-res.all) 
+      MS <- SS/df
+      if (F.mod==TRUE) {
+         stat <- (1+3/(8*kappa.all))*MS[1]/MS[2]
+      } else {
+         stat <- MS[1]/MS[2]
+      }
+      p.value <- 1-pf(stat, grps-1,n-grps)
+   } else {
+      SS <- NA
+      MS <- NA
+      if (is.null(kappa))
+         kappa <- kappa.all
+      stat1 <- 1-1/(4*kappa)*A1(kappa)*(sum(1/ns)-1/n)
+      stat2 <- 2*kappa*sum(resultant*(1-cos(mean.dirs-mean.dir.all)))
+      stat <- stat1*stat2
+      df <- grps-1
+      p.value <- 1-pchisq(stat, df)
+   }
+   result <- list()
+   result$mu <- mean.dirs 
+   result$mu.all <- mean.dir.all
+   result$kappa <- kappas 
+   result$kappa.all <- kappa.all
+   result$rho <- resultant
+   result$rho.all <- res.all
+   result$method <- method
+   result$df <- df 
+   result$SS <- SS
+   result$MS <- MS
+   result$statistic <- stat
+   result$p.value <- p.value
+   return(result)
 }
 
 #############################################################

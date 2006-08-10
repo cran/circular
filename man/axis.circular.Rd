@@ -8,24 +8,22 @@
 }
 
 \usage{
-axis.circular(at, labels, units = c("radians", "degrees"),
-     template=c("none", "geographics"),
-     modulo = c("asis", "2pi", "pi"), zero=0,
-     rotation = c("counter", "clock"),
-     tick=TRUE, lty, lwd, cex, col, font, tcl=0.025, tcl.text=0.125, digits=2)
+axis.circular(at=NULL, labels=NULL,  units = NULL, template=NULL,  
+          modulo=NULL, zero=NULL, rotation=NULL, tick=TRUE, lty, lwd, 
+          cex, col, font, tcl=0.025, tcl.text=0.125, digits=2)
 }
 
 \arguments{
-\item{at}{the points at which tick-marks are to be drawn. If missing the
+\item{at}{the points at which tick-marks are to be drawn. If \code{NULL} the
 tick-marks are placed to 0, pi/2, pi and 3pi/2 radians.}
 \item{labels}{a vector of character strings to be placed at the
-  tickpoints. If missing the labels are choosen according to
+  tickpoints. If \code{NULL} the labels are choosen according to
   \code{units} and \code{template} arguments.}
-\item{units}{either \code{radians} or \code{degrees}.}
-\item{template}{either \code{none} or \code{geographics}.}
-\item{modulo}{either \code{asis} or \code{2pi} or \code{pi}.}
-\item{zero}{the zero of the plot (in radians).}
-\item{rotation}{the rotation of the plot.}
+\item{units}{either \code{radians} or \code{degrees}. If \code{NULL} the value is taken from the attributes of the object \code{at}.}
+\item{template}{either \code{none} or \code{geographics}. If \code{NULL} the value is taken from the attributes of the object \code{at}.}
+\item{modulo}{either \code{asis} or \code{2pi} or \code{pi}. If \code{NULL} the value is taken from the attributes of the object \code{at}.}
+\item{zero}{the zero of the plot (in radians, counterclockwise). If \code{NULL} the value is taken from the attributes of the object \code{at}.}
+\item{rotation}{the rotation of the plot. If \code{NULL} the value is taken from the attributes of the object \code{at}.}
 \item{tick}{logical: if \code{TRUE} ticks are plotted at tick-marks.}
 \item{lty, lwd}{line type, width for the tick marks. If missing means to
   use `par("lty")' and `par("lwd")'.}
@@ -44,9 +42,9 @@ tick-marks are placed to 0, pi/2, pi and 3pi/2 radians.}
 }
 
 \examples{
-data.vm <- rvonmises(n=100, mu=0, kappa=3) 
+data.vm <- rvonmises(n=100, mu=circular(0), kappa=3) 
 plot(data.vm, axes=FALSE, ticks=FALSE)
-axis.circular(at=seq(0, 11/6*pi, pi/6), labels=c("0",
+axis.circular(at=circular(seq(0, 11/6*pi, pi/6)), labels=c("0",
 expression(frac(pi,6)), expression(paste(frac(1,3), pi)),
 expression(frac(pi,2)), expression(paste(frac(2,3), pi)),
 expression(paste(frac(5,6), pi)), expression(pi),

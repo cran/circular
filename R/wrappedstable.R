@@ -3,20 +3,16 @@
 #   rwrappedstable function                                 #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: September, 22, 2003                               #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Date: May, 29, 2006                                     #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2                                             #
+#   Version 0.2-2                                           #
 #############################################################
 
-rwrappedstable <- function(n,  scale=1, index, skewness, units=c("radians", "degrees"), ...) {
-    units <- match.arg(units)
-#    if (units=="degrees") {
-#        scale <- scale/180*pi
-#    }
+rwrappedstable <- function(n,  scale=1, index, skewness, control.circular=list()) {
+    dc <- control.list
     result <- rstable(n=n, scale=scale, index=index, skewness=skewness) %% (2 * pi)
-    if (units=="degrees") result <- result/pi*180
-    result <- circular(result, units=units, ...)
+    result <- conversion.circular(circular(result), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
     return(result)
 }
 

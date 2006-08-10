@@ -7,13 +7,14 @@ Computes the specified order trigonometric moment for a set of directional data 
 }
 
 \usage{
-trigonometric.moment(x, p=1, center=FALSE)
+trigonometric.moment(x, p = 1, center = FALSE, control.circular = list())
 }
 
 \arguments{
-\item{x}{ }
+\item{x}{a vector of class \code{circular}.}
 \item{p}{order of trigonometric moment to be computed. Default is for a first order trigonometric moment.}
 \item{center}{logical, whether to compute centered moments or not.  Default is to compute an uncentered moment.}
+\item{control.circular}{the attribute of the resulting object \code{mu}.}
 }
 
 \value{
@@ -32,6 +33,13 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 \seealso{
 \code{\link{var.circular}}, \code{\link{mean.circular}},
 \code{\link{summary.circular}}, \code{\link{mle.vonmises}} and \code{\link{rho.circular}}
+}
+
+\examples{
+
+x <- rvonmises(100, circular(0), 5)
+trigonometric.moment(x, control.circular=list(units="degrees"))
+
 }
 
 \keyword{math}

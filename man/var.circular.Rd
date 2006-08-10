@@ -40,7 +40,7 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 
 \examples{
 # Compute the mean resultant length of a random sample of observations.
-x <- rvonmises(n=100, mu=0, kappa=1)
+x <- rvonmises(n=100, mu=circular(0), kappa=1)
 var(x)
 }
 

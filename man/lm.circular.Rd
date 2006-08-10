@@ -13,8 +13,8 @@ variables.
 
 \usage{
 lm.circular(..., type=c("c-c", "c-l"))
-lm.circular.cc(y, x, order = 1, level = 0.05)
-lm.circular.cl(y, x, init, verbose=FALSE, tol=1e-10)
+lm.circular.cc(y, x, order = 1, level = 0.05, control.circular = list())
+lm.circular.cl(y, x, init = NULL, verbose = FALSE, tol = 1e-10, control.circular = list())
 \method{print}{lm.circular.cl}(x, digits = max(3, getOption("digits") - 3), signif.stars= getOption("show.signif.stars"), ...)
 }
 
@@ -31,6 +31,7 @@ lm.circular.cl(y, x, init, verbose=FALSE, tol=1e-10)
   an integer value.  By default, order=1. Used if \code{type="c-c"}.}
 \item{level}{level of the test for the significance of higher order
   trigonometric terms. Used if \code{type="c-c"}.}
+\item{control.circular}{the attribute of the resulting objects (\code{fitted}, \code{residuals} components in the case of \code{type=="c-c"} and \code{mu} and \code{se.mu}) otherwise.}
 \item{init}{a vector with initial values of length equal to the columns
   of \code{x}.}
 \item{verbose}{logical: if \code{TRUE} messages are printed while the
@@ -51,9 +52,9 @@ object of class \code{lm.circular.cc} is returned with the following components:
 \item{call}{match.call().}
 \item{rho}{square root of the average of the squares of the estimated
 conditional concentration parameters of y given x.}
-\item{fitted}{fitted values of the model.}
+\item{fitted}{fitted values of the model of class \code{circular}.}
 \item{data}{matrix whose columns correspond to x and y.}
-\item{residuals}{circular residuals of the model.}
+\item{residuals}{circular residuals of the model of class \code{circular}.}
 \item{coefficients}{matrix whose entries are the estimated coefficients of the
 model. The first column corresponds to the coefficients of the model predicting
 the cosine of y, while the second column contains the estimates for the model
@@ -71,8 +72,8 @@ object of class \code{lm.circular.cc} is returned with the following components:
 \item{call}{match.call().}
 \item{x}{the independent variables.}
 \item{y}{the dependent variable.}
-\item{mu}{the circular mean of the dependent variable.}
-\item{se.mu}{an estimated standard error of the circular mean.} 
+\item{mu}{the circular mean of the dependent variable of class \code{circular}.}
+\item{se.mu}{an estimated standard error of the circular mean with the same units of measure used for \code{mu}.} 
 \item{kappa}{the concentration parameter for the dependent variable.}
 \item{se.kappa}{an estimated standard error of the concentration parameter.}
 \item{coefficients}{the estimated coefficients.}
@@ -133,15 +134,22 @@ Statistical Conference.  VSP: Utrecht, Netherlands.
 \examples{
 # Generate a data set of dependent circular variables.
 x <- circular(runif(50, 0, 2*pi))
-y <- atan2(0.15*cos(x) + 0.25*sin(x), 0.35*sin(x)) + rvonmises(n=50, mu=0, kappa=5)
+y <- atan2(0.15*cos(x) + 0.25*sin(x), 0.35*sin(x)) + rvonmises(n=50, mu=circular(0), kappa=5)
 
 # Fit a circular-circular regression model.
 circ.lm <- lm.circular(y, x, order=1)
-# Obtain a crude plot a data and fitted regression line.
+# Obtain a crude plot of the data and fitted regression line.
 plot.default(x, y)
 circ.lm$fitted[circ.lm$fitted>pi] <- circ.lm$fitted[circ.lm$fitted>pi] - 2*pi 
 
 points.default(x[order(x)], circ.lm$fitted[order(x)], type='l')
+
+
+# Fit a circular-linear regression model.
+set.seed(1234)
+x <- cbind(rnorm(10), rep(1, 10))
+y <- circular(2*atan(c(x\%*\%c(5,1))))+rvonmises(10, mu=circular(0), kappa=100)
+lm.circular(y=y, x=x, init=c(5,1), type='c-l', verbose=TRUE)
 }
 
 \keyword{models}

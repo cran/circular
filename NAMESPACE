@@ -1,5 +1,9 @@
 useDynLib(circular)
-          
+
+#Import directive
+importFrom(graphics, axis)
+importFrom(stats, density)
+
 #Export directive
 
 # functions
@@ -20,14 +24,18 @@ export(
  as.circular,
 # file as.data.frame.circular.R
  as.data.frame.circular,
+# file axialvonmises.R
+ daxialvonmises,
 # file cardioid.R
  rcardioid, dcardioid,
 # file change.point.R
  change.point,
 # file circular.R
- circular, conversion.circular, circularp, "circularp<-", is.circular, 
+ circular, conversion.circular, circularp, "circularp<-", is.circular,
 # file cor.circular.R
  cor.circular,
+# file curve.circular.R
+ curve.circular, plot.function.circular,
 # file deg.R
  deg,
 # file equal.kappa.test.R
@@ -46,7 +54,7 @@ export(
  mle.wrappedcauchy,
 # file mle.wrappednormal.R
  mle.wrappednormal,
-# file plot.circular.R
+# file ticks.circular.R
  ticks.circular,
 # file plot.edf.R
  plot.edf, lines.edf,
@@ -83,7 +91,7 @@ export(
 # file wrappedcauchy.R
  rwrappedcauchy, dwrappedcauchy,
 # file wrappednormal.R
- rwrappednormal, dwrappednormal,
+ rwrappednormal, dwrappednormal, pwrappednormal, qwrappednormal,
 # file wrappedstable.R
  rwrappedstable 
 )
@@ -98,16 +106,26 @@ export(
 
 # methods
 export(
+# file circular.R
+ c.circular,
 # file density.circular.R
  density.circular,
 # file mean.circular.R
  mean.circular,
+# file axis.circular.R
+ axis.circular,
+# file lines.circular.R
+ lines.circular,
 # file plot.circular.R
- axis.circular, plot.circular, points.circular,
+ plot.circular,
+# file points.circular.R
+ points.circular,
 # file plot.lsfit.circle.R
  plot.lsfit.circle,
 # file range.circular.R
  range.circular,
+# file unique.circular.R
+ unique.circular,       
 # file var.circular.R
  var, var.default, var.data.frame, var.circular
 )
@@ -157,11 +175,16 @@ S3method("[", circular)
 #axis
 S3method(axis, circular)
 
+#c
+S3method(c, circular)
+
 #density
 S3method(density, circular)
 
 #lines
+S3method(lines, circular)
 S3method(lines, density.circular)
+
 ###S3method(lines, edf)
 
 #mean
@@ -200,6 +223,9 @@ S3method(range, circular)
 
 #summary
 S3method(summary, circular)
+
+#unique
+S3method(unique, circular)
 
 #var
 S3method(var, default)

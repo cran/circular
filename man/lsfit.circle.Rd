@@ -7,7 +7,7 @@
 Fit a 2D circle to an (x,y) dataset using LS.
 }
 \usage{
-lsfit.circle(x, y, init = NULL, units = c("radians", "degrees"),
+lsfit.circle(x, y, init = NULL, units = c("radians", "degrees"), 
 template = c("none", "geographics"),
 modulo = c("asis", "2pi", "pi"), zero = 0, rotation = c("counter", "clock"), ...)
 \method{print}{lsfit.circle}(x, digits = max(3, getOption("digits") - 3), ...)
@@ -50,7 +50,7 @@ squared residuals between the observations and the optimally fitting circle.
   \item{x.centered}{the x-coordinate re-centered at the center of the circle.}
   \item{y.centered}{the y-coordinate re-centered at the center of the circle.}
   \item{angles}{angles of the observations with respect to the center
-    coordinate.}
+    coordinate of class \code{\circular}.}
   \item{radius}{the distance between the observations and the center
     coordinate}
   \item{convergence}{value from the function optim.}
@@ -74,6 +74,11 @@ plot(res)
 par(mfcol=c(1,2))
 plot(res$angles)
 hist(res$radius)
+
+plot(circular(0), type="n", xlim=c(-5.2, 5.2), ylim=c(-5.2, 5.2), xlab="The Radius of the circle \n is measured from the base line of the axes.")
+lines(x=res$angles, y=res$radius, join=TRUE, type="b")
+ff <- function(x) sqrt((res$coefficients[1]*cos(x))^2+(res$coefficients[1]*sin(x))^2)
+curve.circular(ff, add=TRUE, join=TRUE, nosort=FALSE, col=2)
 
 windrose(x=res$angles, y=res$radius)
 }

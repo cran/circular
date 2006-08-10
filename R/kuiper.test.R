@@ -1,20 +1,20 @@
 
-###############################################################
-#                                                             #
-#       Original Splus: Ulric Lund                            #
-#       E-mail: ulund@calpoly.edu                             #
-#                                                             #
-###############################################################
+#############################################################
+#                                                           #
+#       Original Splus: Ulric Lund                          #
+#       E-mail: ulund@calpoly.edu                           #
+#                                                           #
+#############################################################
 
 #############################################################
 #                                                           #
 #   kuiper.test function                                    #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 11, 2005                                    #
-#   Version: 0.2                                            #
+#   Date: May, 27, 2006                                     #
+#   Version: 0.3                                            #
 #                                                           #
-#   Copyright (C) 2005 Claudio Agostinelli                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -26,21 +26,25 @@ kuiper.test <- function(x, alpha=0) {
         warning("No observations (at least after removing missing values)")
         return(NULL)
     }
-    x <- as.circular(x)
-#    xcircularp <- circularp(x)
-#    units <- xcircularp$units
-    x <- conversion.circular(x, units="radians")
+    x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
     attr(x, "circularp") <- attr(x, "class") <- NULL
-    if (!any(c(0, 0.01, 0.025, 0.05, 0.1, 0.15)==alpha)) stop("'alpha' must be one of the following values: 0, 0.01, 0.025, 0.05, 0.1, 0.15")
-    x <- sort(x %% (2 * pi))/(2 * pi)
-    n <- length(x)
-    i <- 1:n
-    D.P <- max(i/n - x)
-    D.M <- max(x - (i - 1)/n)
-    V <- (D.P + D.M) * (sqrt(n) + 0.155 + 0.24/sqrt(n))
-    result <- list(statistic=V, alpha=alpha)
+    result <- list()
+    result$call <- match.call()
+    result$statistic <- KuiperTestRad(x, alpha)
+    result$alpha <- alpha
     class(result) <- "kuiper.test"
     return(result)
+}
+
+KuiperTestRad <- function(x, alpha) {
+   if (!any(c(0, 0.01, 0.025, 0.05, 0.1, 0.15)==alpha)) stop("'alpha' must be one of the following values: 0, 0.01, 0.025, 0.05, 0.1, 0.15")
+   x <- sort(x %% (2 * pi))/(2 * pi)
+   n <- length(x)
+   i <- 1:n
+   D.P <- max(i/n - x)
+   D.M <- max(x - (i - 1)/n)
+   V <- (D.P + D.M) * (sqrt(n) + 0.155 + 0.24/sqrt(n))
+   return(V)
 }
 
 #############################################################

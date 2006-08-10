@@ -1,6 +1,10 @@
 Library circular
 =================
 
+Version 0.3-5, 2006/08/10
+Rewrite most of the functions. Add functions c.circular, unique.circular, curve.circular, plot.function.circular, lines.circular. Add arguments to conversion.circular and change its behavior. Add pwrappednormal, qwrappednormal (experimental versions). Add new features to r,d,p,q functions (now mu must be specifies using a circular object)
+Almost all the functions use control.circular argument in order to specify the attribute of the resulting object. The rvonmises function uses a C code from Harry Southworth.
+
 Version 0.3-4, 2006/02/13
 Add an argument to windrose, rewrite small part of it. Fix typos in kuiper.test.Rd, extract.Rd and lm.circular.Rd. Now, var.default definition in var.circular.R point to stats::var and not to base::var 
 

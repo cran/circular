@@ -1,44 +1,53 @@
 
-###############################################################
-#                                                             #
-#       Original Splus: Ulric Lund                            #
-#       E-mail: ulund@calpoly.edu                             #
-#                                                             #
-###############################################################
+#############################################################
+#                                                           #
+#       Original Splus: Ulric Lund                          #
+#       E-mail: ulund@calpoly.edu                           #
+#                                                           #
+#############################################################
 
 #############################################################
 #                                                           #
 #   watson.two.test function                                #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 12, 2005                                   #
-#   Version: 0.2                                            #
+#   Date: May, 31, 2006                                     #
+#   Version: 0.3-1                                          #
 #                                                           #
-#   Copyright (C) 2005 Claudio Agostinelli                  #
+#   Copyright (C) 2006 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
-watson.two.test <- function(x, y, alpha = 0) {
+watson.two.test <- function(x, y, alpha=0) {
 
     # Handling missing values
     x <- na.omit(x)
-    if ((n1 <- length(x))==0) {
+    if (length(x)==0) {
         warning("'x': No observations (at least after removing missing values)")
         return(NULL)
     }      
     y <- na.omit(y)
-    if ((n2 <- length(y))==0) {
+    if (length(y)==0) {
         warning("'y': No observations (at least after removing missing values)")
         return(NULL)
     }      
 
-    x <- as.circular(x)
-    x <- conversion.circular(x, units="radians")
+    x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
     attr(x, "circularp") <- attr(x, "class") <- NULL
-    y <- as.circular(y)
-    y <- conversion.circular(y, units="radians")
+    y <- conversion.circular(y, units="radians", rotation="counter", modulo="2pi")
     attr(y, "circularp") <- attr(y, "class") <- NULL
 
+    result <- WatsonTwoTestRad(x, y)
+      
+    result$call <- match.call()
+    result$alpha <- alpha
+    class(result) <- "watson.two.test"
+    return(result)
+}
+
+WatsonTwoTestRad <- function(x, y) {
+    n1 <- length(x)
+    n2 <- length(y)
     n <- n1 + n2
     x <- cbind(sort(x %% (2 * pi)), rep(1, n1))
     y <- cbind(sort(y %% (2 * pi)), rep(2, n2))
@@ -48,14 +57,13 @@ watson.two.test <- function(x, y, alpha = 0) {
     a <- 1:n
     b <- 1:n
     for (i in 1:n) {
-     a[i] <- sum(xx[1:i, 2] == 1)
-     b[i] <- sum(xx[1:i, 2] == 2)
+       a[i] <- sum(xx[1:i, 2] == 1)
+       b[i] <- sum(xx[1:i, 2] == 2)
     }
     d <- b/n2 - a/n1
     dbar <- mean.default(d)
     u2 <- (n1 * n2)/n^2 * sum((d - dbar)^2)
-    result <- list(statistic=u2, alpha=alpha, nx=n1, ny=n2)
-    class(result) <- "watson.two.test"
+    result <- list(statistic=u2, nx=n1, ny=n2)
     return(result)
 }
 

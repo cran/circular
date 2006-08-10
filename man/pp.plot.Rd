@@ -8,7 +8,7 @@ von Mises distribution function.
 }
 
 \usage{
-pp.plot(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distribution", ylab = "Empirical Distribution", ...)
+pp.plot(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distribution", ylab = "Empirical Distribution", control.circular = list(), ...)
 }
 
 \arguments{
@@ -17,6 +17,7 @@ pp.plot(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distribution", ylab = 
   the plot. Default is TRUE.}
 \item{tol}{parameter passed to \code{\link{pvonmises}}.}
 \item{xlab, ylab}{labels of the axis.}
+\item{control.circular}{the attribute of the resulting object.}
 \item{...}{parameters passed to the \code{\link{plot.default}} function.}
 }
 
@@ -41,9 +42,9 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 }
 
 \examples{
-x <- rvonmises(n=25, mu=0, kappa=3)
+x <- rvonmises(n=25, mu=circular(0), kappa=3)
 pp.plot(x)
-x <- c(rvonmises(n=20, mu=0, kappa=7), rvonmises(n=20, mu=pi, kappa=7))
+x <- c(rvonmises(n=20, mu=circular(0), kappa=7), rvonmises(n=20, mu=circular(pi), kappa=7))
 pp.plot(x)
 }
 
