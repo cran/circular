@@ -1,5 +1,7 @@
 Library circular
 =================
+Version 0.3-6, 2006/08/28
+Changed long declaration into int in circular/src/rvonmises.c file
 
 Version 0.3-5, 2006/08/10
 Rewrite most of the functions. Add functions c.circular, unique.circular, curve.circular, plot.function.circular, lines.circular. Add arguments to conversion.circular and change its behavior. Add pwrappednormal, qwrappednormal (experimental versions). Add new features to r,d,p,q functions (now mu must be specifies using a circular object)

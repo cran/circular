@@ -2,7 +2,7 @@
 #include <Rmath.h>
 #include <R_ext/Random.h>
 
-void rvm(double *x, long *n, double *mu, double *kappa){
+void rvm(double *x, int *n, double *mu, double *kappa){
 	/* Harry Southworth, January 2005.
 	   GENERATE RANDOM NUMBERS FROM A vonMises DISTRIBUTION.
 	   FOLLOWING THE ALGORITHM ON PAGE 43 OF MARDIA AND JUPP,
@@ -13,7 +13,7 @@ void rvm(double *x, long *n, double *mu, double *kappa){
            Ported the C to R by Claudio Agostinelli, August 2006.
 	*/
 
-	long i;
+	int i;
 	double U1, U2, U3;
 	double a, b, r, z, f, c;
 
