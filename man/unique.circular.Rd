@@ -5,7 +5,7 @@
   \code{unique.circular} returns a circular vector but with duplicate  elements removed.
 }
 \usage{
-unique.circular(x, incomparables = FALSE, \dots)
+\method{unique}{circular}(x, incomparables = FALSE, fromLast = FALSE, \dots)
 }
 
 \arguments{
@@ -13,10 +13,11 @@ unique.circular(x, incomparables = FALSE, \dots)
   \item{incomparables}{a vector of values that cannot be compared.
     Currently, \code{FALSE} is the only possible value, meaning that all
     values can be compared.}
+  \item{fromLast}{logical indicating if duplication should be considered from the last, i.e., the last (or rightmost) of identical elements will be kept. This only matters for \code{\link{names}} or \code{\link{dimnames}}.}
  \item{\dots}{}
 }
 \details{
-  This is a method for \code{circular} object.
+  This is a method for \code{circular} object. See the documentation of \code{\link{unique}}.
 }
 
 \value{

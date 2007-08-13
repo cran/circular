@@ -258,13 +258,13 @@ is.circular <- function (x) inherits(x, "circular")
 
 #############################################################
 #                                                           #
-#   [.circular function                                 #
-#   Author: Claudio Agostinelli                         #
-#   E-mail: claudio@unive.it                            #
-#   Date: March, 7, 2003                                #
-#   Version: 0.1                                        #
+#   [.circular function                                     #
+#   Author: Claudio Agostinelli                             #
+#   E-mail: claudio@unive.it                                #
+#   Date: March, 7, 2003                                    #
+#   Version: 0.1                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli              #
+#   Copyright (C) 2003 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  

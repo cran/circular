@@ -7,7 +7,7 @@ Computes circular summary statistics including the sample size, mean direction a
 }
 
 \usage{
-summary.circular(object, ...)
+\method{summary}{circular}(object, ...)
 }
 
 \arguments{

@@ -28,7 +28,7 @@ a list with the statistic, alpha and the number of observations.
 }
 
 \details{
-If alpha is specified, critical values are determined from a table of simulated critical points (see reference below).  If alpha is not specified, a range for the p-value is determined using the table of simulated critical points.
+If alpha is specified, critical values are determined (using the \code{print} function) from a table of simulated critical points (see reference below); in this case the \code{print} function return a further value \code{accepted} which is \code{TRUE} if the null hypothesis is accepted and \code{FALSE} otherwise. If alpha is not specified, a range for the p-value is determined using the table of simulated critical points in the \code{print} function but not reported.
 }
 
 \author{Claudio Agostinelli and Ulric Lund}
@@ -48,6 +48,9 @@ Russell, G.S. and Levitin, D.J. (1995).  An expanded table of probability values
 \examples{
 x <- circular(runif(200, 0, 2*pi))
 rao.spacing.test(x)
+
+res <- print(rao.spacing.test(x, alpha=0.1))
+res$accepted
 
 x <- rvonmises(100, circular(0), 20)
 rao.spacing.test(x)

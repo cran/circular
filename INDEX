@@ -1,0 +1,62 @@
+A1                      Ratio of First and Zeroth Order Bessel
+                        Functions
+A1inv                   Inverse of A1
+as.data.frame.circular
+                        as.data.frame.circular
+axis.circular           Add Axis to a Circular Plot
+change.point            Change Point Test
+circular                Create Objects of class circular for Circular
+                        data.
+[.circular              Extract or Replace Parts of a Circular Object
+circularp               Attributes for a Circular Object
+conversion.circular     Unit of Measure Conversion for Circular Data
+cor.circular            Correlation Coefficient for Angular Variables
+dcardioid               Cardioid Density Function
+deg                     Degrees
+density                 Kernel Density Estimation
+density.circular        Kernel Density Estimation for Circular Data
+dmixedvonmises          Mixture of von Mises Distributions
+dtriangular             Triangular Density Function
+dvonmises               von Mises Density Function
+dwrappedcauchy          Wrapped Cauchy Density Function
+dwrappednormal          Wrapped Normal Density Function
+I.0                     Zeroth Order Bessel Function of the First Kind
+I.1                     First Order Bessel Function of the First Kind
+I.p                     P-th Order Bessel Function of the First Kind
+kuiper.test             Kuiper's Test
+lines.density.circular
+                        Add a Plot for Kernel Density Estimation for
+                        Circular Data
+lm.circular             Circular-Circular Regression
+mean.circular           Mean Direction
+mle.vonmises            von Mises Maximum Likelihood Estimates
+mle.vonmises.bootstrap.ci
+                        Bootstrap Confidence Intervals
+mle.wrappedcauchy       Wrapped Cauchy Maximum Likelihood Estimates
+mle.wrappednormal       Wrapped Normal Maximum Likelihood Estimates
+ncfrog                  Northern Cricket Frog
+plot.circular           Circular Data Plot
+plot.density.circular   Plot Method for Kernel Density Estimation for
+                        Circular Data
+plot.edf                Plot Circular Empirical Distribution Function
+points.circular         Add Points to a Circular Plot
+pp.plot                 von Mises Probability-Probability Plot
+rad                     Radians
+range.circular          Circular Range
+rao.spacing.test        Rao's Spacing Test of Uniformity
+rao.table               Table for Rao's Spacing Test of Uniformity
+rao.test                Rao's Tests for Homogeneity
+rayleigh.test           Rayleigh Test of Uniformity
+rho.circular            Mean Resultant Length
+rose.diag               Rose Diagram
+rstable                 Random Generation from the Stable Family of
+                        Distributions
+rwrappedstable          Random Generation from the Wrapped Stable
+                        Distribution
+summary.circular        Circular Summary Statistics
+ticks.circular          Draw Tick-Marks in a Circular Plot
+trigonometric.moment    Trigonometric Moments
+var                     Variance
+var.circular            A measure of variance for Circular Data
+watson.test             Watson's Test
+watson.two.test         Watson's Two-Sample Test of Homogeneity

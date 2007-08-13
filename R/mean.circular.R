@@ -57,7 +57,6 @@ MeanCircularRad <- function(x) {
    } else {
        sinr <- sum(sin(x))
        cosr <- sum(cos(x))
-
        if (sqrt((sinr^2 + cosr^2))/length(x) > .Machine$double.eps) {
            circmean <- atan2(sinr, cosr)
        } else {

@@ -8,17 +8,12 @@
 }
 
 \usage{
-x[i]
-x[i, j, \dots]
-x[i, j, \dots , drop=TRUE]
+\method{[}{circular}(x, i, \dots)
 }
 
 \arguments{
   \item{x}{object from which to extract elements.}
-  \item{i, j, \dots}{elements to extract or replace.}
-  \item{drop}{For matrices.  If \code{TRUE} the
-    result is coerced to the lowest possible dimension (see examples
-    below).}
+  \item{i, \dots}{elements to extract or replace.}
 }
 
 \author{Claudio Agostinelli}

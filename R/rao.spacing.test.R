@@ -60,10 +60,10 @@ RaoSpacingTestDeg <- function(x) {
 #   print.rao.spacing.test function                         #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: November, 19, 2003                                #
-#   Version: 0.1-1                                          #
+#   Date: May, 24, 2007                                     #
+#   Version: 0.2                                            #
 #                                                           #
-#   Copyright (C) 2003 Claudio Agostinelli                  #
+#   Copyright (C) 2007 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -122,14 +122,18 @@ print.rao.spacing.test <- function(x, digits=4, ...) {
         else if (U > rao.table[table.row, 4])
              cat("0.05 < P-value < 0.10", "\n", "\n")
         else cat("P-value > 0.10", "\n", "\n")
+        x$accepted <- NA
     } else {
         table.col <- (1:4)[alpha == c(0.001, 0.01, 0.05, 0.1)]
         critical <- rao.table[table.row, table.col]
         cat("Level", alpha, "critical value =", critical, "\n")
-        if (U > critical)
-        cat("Reject null hypothesis of uniformity \n\n")
-        else
-            cat("Do not reject null hypothesis of uniformity \n\n")
+        if (U > critical) {
+           cat("Reject null hypothesis of uniformity \n\n")
+           x$accepted <- FALSE
+        } else {
+           cat("Do not reject null hypothesis of uniformity \n\n")
+           x$accepted <- TRUE
+        }
   }
 invisible(x)
 }

@@ -1,5 +1,8 @@
 Library circular
 =================
+Version 0.3-7, 2007/08/13
+Fix a problem in the api of unique.circular function, fix the documentation of summary.circular and [.circular.
+
 Version 0.3-6, 2006/08/28
 Changed long declaration into int in circular/src/rvonmises.c file
 
