@@ -5,23 +5,19 @@
   \code{unique.circular} returns a circular vector but with duplicate  elements removed.
 }
 \usage{
-\method{unique}{circular}(x, incomparables = FALSE, fromLast = FALSE, \dots)
+\method{unique}{circular}(x, \dots)
 }
 
 \arguments{
-  \item{x}{a vector or a data frame or an array or \code{NULL}.}
-  \item{incomparables}{a vector of values that cannot be compared.
-    Currently, \code{FALSE} is the only possible value, meaning that all
-    values can be compared.}
-  \item{fromLast}{logical indicating if duplication should be considered from the last, i.e., the last (or rightmost) of identical elements will be kept. This only matters for \code{\link{names}} or \code{\link{dimnames}}.}
- \item{\dots}{}
+ \item{x}{a vector or a data frame or an array or \code{NULL}.}
+ \item{\dots}{parameters passed to \code{\link{unique.default}}}
 }
 \details{
   This is a method for \code{circular} object. See the documentation of \code{\link{unique}}.
 }
 
 \value{
-  An object of the same type of \code{x}. but if
+  An object of the same type of \code{x}, but if
   an element is equal to one with a smaller index, it is removed.
 }
 

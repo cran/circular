@@ -19,7 +19,6 @@ conversion.circular(x, units = c("radians", "degrees"), type = NULL, template = 
   \item{rotation}{rotation of the tranformed data. If \code{NULL} no action is performed.}
 }
 
-}
 \value{
   an object of class \code{\link{circular}} with the specified unit of measure, modulo, zero and rotation.
 }

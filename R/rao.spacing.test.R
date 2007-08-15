@@ -60,8 +60,8 @@ RaoSpacingTestDeg <- function(x) {
 #   print.rao.spacing.test function                         #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: May, 24, 2007                                     #
-#   Version: 0.2                                            #
+#   Date: August, 15, 2007                                  #
+#   Version: 0.2-2                                          #
 #                                                           #
 #   Copyright (C) 2007 Claudio Agostinelli                  #
 #                                                           #
@@ -71,7 +71,7 @@ print.rao.spacing.test <- function(x, digits=4, ...) {
     U <- x$statistic
     alpha <- x$alpha
     n <- x$n
-    data(rao.table)
+    data(rao.table, package='circular', envir=sys.frame(which=sys.nframe()))
     if (n <= 30)
     table.row <- n - 3
     else if (n <= 32)
@@ -111,7 +111,7 @@ print.rao.spacing.test <- function(x, digits=4, ...) {
     cat("\n")
     cat("       Rao's Spacing Test of Uniformity", "\n", "\n")
     cat("Test Statistic =", round(U, digits=digits), "\n")
-   
+    
     if (alpha == 0) {
         if (U > rao.table[table.row, 1])
         cat("P-value < 0.001", "\n", "\n")
