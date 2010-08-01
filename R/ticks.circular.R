@@ -3,18 +3,35 @@
 #   ticks.circular function                                 #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: May, 29, 2006                                     #
-#   Version: 0.3-1                                            #
+#   Date: November, 13, 2008                                #
+#   Version: 0.4-1                                          #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2008 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
 ticks.circular <- function(x, template=c("none", "geographics"), zero=NULL, rotation=NULL, tcl=0.025, col=NULL, ...) {
   template <- match.arg(template)
   if (is.null(col)) col <- par("col")
-  x <- conversion.circular(x, units="radians", template=template, zero=zero, rotation=rotation, modulo="2pi")
+  xcircularp <- attr(as.circular(x), "circularp")
+  type <- xcircularp$type
+  if (type=='directions')
+    x <- 2*x
+  if (template=="geographics") {
+    zero <- pi/2
+    rotation <- "clock"
+  } else {
+    if (is.null(zero))
+      zero <- xcircularp$zero
+    if (is.null(rotation))
+      rotation <- xcircularp$rotation
+  }  
+  x <- conversion.circular(x, units="radians")  
   attr(x, "circularp") <- attr(x, "class") <- NULL
+  if (rotation=="clock")
+    x <- -x
+  x <- x+zero
+  x <- x%%(2*pi)
   TicksCircularRad(x, tcl, col, ...)
 }
 

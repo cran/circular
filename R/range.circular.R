@@ -11,49 +11,54 @@
 #   range.circular function                                 #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: August, 10, 2006                                  #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: August, 31, 2010                                  #
+#   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.3-2                                           #
+#   Version 0.4                                             #
 #############################################################
 
 range.circular <- function(x, test = FALSE, na.rm=FALSE, finite=FALSE, control.circular=list(), ...) {
-   if (finite) 
-       x <- x[is.finite(x)]
-   else if (na.rm) 
-       x <- x[!is.na(x)]
-
-    if (is.circular(x)) {
-       datacircularp <- circularp(x)     
-    } else {
-       datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+  if (finite) 
+    x <- x[is.finite(x)]
+  if (na.rm) 
+    x <- x[!is.na(x)]
+  else {
+    if (any(is.na(x))) {
+       x <- circular(NA)
+       return(x)
     }
+  }
+  if (is.circular(x)) {
+    datacircularp <- circularp(x)     
+  } else {
+    datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+  }
 
-    dc <- control.circular
-    if (is.null(dc$type))
-       dc$type <- datacircularp$type
-    if (is.null(dc$units))
-       dc$units <- datacircularp$units
-    if (is.null(dc$template))
-       dc$template <- datacircularp$template
-    if (is.null(dc$modulo))
-       dc$modulo <- datacircularp$modulo
-    if (is.null(dc$zero))
-       dc$zero <- datacircularp$zero
-    if (is.null(dc$rotation))
-       dc$rotation <- datacircularp$rotation
+  dc <- control.circular
+  if (is.null(dc$type))
+    dc$type <- datacircularp$type
+  if (is.null(dc$units))
+    dc$units <- datacircularp$units
+  if (is.null(dc$template))
+    dc$template <- datacircularp$template
+  if (is.null(dc$modulo))
+    dc$modulo <- datacircularp$modulo
+  if (is.null(dc$zero))
+    dc$zero <- datacircularp$zero
+  if (is.null(dc$rotation))
+    dc$rotation <- datacircularp$rotation
    
-    x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
-    attr(x, "class") <- attr(x, "circularp") <- NULL
+  x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
+  attr(x, "class") <- attr(x, "circularp") <- NULL
 
-    result <- RangeCircularRad(x, test)
+  result <- RangeCircularRad(x, test)
    
-    if (test) {
-       result$range <- conversion.circular(circular(result$range), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
-    } else {
-      result <- conversion.circular(circular(result), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
-    }
-    return(result)
+  if (test) {
+    result$range <- conversion.circular(x=circular(result$range), units=dc$units, type=dc$type, template=dc$template, modulo="2pi", zero=0, dc$rotation)
+  } else {
+    result <- conversion.circular(x=circular(result), units=dc$units, type=dc$type, template=dc$template, modulo="2pi", zero=0, dc$rotation)
+  }
+  return(result)
 }
 
 RangeCircularRad <- function(x, test=TRUE) {

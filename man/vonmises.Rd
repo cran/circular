@@ -3,32 +3,38 @@
 \alias{dvonmises}
 \alias{rvonmises}
 \alias{pvonmises}
+\alias{qvonmises}
 
 \description{
-  Density, distribution function and random generation for the von Mises
-  circular distribution. 
+  Density, distribution function, random generation and quantiles for
+  the von Mises circular distribution. 
 }
 
 \usage{
+rvonmises(n, mu, kappa, control.circular=list())
 dvonmises(x, mu, kappa)
 pvonmises(q, mu, kappa, tol = 1e-020)
-rvonmises(n, mu, kappa, control.circular=list())
+qvonmises(p, mu = circular(0), kappa=NULL, tol = .Machine$double.eps^(0.6), 
+  control.circular = list(), \dots)
 }
 
 \arguments{
-  \item{x, q}{a vector. The object is coerced to class
+  \item{x, q, p}{a vector. The \code{x} and \code{q} objects are coerced to class
     \code{\link{circular}}.}
 \item{n}{number of observations.}  
 \item{mu}{mean direction of the distribution. The object is coerced to class \code{\link{circular}}.}
 \item{kappa}{non-negative numeric value for the concentration parameter
   of the distribution.}
 \item{control.circular}{the attribute of the resulting object.}
-\item{tol}{the precision in evaluating the distributon function.}
+\item{tol}{the precision in evaluating the distributon function or the
+  quantile.}
+  \item{\dots}{parameters passed to \code{\link{integrate}}.}
 }
 
 \value{
 \code{dvonmises} gives the density, \code{pvonmises} gives the
-distribution function and \code{rvonmises} generates random deviates.
+distribution function, \code{rvonmises} generates random deviates and
+\code{qvonmises} provides quantiles.
 
 Since version 0.3-5 the random deviates are generated using a C code.
 }
@@ -45,10 +51,13 @@ data1 <- rvonmises(100, circular(0), 10, control.circular=list(units="degrees"))
 plot(data1)
 
 ff <- function(x) dvonmises(x, mu=circular(pi), kappa=10)
-curve.circular(ff, join=TRUE, xlim=c(-2.3, 1), main="Density of a VonMises Distribution \n mu=pi, kappa=10")
+curve.circular(ff, join=TRUE, xlim=c(-2.3, 1),
+  main="Density of a VonMises Distribution \n mu=pi, kappa=10")
 
 ff <- function(x) pvonmises(x, mu=circular(pi), kappa=10)
-curve.circular(ff, join=FALSE, xlim=c(-2, 2), ylim=c(-2, 1), to=(2*pi-3*.Machine$double.eps), modulo="asis", nosort=TRUE, main="Probability of a VonMises Distribution \n mu=pi, kappa=10")
+curve.circular(ff, join=FALSE, xlim=c(-2, 2), ylim=c(-2, 1), 
+  to=(2*pi-3*.Machine$double.eps), modulo="asis", nosort=TRUE, 
+  main="Probability of a VonMises Distribution \n mu=pi, kappa=10")
 
 }
 

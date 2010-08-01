@@ -6,10 +6,12 @@
 	 indicate the proportion of time wind comes from a given
 	 direction. Bands on the windrose indicate the proportions of
 	 winds of each magnitude.}
-       \usage{windrose(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose',
-              cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, 
-              ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), 
-              ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, calm=c("0", "NA"), ...)
+\usage{windrose(x, y=NULL, breaks=NULL, bins=12, increment = 10, 
+  main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, 
+  mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, 
+  tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), 
+  ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, 
+  label.freq=FALSE, calm=c("0", "NA"), ...)
 }
 
 \arguments{
@@ -79,13 +81,16 @@ res <- windrose(sample)
 ## we join two pedals and keep the same shrink (scale of the plot)
 breaks <-circular(seq(0, 2 * pi, by = pi/6))
 breaks <- breaks[-2]
-windrose(sample, breaks=breaks, main="The same but with two pedals joined", shrink=res$shrink)
+windrose(sample, breaks=breaks, main="The same but with two pedals joined", 
+  shrink=res$shrink)
 ## change the rotation
 sample <- data.frame(dir=circular(dir, units="degrees", rotation="clock"), mag=mag)
 windrose(sample, breaks=breaks, main="Change the rotation", shrink=res$shrink)
 ## use geographics template
-sample <- data.frame(dir=circular(dir, units="degrees", template="geographics"), mag=mag)
-windrose(sample, breaks=breaks, main="Use the template 'geographics'", shrink=res$shrink)
+sample <- data.frame(dir=circular(dir, units="degrees", template="geographics"),
+  mag=mag)
+windrose(sample, breaks=breaks, main="Use the template 'geographics'", 
+  shrink=res$shrink)
 
 ## do the same plot but in radians
 dir <- conversion.circular(dir)

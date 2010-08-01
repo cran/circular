@@ -3,14 +3,14 @@
 #   plot.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: June, 07, 2006                                    #
-#   Version: 0.3-1                                          #
+#   Date: October, 19, 2009                                 #
+#   Version: 0.5                                            #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
-plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, shrink=1, bins=NULL, ticks=FALSE, tcl=0.025, tcl.text=0.125, col=NULL, tol=0.04, uin=NULL, xlim=c(-1, 1), ylim=c(-1, 1), digits=2, units=NULL, template=NULL, zero=NULL, rotation=NULL, main="", xlab="", ylab="", ...) {
+plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, shrink=1, bins=NULL, ticks=FALSE, tcl=0.025, tcl.text=0.125, col=NULL, tol=0.04, uin=NULL, xlim=c(-1, 1), ylim=c(-1, 1), digits=2, units=NULL, template=NULL, zero=NULL, rotation=NULL, main=NULL, sub=NULL, xlab="", ylab="", control.circle=circle.control(), ...) {
 
    if (is.matrix(x) | is.data.frame(x)) {
       nseries <- ncol(x)
@@ -26,9 +26,13 @@ plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, s
       units <- xcircularp$units
    if (is.null(template))
       template <- xcircularp$template
-   if (template=="geographics") {
+   if (template=="geographics" | template=="clock24") {
       zero <- pi/2
       rotation <- "clock"
+   } else if (template=="clock12") {
+      zero <- pi/2
+      rotation <- "clock"
+      modulo <- "pi"
    } else {
       if (is.null(zero))
          zero <- xcircularp$zero
@@ -36,7 +40,7 @@ plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, s
          rotation <- xcircularp$rotation
    }
    
-   CirclePlotRad(xlim, ylim, uin, shrink, tol, 1000, main=main, xlab=xlab, ylab=ylab)
+   CirclePlotRad(xlim=xlim, ylim=ylim, uin=uin, shrink=shrink, tol=tol, main=main, sub=sub, xlab=xlab, ylab=ylab, control.circle=control.circle)
     
    if (is.null(bins)) {
       bins <- NROW(x)
@@ -72,19 +76,21 @@ plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, s
       x <- na.omit(x)
       n <- length(x)      
       if (n) {
-         x <- conversion.circular(x, units="radians")
+         x <- conversion.circular(x, units="radians", modulo=modulo)
          attr(x, "circularp") <- attr(x, "class") <- NULL
          if (rotation=="clock")
             x <- -x
          x <- x+zero
+         if (template=="clock12")
+           x <- 2*x
          x <- x%%(2*pi)
-         PointsCircularRad(x, bins, stack, col, pch, iseries, nseries, sep, 0, shrink, cex, ...) 
+         PointsCircularRad(x, bins, stack, col, pch, iseries, nseries, sep, 0, shrink, cex, ...)
       }
    }
 return(invisible(list(zero=zero, rotation=rotation, next.points=nseries*sep)))
 }
 
-CirclePlotRad <- function(xlim=c(-1,1), ylim=c(-1,1), uin=NULL, shrink=1, tol=0.04, n=1000, ...) {
+CirclePlotRad <- function(xlim=c(-1,1), ylim=c(-1,1), uin=NULL, shrink=1, tol=0.04, main=NULL, sub=NULL, xlab=NULL, ylab=NULL, control.circle=circle.control()) {
    xlim <- shrink * xlim
    ylim <- shrink * ylim
    midx <- 0.5 * (xlim[2] + xlim[1])
@@ -108,6 +114,23 @@ CirclePlotRad <- function(xlim=c(-1,1), ylim=c(-1,1), uin=NULL, shrink=1, tol=0.
    }
    xlim <- midx + oxuin/xuin * c(-1, 1) * diff(xlim) * 0.5
    ylim <- midy + oyuin/yuin * c(-1, 1) * diff(ylim) * 0.5
-   plot.default(cos(seq(0, 2 * pi, length = n)), sin(seq(0, 2 * pi, length = n)), axes = FALSE, type = "l", xlim=xlim, ylim=ylim, xaxs="i", yaxs="i", ...)
+   n <- control.circle$n
+   x <- cos(seq(0, 2 * pi, length = n))
+   y <- sin(seq(0, 2 * pi, length = n))
+   axes <- FALSE
+   log <- ""
+   xaxs <- "i"
+   yaxs <- "i"
+   ann <-  par("ann")
+   frame.plot <- axes
+   panel.first <- NULL 
+   panel.last <- NULL
+   asp <- NA
+   plot.default(x=x, y=y, type=control.circle$type, xlim=xlim, ylim=ylim, log="", main=main, sub=sub, xlab=xlab, ylab=ylab, ann=ann, axes=axes, frame.plot=frame.plot, panel.first=panel.first, panel.last=panel.last, asp=asp, col=control.circle$col, bg=control.circle$bg, pch=control.circle$pch, cex=control.circle$cex, lty=control.circle$lty, lwd=control.circle$lwd)
+}
+
+circle.control <- function(n=1000, type='l', col=1, bg=par('bg'), pch=1, cex=1, lty=1, lwd=1) {
+  x <- list(n=n, type=type, col=col, bg=bg, pch=pch, cex=cex, lty=lty, lwd=lwd)
+  return(x)
 }
 

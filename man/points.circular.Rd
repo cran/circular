@@ -7,9 +7,9 @@ Add points to a plot of circular data points on the current graphics device.
 }
 
 \usage{
-points.circular(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, shrink = 1, 
-    bins = NULL, col = NULL, next.points = NULL, plot.info = NULL, zero = NULL, 
-    rotation = NULL, ...)
+points.circular(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, 
+  shrink = 1, bins = NULL, col = NULL, next.points = NULL, 
+  plot.info = NULL, zero = NULL, rotation = NULL, ...)
 }
 
 \arguments{
@@ -35,7 +35,7 @@ points.circular(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, shrink = 1,
 
 \details{
 When there are many closely distributed observations, stacking is
-recommended. When stacking the points, if there are many points in a particular bin, it may be necessary to shrink the plot of the circle so that all points fit.  This is controlled with the parameter \code{shrink}.  Generally the parameter \code{sep} does not need adjustment, however, when shrinking the plot, or for a very large number of observations, it may be helpful.
+recommended. When stacking the points, if there are many points in a particular bin, it may be necessary to shrink the plot of the circle so that all points fit. This is controlled with the parameter \code{shrink}. Generally the parameter \code{sep} does not need adjustment, however, when shrinking the plot, or for a very large number of observations, it may be helpful. Since version 0.3-9 the intervals are on the form [a,b).
 }
 
 \author{Claudio Agostinelli}

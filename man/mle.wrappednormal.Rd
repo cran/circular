@@ -9,8 +9,9 @@ Wrapped Normal distribution:  mean and concentration parameter.
 }
 
 \usage{
-mle.wrappednormal(x, mu = NULL, rho = NULL, sd = NULL, K = NULL, tol = 1e-05, 
-    min.sd = 1e-3, min.k = 10, max.iter = 100, verbose = FALSE, control.circular=list())
+mle.wrappednormal(x, mu = NULL, rho = NULL, sd = NULL, K = NULL, 
+  tol = 1e-05, min.sd = 1e-3, min.k = 10, max.iter = 100, 
+  verbose = FALSE, control.circular=list())
 \method{print}{mle.wrappednormal}(x, digits = max(3, getOption("digits") - 3), \dots)
 }
 
@@ -19,7 +20,7 @@ mle.wrappednormal(x, mu = NULL, rho = NULL, sd = NULL, K = NULL, tol = 1e-05,
     \code{\link{circular}}.}
   \item{mu}{if \code{NULL} the maximum likelihood estimate of the mean
     direction is calculated, otherwise the value is coerced to an object of class \code{circular}.}
-  \item{rho}{if {NULL} the maximum likelihood estimate of the
+  \item{rho}{if \code{NULL} the maximum likelihood estimate of the
     concentration parameter is calculated.}
   \item{sd}{standard deviation of the (unwrapped) normal. Used as an
     alternative parametrization.}

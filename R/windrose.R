@@ -18,10 +18,10 @@
 #   windrose function                                       #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: March, 010, 2006                                  #
-#   Version: 0.4                                            #
+#   Date: October, 19, 2009                                 #
+#   Version: 0.4-1                                          #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -141,12 +141,16 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
    
    x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
    attr(x, "class") <- attr(x, "circularp") <-  NULL
-
+   
+   if (template=="clock12") { ### added for clock12
+     x <- 2*x
+     x <- x%%(2*pi)
+   }
    x[x >= breaks[bins+1]] <- x[x >= breaks[bins+1]]-2*pi
  
 ###   x[(x+step/2)%%(2*pi)==0] <- 2*pi # Values like 359 go to Sector 0
    plot(c(-1.2,1.2), c(-1.2,1.2), xlab='', ylab='', main=main, xaxt='n', yaxt='n', pch=' ', xlim=xlim, ylim=ylim)
-   counts <- hist(x, breaks=breaks ,plot=FALSE, right=right)$counts #use hist for
+   counts <- hist.default(x, breaks=breaks ,plot=FALSE, right=right)$counts #use hist for
    mids <- breaks[1:bins]+step/2 # midpoints
    if (plot.mids) {
        for (i in 1:bins) { 
@@ -176,7 +180,7 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
 
    for(j in J:1){  
       data1<- x[y <= j*increment]
-      OUT[j,] <- counts <- hist(data1, breaks=breaks, plot=FALSE, right=right)$counts #use hist for
+      OUT[j,] <- counts <- hist.default(data1, breaks=breaks, plot=FALSE, right=right)$counts #use hist for
       for (i in 1:bins) {
            w1 <- breaks[i]  ## in radians, the locations of the upper and lower lines
            w2 <- breaks[i+1]

@@ -166,10 +166,10 @@ pwrappednormal <- function(q, mu=circular(0), rho=NULL, sd=1, from=NULL, K=NULL,
 #   qwrappednormal function                                 #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: August, 10, 2006                                  #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: November, 23, 2009                                #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-4                                           #
+#   Version 0.3                                             #
 #############################################################
 
 qwrappednormal <- function(p, mu=circular(0), rho=NULL, sd=1, from=NULL, K=NULL, min.k=10, tol=.Machine$double.eps^(0.6), control.circular=list(), ...) {
@@ -217,7 +217,7 @@ qwrappednormal <- function(p, mu=circular(0), rho=NULL, sd=1, from=NULL, K=NULL,
    if (rho < 0 | rho > 1)
       stop("rho must be between 0 and 1")
 
-   zeroPwrappednormalRad <- function(x, p) {
+   zeroPwrappednormalRad <- function(x, p, mu, rho, K, min.k) {
       if (is.na(x)) {    
          return(NA)
       } else {   
@@ -230,7 +230,7 @@ qwrappednormal <- function(p, mu=circular(0), rho=NULL, sd=1, from=NULL, K=NULL,
    sem <- options()$show.error.messages
    options(show.error.messages=FALSE)
    for (i in 1:length(p)) {
-         res <- try(uniroot(zeroPwrappednormalRad, p=p[i], lower=0, upper=2*pi-epsilon, tol=tol))
+         res <- try(uniroot(zeroPwrappednormalRad, p=p[i], mu=mu, rho=rho, K=K, min.k=min.k, lower=0, upper=2*pi-epsilon, tol=tol))
          if (is.list(res)) {
              value[i] <- res$root 
          } else if (p[i] < 10*epsilon) {

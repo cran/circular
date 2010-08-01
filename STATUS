@@ -1,5 +1,27 @@
 Library circular
 =================
+Version 0.4, 2010/08/01
+Refix range.circular
+
+Version 0.3-9, 2010/07/31
+Fixed bug #729 on watson.two.test function.
+Fixed bug #69 small bug in rose.diag of R package "circular", 0.3-8 and the same problem in the points.circular and plot.circular
+Fixed bug #104	bug in rvonmises, 0.3-8. Now, when kappa is zero, random deviates are generated according to the Circular Uniform Distribution
+Use patches #193 to fix for plotting many arrows with one call to arrows.circular()
+Add the argument control.circle to pass parameters to the internal function that draws the circle in plot.circular, curve.circular, plot.circular.function, plot.density.circular. A function, circle.control, is introduced to set those parameters. This is used instead of the proposed patches #194	The CirclePlotRad() function can accept "..." but it isn't currently passed.
+Add the argument sub, and change the default of main to NULL in the above functions.
+Internal functions PointsCircularRad and RosediagRad use the hist function to construct intervals in stack=TRUE.
+Add units "hours" for data expressed in hours (minutes and seconds must be expressed in decimals).
+Add template "clock12" and "clock24" to plot data which are time. 
+Add dist.circular function.
+Add heatmap.circular function.
+Add medianCircular function.
+Add offset argument to the lines.circular, lines.density.circular, plot.density.circular functions.
+Add shrink argument to the lines.circular function.
+Function lines.circular return x and y in the invisible object.
+Fixed the name of the help page for the circular function.
+
+
 Version 0.3-8, 2007/08/15
 Now unique.circular calls unique.default instead of the internal function. print.rao.spacing.test loads locally the dataset rao.table
 

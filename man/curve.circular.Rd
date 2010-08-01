@@ -9,11 +9,14 @@
   plot circular density functions.
 }
 \usage{
-curve.circular(expr, from = NULL, to = NULL, n = 101, add = FALSE, cex = 1, axes = TRUE, ticks = FALSE, shrink = 1, tcl = 0.025, tcl.text = 0.125, tol = 0.04, uin = NULL, xlim = c(-1, 1), ylim = c(-1, 1), digits = 2, modulo = c("2pi", "asis", "pi"), main = "", xlab = "", ylab = "", \dots)
-plot.function.circular(x, from = 0, to = 2*pi, \dots)
-
+curve.circular(expr, from=NULL, to=NULL, n=101, add=FALSE, 
+  cex=1, axes=TRUE, ticks=FALSE, shrink=1, tcl=0.025, 
+  tcl.text=0.125, tol=0.04, uin=NULL, xlim=c(-1, 1), 
+  ylim=c(-1, 1), digits=2, modulo=c("2pi", "asis", "pi"), 
+  main=NULL, sub=NULL, xlab="", ylab="", 
+  control.circle=circle.control(), \dots)
+plot.function.circular(x, from=0, to=2*pi, \dots)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{expr}{an expression written as a function of \code{x}, or
     alternatively the name of a function which will be plotted.}
@@ -35,11 +38,12 @@ plot.function.circular(x, from = 0, to = 2*pi, \dots)
    axes. Useful for centering the plot.}
   \item{digits}{number of digits used to print axis values.}
   \item{modulo}{the modulo used to process the data.}
-  \item{main, xlab, ylab, cex}{graphical parameters.}
+  \item{main, sub, xlab, ylab, cex}{graphical parameters.}
+  \item{control.circle}{parameters passed to \code{\link{plot.default}} in order to draw the circle. The function \code{\link{circle.control}} is used to set the parameters.}
   \item{\dots}{parameters, passed to \code{\link{lines.circular}}.}
 }
 \details{
-For now, curve circular draws functions defined in radians, counterclowise coordinate and zero at 0.
+For now, curve circular draws functions defined in radians, counterclockwise coordinate and zero at 0.
 }
 
 \value{
@@ -47,7 +51,7 @@ A list with information on the plot: zero, rotation and next.points.
 }
 
 \seealso{
-\code{\link{lines.circular}}
+\code{\link{lines.circular}} and \code{\link{circle.control}}
 }
 
 \author{Claudio Agostinelli}
@@ -56,7 +60,8 @@ A list with information on the plot: zero, rotation and next.points.
 
 ff <- function(x) sqrt(x)/20
 curve.circular(ff)
-curve.circular(ff, to=6*pi, join=FALSE, nosort=TRUE, n=1001, modulo="asis", shrink=1.2)
+curve.circular(ff, to=6*pi, join=FALSE, nosort=TRUE, n=1001, modulo="asis",
+  shrink=1.2)
 
 plot.function.circular(function(x) dvonmises(x, circular(0), 10), xlim=c(-1, 2.2))
 }

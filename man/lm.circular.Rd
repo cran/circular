@@ -14,8 +14,10 @@ variables.
 \usage{
 lm.circular(..., type=c("c-c", "c-l"))
 lm.circular.cc(y, x, order = 1, level = 0.05, control.circular = list())
-lm.circular.cl(y, x, init = NULL, verbose = FALSE, tol = 1e-10, control.circular = list())
-\method{print}{lm.circular.cl}(x, digits = max(3, getOption("digits") - 3), signif.stars= getOption("show.signif.stars"), ...)
+lm.circular.cl(y, x, init = NULL, verbose = FALSE, tol = 1e-10, 
+  control.circular = list())
+\method{print}{lm.circular.cl}(x, digits = max(3, getOption("digits") - 3), 
+  signif.stars= getOption("show.signif.stars"), ...)
 }
 
 \arguments{
@@ -134,7 +136,8 @@ Statistical Conference.  VSP: Utrecht, Netherlands.
 \examples{
 # Generate a data set of dependent circular variables.
 x <- circular(runif(50, 0, 2*pi))
-y <- atan2(0.15*cos(x) + 0.25*sin(x), 0.35*sin(x)) + rvonmises(n=50, mu=circular(0), kappa=5)
+y <- atan2(0.15*cos(x) + 0.25*sin(x), 0.35*sin(x)) + 
+  rvonmises(n=50, mu=circular(0), kappa=5)
 
 # Fit a circular-circular regression model.
 circ.lm <- lm.circular(y, x, order=1)

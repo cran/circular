@@ -11,10 +11,10 @@
 #   watson.two.test function                                #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: May, 31, 2006                                     #
-#   Version: 0.3-1                                          #
+#   Date: December, 16, 2009                                #
+#   Version: 0.3-2                                          #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -34,7 +34,7 @@ watson.two.test <- function(x, y, alpha=0) {
 
     x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
     attr(x, "circularp") <- attr(x, "class") <- NULL
-    y <- conversion.circular(y, units="radians", rotation="counter", modulo="2pi")
+    y <- conversion.circular(y, units="radians", zero=0, rotation="counter", modulo="2pi")
     attr(y, "circularp") <- attr(y, "class") <- NULL
 
     result <- WatsonTwoTestRad(x, y)

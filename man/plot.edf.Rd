@@ -50,9 +50,14 @@ ff <- function(x, data) {
 plot(function(x) ff(x, data=data1), from=0, to=2*pi-3*.Machine$double.eps)
 
 #Or curve.circular
-plot.function.circular(function(x) ff(x, data=data1), from=0, to=(2*pi-3*.Machine$double.eps), join=FALSE, nosort=TRUE, xlim=c(-2,2), ylim=c(-2,2), modulo="asis", main="Empirical Distribution Function", n=2001, tcl.text=0.25)
+plot.function.circular(function(x) ff(x, data=data1), from=0, 
+  to=(2*pi-3*.Machine$double.eps), join=FALSE, nosort=TRUE, xlim=c(-2,2), 
+  ylim=c(-2,2), modulo="asis", main="Empirical Distribution Function", 
+  n=2001, tcl.text=0.25)
 
-res <- plot.function.circular(function(x) ff(x, data=data2), from=0, to=(2*pi-3*.Machine$double.eps), join=FALSE, nosort=TRUE, modulo="asis", add=TRUE, col=2, n=2001)
+res <- plot.function.circular(function(x) ff(x, data=data2), from=0, 
+  to=(2*pi-3*.Machine$double.eps), join=FALSE, nosort=TRUE, modulo="asis", 
+  add=TRUE, col=2, n=2001)
 
 res1 <- points(data1, plot.info=res)
 points(data2, plot.info=res1, col=2, sep=0.05)

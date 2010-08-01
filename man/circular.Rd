@@ -1,4 +1,4 @@
-\name{Circular}
+\name{circular}
 \alias{circular}
 \alias{as.circular}
 \alias{is.circular}
@@ -8,7 +8,10 @@
 The function \code{circular} is used to create circular objects. \code{as.circular} and \code{is.circular} coerce an object to a circular and  test whether an object is a circular data.
 }
 \usage{
-circular(x, type = c("angles", "directions"), units = c("radians", "degrees"), template = c("none", "geographics"), modulo = c("asis", "2pi", "pi"), zero = 0, rotation = c("counter", "clock"), names)
+circular(x, type = c("angles", "directions"), 
+  units = c("radians", "degrees", "hours"),
+  template = c("none", "geographics", "clock12", "clock24"), modulo = c("asis", "2pi", "pi"), 
+  zero = 0, rotation = c("counter", "clock"), names)
 as.circular(x, control.circular=list(), ...)
 is.circular(x)
 \method{print}{circular}(x, info=TRUE, ...)
@@ -18,7 +21,7 @@ is.circular(x)
   \item{x}{a vector or a matrix. If a data.frame is supply then it is corced to a matrix.}
   \item{type}{the type of measures (Not Used Yet).}
   \item{units}{units of the measures.}
-  \item{template}{how the data should be plotted (Until now only 'geographics' style is available). This set \code{modulo}, \code{zero} and \code{rotation} to some suitable values. For instance for 'geographics': zero=pi/2 and rotation='clock'. It is also used to set default labels on the plots.}
+  \item{template}{how the data should be plotted. This set \code{modulo}, \code{zero} and \code{rotation} to some suitable values. For instance for 'geographics': zero=pi/2 and rotation='clock'. It is also used to set default labels on the plots.}
   \item{modulo}{if we need to reduce the measures to modulo.}
   \item{zero}{the zero of the axes (in radians, counter).}
   \item{rotation}{the orientation of the axes.}
@@ -52,7 +55,8 @@ x <- circular(data.frame(runif(10, -pi/2, pi/2)))
 plot(x)
 class(x)
 
-cbind(x, x) # the matrix, cbind, rbind functions unclass and lost attributes! Use it with care.
+cbind(x, x) # the matrix, cbind, rbind functions unclass and lost attributes! 
+########Use it with care.
 
 x <- c(pi/12,2*pi+pi/12)%%(2*pi)  # unique may not work as desidered due to machine precision 
 print(x)

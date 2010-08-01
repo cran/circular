@@ -6,14 +6,19 @@ A method taking coordinates in a polar system and joining the corresponding poin
 
 }
 \usage{
-lines.circular(x, y, join = FALSE, nosort = FALSE, plot.info = NULL, zero = NULL, rotation = NULL, modulo = NULL, \dots)
+lines.circular(x, y, join = FALSE, nosort = FALSE, offset=1, shrink=1,
+  plot.info = NULL, zero = NULL, rotation = NULL, modulo = NULL, \dots)
 }
 
 \arguments{
   \item{x}{a vector of class \code{circular}.}
   \item{y}{a vector with the same length as 'x'.}
   \item{join}{logical: if \code{TRUE} the first and the last values are joined by a line.}
-  \item{nosort}{logical: if \code{TRUE} the data are not sorted before join them.}
+  \item{nosort}{logical: if \code{TRUE} the data are not sorted before
+    join them.}
+  \item{offset}{the radius of the circle}
+  \item{shrink}{parameter that controls the size of the plotted function.
+    Default is 1.}
   \item{plot.info}{an object from another circular graphic function.}
   \item{zero}{the zero of the axis.}
   \item{rotation}{the rotation of the axis.}

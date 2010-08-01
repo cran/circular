@@ -3,14 +3,14 @@
 #   lines.circular function                                 #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: June, 06, 2006                                    #
-#   Version: 0.1-2                                          #
+#   Date: March, 29, 2010                                   #
+#   Version: 0.2-1                                          #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
-lines.circular <- function(x, y, join=FALSE, nosort=FALSE, plot.info=NULL, zero=NULL, rotation=NULL, modulo=NULL, ...) {
+lines.circular <- function(x, y, join=FALSE, nosort=FALSE, offset=1, shrink=1, plot.info=NULL, zero=NULL, rotation=NULL, modulo=NULL, ...) {
 
    xcircularp <- attr(as.circular(x), "circularp")
 #   type <- xcircularp$type
@@ -42,12 +42,12 @@ lines.circular <- function(x, y, join=FALSE, nosort=FALSE, plot.info=NULL, zero=
          x <- -x
       x <- x+zero
 ###      x <- x%%(2*pi)
-      LinesCircularRad(x, y, join, nosort, ...) 
+      ll <- LinesCircularRad(x, y, join, nosort, offset, shrink, ...) 
    }
-   return(invisible(list(zero=zero, rotation=rotation, next.points=next.points)))
+   return(invisible(list(x=ll$x, y=ll$y, zero=zero, rotation=rotation, next.points=next.points)))
 }
 
-LinesCircularRad <- function(x, y, join=FALSE, nosort=FALSE,...) {
+LinesCircularRad <- function(x, y, join=FALSE, nosort=FALSE, offset=1, shrink=1, ...) {
    n <- length(x)
    if (!nosort) {
       xorder <- order(x)
@@ -63,8 +63,8 @@ LinesCircularRad <- function(x, y, join=FALSE, nosort=FALSE,...) {
          xorder <- 1:n
    
    }
-   z <- (y+1)*cos(x)
-   w <- (y+1)*sin(x)
+   z <- (y/shrink+offset)*cos(x)
+   w <- (y/shrink+offset)*sin(x)
    z <- z[xorder]
    w <- w[xorder]
    if (join) {
@@ -72,5 +72,6 @@ LinesCircularRad <- function(x, y, join=FALSE, nosort=FALSE,...) {
       w <- c(w, w[1])
    }
    lines.default(x=z, y=w, ...)
+   invisible(list(x=z, y=w))
 }
 

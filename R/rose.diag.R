@@ -11,10 +11,10 @@
 #   rose.diag function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: June, 06, 2006                                    #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: October, 18, 2009                                 #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-1                                           #
+#   Version 0.2-2                                           #
 #                                                           #
 #############################################################
 
@@ -29,15 +29,19 @@ rose.diag <- function(x, pch = 16, cex=1, axes = TRUE, shrink = 1, bins=NULL, ti
   
    xcircularp <- attr(as.circular(xx[,1]), "circularp")
 #   type <- xcircularp$type
-#   modulo <- xcircularp$modulo
+   modulo <- xcircularp$modulo
    if (is.null(units)) 
       units <- xcircularp$units
    if (is.null(plot.info)) {
       if (is.null(template))
          template <- xcircularp$template
-      if (template=="geographics") {
+      if (template=="geographics" | template=="clock24") {
          zero <- pi/2
          rotation <- "clock"
+      } else if (template=="clock12") {
+         zero <- pi/2
+         rotation <- "clock"
+         modulo <- "pi"
       } else {
          if (is.null(zero))
             zero <- xcircularp$zero
@@ -89,11 +93,13 @@ rose.diag <- function(x, pch = 16, cex=1, axes = TRUE, shrink = 1, bins=NULL, ti
       x <- na.omit(x)
       n <- length(x)      
       if (n) {
-         x <- conversion.circular(x, units="radians")
+         x <- conversion.circular(x, units="radians", modulo=modulo)
          attr(x, "circularp") <- attr(x, "class") <- NULL
          if (rotation=="clock")
             x <- -x
          x <- x+zero
+         if (template=="clock12")
+           x <- 2*x
          x <- x%%(2*pi)
          RosediagRad(x, bins, prop, col[iseries], ...)
       }
@@ -102,12 +108,16 @@ rose.diag <- function(x, pch = 16, cex=1, axes = TRUE, shrink = 1, bins=NULL, ti
 }
 
 RosediagRad <- function(x, bins, prop, col, ...) {
+#### x musts be in modulo 2pi
     n <- length(x)
     freq <- rep(0, bins)
     arc <- (2 * pi)/bins
-    for (i in 1:bins) {
-       freq[i] <- sum(x <= i * arc & x > (i - 1) * arc)
-    }
+    x[x >= 2*pi] <- 2*pi-4*.Machine$double.eps
+#    for (i in 1:bins) {
+#       freq[i] <- sum(x < i * arc & x >= (i - 1) * arc)
+#    }
+    breaks <- seq(0,2*pi,length.out=(bins+1))
+    freq <- hist.default(x, breaks=breaks, plot=FALSE, right=TRUE)$counts   
     rel.freq <- freq/n
     radius <- sqrt(rel.freq) * prop
     sector <- seq(0, 2 * pi - (2 * pi)/bins, length = bins)

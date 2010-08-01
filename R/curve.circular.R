@@ -3,16 +3,16 @@
 #   curve.circular function                                 #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: June, 01, 2006                                    #
-#   Version: 0.1-1                                          #
+#   Date: April, 02, 2009                                   #
+#   Version: 0.2                                            #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
 # For now the function can use only this coordinate system: units="radians", zero=0, rotation="counter"
 
-curve.circular <- function(expr, from=NULL, to=NULL, n=101, add=FALSE, cex=1, axes=TRUE, ticks=FALSE, shrink=1, tcl=0.025, tcl.text=0.125, tol=0.04, uin=NULL, xlim=c(-1, 1), ylim=c(-1, 1), digits=2, modulo=c("2pi", "asis", "pi"), main="", xlab="", ylab="", ...) {
+curve.circular <- function(expr, from=NULL, to=NULL, n=101, add=FALSE, cex=1, axes=TRUE, ticks=FALSE, shrink=1, tcl=0.025, tcl.text=0.125, tol=0.04, uin=NULL, xlim=c(-1, 1), ylim=c(-1, 1), digits=2, modulo=c("2pi", "asis", "pi"), main=NULL, sub=NULL, xlab="", ylab="", control.circle=circle.control(), ...) {
     modulo <- match.arg(modulo)
     sexpr <- substitute(expr)
     if (is.name(sexpr)) {
@@ -29,7 +29,7 @@ curve.circular <- function(expr, from=NULL, to=NULL, n=101, add=FALSE, cex=1, ax
     y <- eval(expr, envir=list(x = x), enclos=parent.frame())
     attr(y, "circularp") <- attr(y, "class") <- NULL
     if (!add) {
-       CirclePlotRad(xlim=xlim, ylim=ylim, uin=uin, shrink=shrink, tol=tol, n=1000, main=main, xlab=xlab, ylab=ylab)
+       CirclePlotRad(xlim=xlim, ylim=ylim, uin=uin, shrink=shrink, tol=tol, main=main, sub=sub, xlab=xlab, ylab=ylab, control.circle=control.circle)
        if (axes) {
           axis.circular(units="radians", template="none", zero=0, rotation="counter", digits=digits, cex=cex, tcl=tcl, tcl.text=tcl.text)
        }

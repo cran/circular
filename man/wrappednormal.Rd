@@ -10,12 +10,15 @@ Density, and random generation for the wrapped normal circular distribution.
 }
 
 \usage{
-rwrappednormal(n, mu = circular(0), rho = NULL, sd = 1, control.circular = list())
-dwrappednormal(x, mu = circular(0), rho = NULL, sd = 1, K = NULL, min.k = 10)
-pwrappednormal(q, mu = circular(0), rho = NULL, sd = 1, from = NULL, K = NULL, 
-       min.k = 10, \dots)
-qwrappednormal(p, mu = circular(0), rho = NULL, sd = 1, from = NULL, K = NULL, 
-       min.k = 10, tol = .Machine$double.eps^(0.6), control.circular = list(), \dots)
+rwrappednormal(n, mu = circular(0), rho = NULL, sd = 1, 
+  control.circular = list())
+dwrappednormal(x, mu = circular(0), rho = NULL, sd = 1, 
+  K = NULL, min.k = 10)
+pwrappednormal(q, mu = circular(0), rho = NULL, sd = 1, 
+  from = NULL, K = NULL, min.k = 10, \dots)
+qwrappednormal(p, mu = circular(0), rho = NULL, sd = 1, 
+  from = NULL, K = NULL, min.k = 10, tol = .Machine$double.eps^(0.6), 
+  control.circular = list(), \dots)
 }
 
 \arguments{
@@ -36,7 +39,9 @@ qwrappednormal(p, mu = circular(0), rho = NULL, sd = 1, from = NULL, K = NULL,
 }
 
 \value{
-\code{dwrappednormal} gives the density and \code{rwrappednormal} generates random deviates.
+\code{dwrappednormal} gives the density and \code{rwrappednormal}
+generates random deviates,  \code{pwrappednormal} gives the
+distribution function, and \code{qwrappednormal} provides quantiles.
 }
 
 \author{Claudio Agostinelli and Ulric Lund}
@@ -47,17 +52,25 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 
 \examples{
 
-data1 <- rwrappednormal(100, mu=circular(0), rho=0.7, control.circular=list(units="degrees"))
+data1 <- rwrappednormal(100, mu=circular(0), rho=0.7, 
+  control.circular=list(units="degrees"))
 plot(data1)
 
 ff <- function(x) dwrappednormal(x, mu=circular(pi), rho=0.7)
-curve.circular(ff, join=TRUE, xlim=c(-1.5, 1), main="Density of a Wrapped Normal Distribution \n mu=pi, rho=0.7")
+curve.circular(ff, join=TRUE, xlim=c(-1.5, 1), 
+  main="Density of a Wrapped Normal Distribution \n mu=pi, rho=0.7")
 
 ff <- function(x) pwrappednormal(x, mu=circular(pi), rho=0.7)
-curve.circular(ff, join=FALSE, xlim=c(-2, 2), ylim=c(-2, 2), to=(2*pi-3*.Machine$double.eps), modulo="asis", nosort=TRUE, main="Probability of a Wrapped Normal Distribution \n mu=pi, rho=0.7, from=0")
+curve.circular(ff, join=FALSE, xlim=c(-2, 2), ylim=c(-2, 2), 
+  to=(2*pi-3*.Machine$double.eps), modulo="asis", nosort=TRUE, 
+  main="Probability of a Wrapped Normal Distribution \n mu=pi, 
+  rho=0.7, from=0")
 
 ff <- function(x) pwrappednormal(x, mu=circular(pi), rho=0.7, from=circular(pi))
-curve.circular(ff, join=FALSE, xlim=c(-2, 2), ylim=c(-2, 2), from=-pi, to=(pi-3*.Machine$double.eps), modulo="asis", nosort=TRUE, main="Probability of a Wrapped Normal Distribution \n mu=pi, rho=0.7, from=pi")
+curve.circular(ff, join=FALSE, xlim=c(-2, 2), ylim=c(-2, 2), from=-pi, 
+  to=(pi-3*.Machine$double.eps), modulo="asis", nosort=TRUE, 
+  main="Probability of a Wrapped Normal Distribution \n mu=pi, 
+  rho=0.7, from=pi")
 
 curve(qwrappednormal, from=0, to=1)
 

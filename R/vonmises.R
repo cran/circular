@@ -1,4 +1,3 @@
-
 #############################################################
 #                                                           #
 #       Original Splus: Ulric Lund                          #
@@ -11,37 +10,45 @@
 #   rvonmises function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: August, 10, 2006                                  #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: March, 31, 2009                                   #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-4                                           #
+#   Version 0.2-5                                           #
 #############################################################
 
 rvonmises <- function(n, mu, kappa, control.circular=list()) {
-   if (is.circular(mu)) {
-      datacircularp <- circularp(mu)
-   } else {
-      datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
-   }
-   dc <- control.circular
-   if (is.null(dc$type))
-      dc$type <- datacircularp$type
-   if (is.null(dc$units))
-      dc$units <- datacircularp$units
-   if (is.null(dc$template))
-      dc$template <- datacircularp$template
-   if (is.null(dc$modulo))
-      dc$modulo <- datacircularp$modulo
-   if (is.null(dc$zero))
-      dc$zero <- datacircularp$zero
-   if (is.null(dc$rotation))
-      dc$rotation <- datacircularp$rotation
+  if (missing(mu) || length(mu)!=1)
+    stop("the mean direction parameter 'mu' is mandatory and it must have length 1")
+  if (missing(kappa) || length(kappa)!=1)
+    stop("the concentration parameter 'kappa' is mandatory and it must have length 1")   
+  if (is.circular(mu)) {
+    datacircularp <- circularp(mu)
+  } else {
+    datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+  }
+  dc <- control.circular
+  if (is.null(dc$type))
+    dc$type <- datacircularp$type
+  if (is.null(dc$units))
+    dc$units <- datacircularp$units
+  if (is.null(dc$template))
+    dc$template <- datacircularp$template
+  if (is.null(dc$modulo))
+    dc$modulo <- datacircularp$modulo
+  if (is.null(dc$zero))
+    dc$zero <- datacircularp$zero
+  if (is.null(dc$rotation))
+    dc$rotation <- datacircularp$rotation
    
-   mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter")
-   attr(mu, "class") <- attr(mu, "circularp") <-  NULL  
-   vm <- RvonmisesRad(n, mu, kappa)
-   vm <- conversion.circular(circular(vm), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
-   return(vm)
+  mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter")
+  mu <- as.vector(mu)
+  kappa <- as.vector(kappa)
+  if (kappa < 0)
+    stop("the concentration parameter 'kappa' must be non negative")
+  attr(mu, "class") <- attr(mu, "circularp") <-  NULL
+  vm <- RvonmisesRad(n, mu, kappa)
+  vm <- conversion.circular(circular(vm), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
+  return(vm)
 }
 
 #RvonmisesRad <- function(n, mu, kappa) {
@@ -75,12 +82,16 @@ rvonmises <- function(n, mu, kappa, control.circular=list()) {
 
 RvonmisesRad <- function(n, mu, kappa) {
    x <- vector(len = n)
-   vm <- .C("rvm",
+   if (kappa) {
+     vm <- .C("rvm",
        as.double(x),
        as.integer(n),
        as.double(mu),
        as.double(kappa),
        PACKAGE="circular")[[1]] %% (2 * pi)
+   } else {
+     vm <- stats:::runif(n=n, min=0, max=2*pi)
+   }
    return(vm)
 }
 
@@ -89,24 +100,37 @@ RvonmisesRad <- function(n, mu, kappa) {
 #   dvonmises function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: May, 10, 2006                                     #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: March, 31, 2009                                   #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2                                             #
+#   Version 0.2-1                                           #
 #############################################################
 
 dvonmises <- function (x, mu, kappa) {
-    x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
-    mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter")
+  if (missing(mu) || length(mu)!=1)
+    stop("the mean direction parameter 'mu' is mandatory and it must have length 1")
+  if (missing(kappa) || length(kappa)!=1)
+    stop("the concentration parameter 'kappa' is mandatory and it must have length 1")   
 
-    attr(x, "class") <- attr(x, "circularp") <-  NULL
-    attr(mu, "class") <- attr(mu, "circularp") <-  NULL    
+  x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
+  mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter")
+  mu <- as.vector(mu)
+  kappa <- as.vector(kappa)
+  if (kappa < 0)
+    stop("the concentration parameter 'kappa' must be non negative")
+  attr(x, "class") <- attr(x, "circularp") <-  NULL
+  attr(mu, "class") <- attr(mu, "circularp") <-  NULL    
   
-    DvonmisesRad(x, mu, kappa)
+  DvonmisesRad(x, mu, kappa)
 }
 
 DvonmisesRad <- function(x, mu, kappa) {
-    return(1/(2 * pi * besselI(x = kappa, nu = 0, expon.scaled = TRUE)) * (exp(cos(x - mu) -1))^kappa)
+  if (kappa) {
+    vm <- 1/(2 * pi * besselI(x = kappa, nu = 0, expon.scaled = TRUE)) * (exp(cos(x - mu) -1))^kappa
+  } else {
+    vm <- rep(1/(2*pi), length(x))
+  }
+  return(vm)
 }
 
 #############################################################
@@ -114,19 +138,28 @@ DvonmisesRad <- function(x, mu, kappa) {
 #   pvonmises function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: May, 10, 2006                                     #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: March, 31, 2009                                   #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2                                             #
+#   Version 0.3                                             #
 #############################################################
 
 pvonmises <- function(q, mu, kappa, tol = 1e-020) {
-     q <- conversion.circular(q, units="radians", zero=0, rotation="counter")
-     mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter")
-     attr(q, "class") <- attr(q, "circularp") <-  NULL    
-     attr(mu, "class") <- attr(mu, "circularp") <-  NULL
+  if (missing(mu) || length(mu)!=1)
+    stop("the mean direction parameter 'mu' is mandatory and it must have length 1")
+  if (missing(kappa) || length(kappa)!=1)
+    stop("the concentration parameter 'kappa' is mandatory and it must have length 1")   
 
-     PvonmisesRad(q, mu, kappa, tol)
+  q <- conversion.circular(q, units="radians", zero=0, rotation="counter")
+  mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter")
+  mu <- as.vector(mu)
+  kappa <- as.vector(kappa)
+  if (kappa < 0)
+    stop("the concentration parameter 'kappa' must be non negative")
+  attr(q, "class") <- attr(q, "circularp") <-  NULL    
+  attr(mu, "class") <- attr(mu, "circularp") <-  NULL
+
+  PvonmisesRad(q, mu, kappa, tol)
 }
 
 PvonmisesRad <- function(q, mu, kappa, tol) {    
@@ -172,47 +205,22 @@ PvonmisesRad <- function(q, mu, kappa, tol) {
 
 #############################################################
 #                                                           #
-#   dmixedvonmises function                                 #
+#   qvonmises function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: May, 10, 2006                                     #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: May, 13, 2010                                     #
+#   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2                                             #
+#   Version 0.1-1                                           #
 #############################################################
 
-dmixedvonmises <- function(x, mu1, mu2, kappa1, kappa2, p) {
-    x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
-    mu1 <- conversion.circular(mu1, units="radians", zero=0, rotation="counter")
-    mu2 <- conversion.circular(mu2, units="radians", zero=0, rotation="counter")
-    
-    attr(x, "class") <- attr(x, "circularp") <-  NULL
-    attr(mu1, "class") <- attr(mu1, "circularp") <-  NULL
-    attr(mu2, "class") <- attr(mu2, "circularp") <-  NULL
-    
-    DmixedvonmisesRad(x, mu1, mu2, kappa1, kappa2, p)
-}
+qvonmises <- function(p, mu=circular(0), kappa=NULL, tol = .Machine$double.eps^(0.6), control.circular=list(), ...) {
+   epsilon <- 10 * .Machine$double.eps
+   if (any(p > 1 & p<0))
+      stop("p must be in [0,1]")
 
-DmixedvonmisesRad <- function(x, mu1, mu2, kappa1, kappa2, p) {
-   return(p/(2 * pi * besselI(x=kappa1, nu=0, expon.scaled = TRUE)) * (exp(cos(x - mu1) - 1))^kappa1 + (1 - p)/(2 * pi * besselI(x=kappa2, nu=0, expon.scaled = TRUE)) * (exp(cos(x - mu2) - 1))^kappa2)
-}
-
-#############################################################
-#                                                           #
-#   rmixedvonmises function                                 #
-#   Author: Claudio Agostinelli                             #
-#   Email: claudio@unive.it                                 #
-#   Date: August, 10, 2006                                  #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
-#                                                           #
-#   Version 0.2-4                                           #
-#############################################################
-
-rmixedvonmises <- function(n, mu1, mu2, kappa1, kappa2, p, control.circular=list()) {
-   if (is.circular(mu1)) {
-      datacircularp <- circularp(mu1)
-   } else if  (is.circular(mu2)) {
-      datacircularp <- circularp(mu2)
+   if (is.circular(mu)) {
+      datacircularp <- circularp(mu)
    } else {
       datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
    }
@@ -229,26 +237,162 @@ rmixedvonmises <- function(n, mu1, mu2, kappa1, kappa2, p, control.circular=list
       dc$zero <- datacircularp$zero
    if (is.null(dc$rotation))
       dc$rotation <- datacircularp$rotation
-   
-   mu1 <- conversion.circular(mu1, units="radians", zero=0, rotation="counter")
-   mu2 <- conversion.circular(mu2, units="radians", zero=0, rotation="counter")
-    
-   attr(mu1, "class") <- attr(mu1, "circularp") <-  NULL
-   attr(mu2, "class") <- attr(mu2, "circularp") <-  NULL
 
-   vm <- RmixedvonmisesRad(n, mu1, mu2, kappa1, kappa2, p)
-   vm <- conversion.circular(circular(vm), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)    
-   return(vm)
+   mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter", modulo="2pi")
+   if (is.null(from)) {
+      from <- mu - pi
+   } else {
+      from <- conversion.circular(from, units="radians", zero=0, rotation="counter", modulo="2pi")    
+   }
+
+   attr(mu, "class") <- attr(mu, "circularp") <- NULL
+   attr(from, "class") <- attr(from, "circularp") <- NULL
+
+   n <- length(p)
+   if (length(mu) != 1) 
+      stop("is implemented only for scalar 'mean'")
+   
+   mu <- (mu-from)%%(2*pi)
+   if (is.null(kappa))
+      stop("kappa must be provided")
+
+   zeroPvonmisesRad <- function(x, p, mu, kappa) {
+      if (is.na(x)) {    
+         return(NA)
+      } else {   
+         return(integrate(DvonmisesRad, mu=mu, kappa=kappa, ...)$value - p)
+      }
+   }
+
+   value <- rep(NA, length(p))
+   sem <- options()$show.error.messages
+   options(show.error.messages=FALSE)
+   for (i in 1:length(p)) {
+         res <- try(uniroot(zeroPvonmisesRad, p=p[i], mu=mu, kappa=kappa, lower=0, upper=2*pi-epsilon, tol=tol))
+         if (is.list(res)) {
+             value[i] <- res$root 
+         } else if (p[i] < 10*epsilon) {
+             value[i] <- 0
+         } else if (p[i] > 1-10*epsilon) {
+             value[i] <- 2*pi-epsilon
+         }
+    }
+    options(show.error.messages=sem)
+    value <- value + from
+    value <- conversion.circular(circular(value), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
+    return(value)
+}
+
+#############################################################
+#                                                           #
+#   dmixedvonmises function                                 #
+#   Author: Claudio Agostinelli                             #
+#   Email: claudio@unive.it                                 #
+#   Date: March, 31, 2009                                   #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
+#                                                           #
+#   Version 0.9-1                                           #
+#############################################################
+
+dmixedvonmises <- function(x, mu1, mu2, kappa1, kappa2, p) {
+  if (missing(mu1) || length(mu1)!=1)
+    stop("the mean direction parameter 'mu1' is mandatory and it must have length 1")
+  if (missing(kappa1) || length(kappa1)!=1)
+    stop("the concentration parameter 'kappa1' is mandatory and it must have length 1")
+  if (missing(mu2) || length(mu2)!=1)
+    stop("the mean direction parameter 'mu2' is mandatory and it must have length 1")
+  if (missing(kappa2) || length(kappa2)!=1)
+    stop("the concentration parameter 'kappa2' is mandatory and it must have length 1")
+  x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
+  mu1 <- conversion.circular(mu1, units="radians", zero=0, rotation="counter")
+  mu2 <- conversion.circular(mu2, units="radians", zero=0, rotation="counter")
+  mu1 <- as.vector(mu1)
+  kappa1 <- as.vector(kappa1)
+  mu2 <- as.vector(mu2)
+  kappa2 <- as.vector(kappa2)    
+  if (kappa1 < 0)
+    stop("the concentration parameter 'kappa1' must be non negative")
+  if (kappa2 < 0)
+    stop("the concentration parameter 'kappa2' must be non negative")
+  attr(x, "class") <- attr(x, "circularp") <-  NULL
+  attr(mu1, "class") <- attr(mu1, "circularp") <-  NULL
+  attr(mu2, "class") <- attr(mu2, "circularp") <-  NULL
+    
+  DmixedvonmisesRad(x, mu1, mu2, kappa1, kappa2, p)
+}
+
+DmixedvonmisesRad <- function(x, mu1, mu2, kappa1, kappa2, p) {
+  vm <- p/(2 * pi * besselI(x=kappa1, nu=0, expon.scaled = TRUE)) * (exp(cos(x - mu1) - 1))^kappa1 + (1 - p)/(2 * pi * besselI(x=kappa2, nu=0, expon.scaled = TRUE)) * (exp(cos(x - mu2) - 1))^kappa2
+  return(vm)
+}
+
+#############################################################
+#                                                           #
+#   rmixedvonmises function                                 #
+#   Author: Claudio Agostinelli                             #
+#   Email: claudio@unive.it                                 #
+#   Date: March, 31, 2009                                   #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
+#                                                           #
+#   Version 0.2-5                                           #
+#############################################################
+
+rmixedvonmises <- function(n, mu1, mu2, kappa1, kappa2, p, control.circular=list()) {
+  if (missing(mu1) || length(mu1)!=1)
+    stop("the mean direction parameter 'mu1' is mandatory and it must have length 1")
+  if (missing(kappa1) || length(kappa1)!=1)
+    stop("the concentration parameter 'kappa1' is mandatory and it must have length 1")
+  if (missing(mu2) || length(mu2)!=1)
+    stop("the mean direction parameter 'mu2' is mandatory and it must have length 1")
+  if (missing(kappa2) || length(kappa2)!=1)
+    stop("the concentration parameter 'kappa2' is mandatory and it must have length 1")
+  if (is.circular(mu1)) {
+    datacircularp <- circularp(mu1)
+  } else if  (is.circular(mu2)) {
+    datacircularp <- circularp(mu2)
+  } else {
+    datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+  }
+  dc <- control.circular
+  if (is.null(dc$type))
+    dc$type <- datacircularp$type
+  if (is.null(dc$units))
+    dc$units <- datacircularp$units
+  if (is.null(dc$template))
+    dc$template <- datacircularp$template
+  if (is.null(dc$modulo))
+    dc$modulo <- datacircularp$modulo
+  if (is.null(dc$zero))
+    dc$zero <- datacircularp$zero
+  if (is.null(dc$rotation))
+    dc$rotation <- datacircularp$rotation
+   
+  mu1 <- conversion.circular(mu1, units="radians", zero=0, rotation="counter")
+  mu2 <- conversion.circular(mu2, units="radians", zero=0, rotation="counter")
+  mu1 <- as.vector(mu1)
+  kappa1 <- as.vector(kappa1)
+  mu2 <- as.vector(mu2)
+  kappa2 <- as.vector(kappa2)
+  if (kappa1 < 0)
+    stop("the concentration parameter 'kappa1' must be non negative")
+  if (kappa2 < 0)
+    stop("the concentration parameter 'kappa2' must be non negative")
+  attr(mu1, "class") <- attr(mu1, "circularp") <-  NULL
+  attr(mu2, "class") <- attr(mu2, "circularp") <-  NULL
+
+  vm <- RmixedvonmisesRad(n, mu1, mu2, kappa1, kappa2, p)
+  vm <- conversion.circular(circular(vm), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)    
+  return(vm)
 }
 
 RmixedvonmisesRad <- function(n, mu1, mu2, kappa1, kappa2, p) {
-    result <- rep(NA, n)
-    test <- runif(n)
-    n1 <- sum(test < p)
-    n2 <- n - n1
-    res1 <- RvonmisesRad(n1, mu1, kappa1)
-    res2 <- RvonmisesRad(n2, mu2, kappa2)
-    result[test < p] <- res1
-    result[test >= p] <- res2
-    return(result)
+  result <- rep(NA, n)
+  test <- runif(n)
+  n1 <- sum(test < p)
+  n2 <- n - n1
+  res1 <- RvonmisesRad(n1, mu1, kappa1)
+  res2 <- RvonmisesRad(n2, mu2, kappa2)
+  result[test < p] <- res1
+  result[test >= p] <- res2
+  return(result)
 }

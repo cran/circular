@@ -3,7 +3,7 @@
 \alias{print.aov.circular}
 \title{Analysis of Variance for circular data}
 \description{
-
+  One Critrion Analysis of Variance for circular data
 }
 
 \usage{

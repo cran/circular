@@ -3,6 +3,7 @@ useDynLib(circular)
 #Import directive
 importFrom(graphics, axis)
 importFrom(stats, density)
+###importFrom(stats, median)
 
 #Export directive
 
@@ -20,6 +21,8 @@ export(
  I.p,
 # file aov.circular.R
  aov.circular,
+# file arrows.circular.R
+ arrows.circular,
 # file as.circular.R
  as.circular,
 # file as.data.frame.circular.R
@@ -32,14 +35,22 @@ export(
  change.point,
 # file circular.R
  circular, conversion.circular, circularp, "circularp<-", is.circular,
+# file circular.colors.R
+ circular.colors,
+# file coord2rad.R
+ coord2rad,
 # file cor.circular.R
  cor.circular,
 # file curve.circular.R
  curve.circular, plot.function.circular,
 # file deg.R
  deg,
+# file dist.circular.R
+ dist.circular,
 # file equal.kappa.test.R
  equal.kappa.test,
+# file heatmap.circular.R
+ heatmap.circular,
 # file kuiper.test.R
  kuiper.test,
 # file lm.circular.R
@@ -78,8 +89,10 @@ export(
  rtriangular, dtriangular,
 # file trigonometric.moment.R
  trigonometric.moment,
+# file uniform.R
+ rcircularuniform, dcircularuniform,      
 # file vonmises.R
- rvonmises, dvonmises, pvonmises, rmixedvonmises, dmixedvonmises,
+ rvonmises, dvonmises, pvonmises, qvonmises, rmixedvonmises, dmixedvonmises,
 # file var.circular.R 
 ### var,
 # file watson.test.R
@@ -112,12 +125,14 @@ export(
  density.circular,
 # file mean.circular.R
  mean.circular,
+# file median.circular.R
+ medianCircular,
 # file axis.circular.R
  axis.circular,
 # file lines.circular.R
  lines.circular,
 # file plot.circular.R
- plot.circular,
+ plot.circular, circle.control,
 # file points.circular.R
  points.circular,
 # file plot.lsfit.circle.R
@@ -190,6 +205,10 @@ S3method(lines, density.circular)
 #mean
 S3method(mean, circular)
 
+#median
+####S3method(median, default)
+##S3method(median, circular)
+
 #print
 S3method(print, aov.circular)
 S3method(print, circular)
@@ -232,6 +251,4 @@ S3method(var, default)
 #S3method(var, matrix)
 S3method(var, data.frame)
 S3method(var, circular)
-
-
 

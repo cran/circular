@@ -130,14 +130,14 @@ DensityCircularRad <- function(x, z, bw, kernel, K=NULL, min.k=10) {
 #   plot.density.circular function                          #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: June, 07, 2006                                    #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: March, 29, 2010                                   #
+#   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.4-1                                           #
+#   Version 0.4-4                                           #
 #                                                           #
 #############################################################
 
-plot.density.circular <- function(x, main = NULL, xlab = NULL, ylab ="Density circular", type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, points.cex=1, plot.type = c("circle", "line"), axes=TRUE, ticks=TRUE, bins=NULL, shrink=1, tcl=0.025,  tcl.text=0.125, sep=0.025, tol = 0.04, digits=2, cex=1, uin=NULL, xlim=NULL, ylim=NULL, join=FALSE, nosort=FALSE, units=NULL, template=NULL, zero=NULL, rotation=NULL, ...) {
+plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="Density circular", type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, points.cex=1, plot.type = c("circle", "line"), axes=TRUE, ticks=TRUE, bins=NULL, offset=1, shrink=1, tcl=0.025,  tcl.text=0.125, sep=0.025, tol = 0.04, digits=2, cex=1, uin=NULL, xlim=NULL, ylim=NULL, join=FALSE, nosort=FALSE, units=NULL, template=NULL, zero=NULL, rotation=NULL, control.circle=circle.control(), ...) {
    xcircularp <- attr(x$x, "circularp")
    if (is.null(xcircularp))
       stop("the component 'x' of the object must be of class circular")
@@ -199,7 +199,7 @@ plot.density.circular <- function(x, main = NULL, xlab = NULL, ylab ="Density ci
             stop("'bins' must be non negative")
       }
     
-      CirclePlotRad(xlim, ylim, uin, shrink, tol, 1000, main=main, xlab=xlab, ylab=ylab)
+      CirclePlotRad(xlim=xlim, ylim=ylim, uin=uin, shrink=shrink, tol=tol, main=main, sub=sub, xlab=xlab, ylab=ylab, control.circle=control.circle)
 
       if (axes) {
 	 axis.circular(units = units, template=template, modulo = modulo, zero=zero, rotation=rotation, digits=digits, cex=cex, tcl=tcl, tcl.text=tcl.text)
@@ -213,7 +213,7 @@ plot.density.circular <- function(x, main = NULL, xlab = NULL, ylab ="Density ci
          x$x <- -x$x
       x$x <- x$x+zero
       x$x <- x$x%%(2*pi)
-      LinesCircularRad(x=x$x, y=x$y, join=join, nosort=nosort, ...)
+      ll <- LinesCircularRad(x=x$x, y=x$y, join=join, nosort=nosort, offset=offset, shrink=shrink, ...)
 
       if (points.plot) {
          next.points <- sep
@@ -223,7 +223,7 @@ plot.density.circular <- function(x, main = NULL, xlab = NULL, ylab ="Density ci
          x$data <- x$data%%(2*pi)
          PointsCircularRad(x$data, bins, FALSE, points.col, points.pch, 1, 1, sep, next.points, shrink, points.cex)
       }
-      return(invisible(list(zero=zero, rotation=rotation, next.points=next.points)))
+      return(invisible(list(x=ll$x, y=ll$y, zero=zero, rotation=rotation, next.points=next.points)))
    }
 }
 
@@ -233,14 +233,14 @@ plot.density.circular <- function(x, main = NULL, xlab = NULL, ylab ="Density ci
 #   lines.density.circular function                         #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: June, 07, 2006                                    #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: June, 05, 2010                                    #
+#   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-1                                           #
+#   Version 0.3                                             #
 #                                                           #
 #############################################################
 
-lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, points.cex=1, plot.type = c("circle", "line"), bins=NULL, shrink=1, tcl=0.025, sep=0.025, join=TRUE, nosort=FALSE, plot.info=NULL, zero=NULL, rotation=NULL, ...) {
+lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, points.cex=1, plot.type = c("circle", "line"), bins=NULL, offset=1, shrink=1, tcl=0.025, sep=0.025, join=TRUE, nosort=FALSE, plot.info=NULL, zero=NULL, rotation=NULL, ...) {
    xcircularp <- attr(x$x, "circularp")
    if (is.null(xcircularp))
       stop("the component 'x' of the object must be of class circular")
@@ -262,7 +262,9 @@ lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=
    x$data <- conversion.circular(x$data, units="radians")
    attr(x$x, "circularp") <- attr(x$x, "class") <- NULL
    attr(x$data, "circularp") <- attr(x$data, "class") <- NULL
-  
+
+   ll <- list()
+   
    plot.type <- match.arg(plot.type)
    if (is.null(bins)) {
        bins <- NROW(x)
@@ -286,7 +288,7 @@ lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=
          x$x <- -x$x
       x$x <- x$x+zero
       x$x <- x$x%%(2*pi)
-      LinesCircularRad(x=x$x, y=x$y, join=join, nosort=nosort, ...)
+      ll <- LinesCircularRad(x=x$x, y=x$y, join=join, nosort=nosort, offset=offset, shrink=shrink, ...)
       if (points.plot) {
          if (rotation=="clock")
             x$data <- -x$data
@@ -296,7 +298,8 @@ lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=
          PointsCircularRad(x$data, bins, FALSE, points.col, points.pch, 1, 1, sep, next.points, shrink, points.cex)
       }
     }
-    return(invisible(list(zero=zero, rotation=rotation, next.points=next.points)))
+      
+    return(invisible(list(x=ll$x, y=ll$y, zero=zero, rotation=rotation, next.points=next.points)))
 }
 
 

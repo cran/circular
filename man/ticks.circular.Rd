@@ -5,7 +5,8 @@
 Draw tick-marks in a circular plot.
 }
 \usage{
-ticks.circular(x, template = c("none", "geographics"), zero = NULL, rotation = NULL, tcl = 0.025, col = NULL, \dots)
+ticks.circular(x, template = c("none", "geographics"), zero = NULL, 
+  rotation = NULL, tcl = 0.025, col = NULL, \dots)
 }
 
 \arguments{

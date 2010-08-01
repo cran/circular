@@ -1,0 +1,2 @@
+Use bincount C function instead of hist.default in PointsCircularRad and RoseDiagRad
+Allows to pass parameters for bincount from plot.circular and points.circular

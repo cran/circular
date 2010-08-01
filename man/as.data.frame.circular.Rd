@@ -14,7 +14,7 @@ as.data.frame.circular(x, row.names = NULL, optional = FALSE, ...)
     names for the data frame. Missing values are not allowed.}
   \item{optional}{logical; if \code{TRUE} setting row names is
       optional.}
-  \item{\dots}{}
+  \item{\dots}{additional arguments to be passed to or from methods.}
 }
 
 \author{Claudio Agostinelli}

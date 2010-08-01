@@ -7,7 +7,8 @@ This is a plot method for objects of class \code{lsfit.circle}.
 }
 
 \usage{
-\method{plot}{lsfit.circle}(x, add = FALSE, main = NULL, xlim = NULL, ylim = NULL, xlab = NULL, ylab = NULL, uin, tol = 0.04, plus.cex = 1, ...)
+\method{plot}{lsfit.circle}(x, add = FALSE, main = NULL, xlim = NULL, ylim = NULL, 
+  xlab = NULL, ylab = NULL, uin, tol = 0.04, plus.cex = 1, ...)
 }
 
 \arguments{

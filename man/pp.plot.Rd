@@ -8,7 +8,8 @@ von Mises distribution function.
 }
 
 \usage{
-pp.plot(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distribution", ylab = "Empirical Distribution", control.circular = list(), ...)
+pp.plot(x, ref.line = TRUE, tol=1e-20,  xlab = "von Mises Distribution", 
+  ylab = "Empirical Distribution", control.circular = list(), ...)
 }
 
 \arguments{
@@ -44,7 +45,8 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 \examples{
 x <- rvonmises(n=25, mu=circular(0), kappa=3)
 pp.plot(x)
-x <- c(rvonmises(n=20, mu=circular(0), kappa=7), rvonmises(n=20, mu=circular(pi), kappa=7))
+x <- c(rvonmises(n=20, mu=circular(0), kappa=7), 
+  rvonmises(n=20, mu=circular(pi), kappa=7))
 pp.plot(x)
 }
 

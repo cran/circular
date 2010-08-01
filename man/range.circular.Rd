@@ -7,7 +7,8 @@ Computes the circular range of a data set and performs a test of uniformity if s
 }
 
 \usage{
-range.circular(x, test=FALSE, na.rm = FALSE, finite = FALSE, control.circular=list(), ...)
+range.circular(x, test=FALSE, na.rm = FALSE, finite = FALSE, 
+  control.circular=list(), ...)
 }
 
 \arguments{
@@ -17,7 +18,7 @@ range.circular(x, test=FALSE, na.rm = FALSE, finite = FALSE, control.circular=li
 \item{na.rm}{logical, indicating if \code{\link{NA}}'s should be omitted.}
 \item{finite}{logical, indicating if all non-finite elements should be
   omitted.}
-\item{control.circular}{}
+\item{control.circular}{the attribute of the resulting object.}
 \item{\ldots}{further parameter passed from/to the method.}
 }
 

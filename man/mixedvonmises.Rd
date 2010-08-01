@@ -35,7 +35,8 @@ rmixedvonmises(n, mu1, mu2, kappa1, kappa2, p, control.circular = list())
 
 \examples{
 
-x <- rmixedvonmises(n=100, mu1=circular(0), mu2=circular(pi), kappa1=15, kappa2=15, p=0.5)
+x <- rmixedvonmises(n=100, mu1=circular(0), mu2=circular(pi), kappa1=15, 
+  kappa2=15, p=0.5)
 plot(x)
 
 

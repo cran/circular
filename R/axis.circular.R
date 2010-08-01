@@ -3,10 +3,10 @@
 #   axis.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: May, 19, 2006                                     #
-#   Version: 0.4-2                                          #
+#   Date: October, 19, 2009                                 #
+#   Version: 0.4-3                                          #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
@@ -19,10 +19,15 @@ axis.circular <- function(at=NULL, labels=NULL,  units = NULL, template=NULL, mo
    if (missing(lwd)) lwd <- par("lwd")
 
    if (is.null(at)) {
-      at <- circular(c(0, pi/2, pi, 3/2*pi))
+      if (is.null(template) | template=="none" | template=="geographics") {
+        at <- circular(c(0, pi/2, pi, 3/2*pi))
+      } else if (template=="clock24") {
+        at <- circular(seq(0, 23), units="hours")
+      } else if (template=="clock12") {
+        at <- circular(seq(0, 11), units="hours", modulo="pi")
+      }
    }
    at <- na.omit(at)
-   
    atcircularp <- attr(as.circular(at), "circularp")
    type <- atcircularp$type
    if (is.null(modulo))
@@ -31,9 +36,13 @@ axis.circular <- function(at=NULL, labels=NULL,  units = NULL, template=NULL, mo
       units <- atcircularp$units
    if (is.null(template))
       template <- atcircularp$template
-   if (template=="geographics") {
+   if (template=="geographics" | template=="clock24") {
       zero <- pi/2
       rotation <- "clock"
+   } else if (template=="clock12") {
+      zero <- pi/2
+      rotation <- "clock"
+      modulo <- "pi"
    } else {
       if (is.null(zero))
          zero <- atcircularp$zero
@@ -47,22 +56,27 @@ axis.circular <- function(at=NULL, labels=NULL,  units = NULL, template=NULL, mo
    if (modulo=="2pi") {
       if (units=="radians") {
          atasis <- atasis%%(2*pi)
-      } else {
+      } else if (units=="degrees") {
          atasis <- atasis%%(360)
+      } else if (units=="hours") {
+         atasis <- atasis%%(24)
       }
       attext <- attext%%2
-
     } else if (modulo=="pi") {
               if (units=="radians") {
                  atasis <- atasis%%pi
-              } else {
+              } else if (units=="degrees") {
                  atasis <- atasis%%180
+              } else if (units=="hours") {
+                 atasis <- atasis%%12
               }
               attext <- attext%%1
           }
    attext <- round(attext, digits=digits)
    
-   at <- conversion.circular(at, units="radians", modulo=modulo, zero=0, rotation="counter")
+   if (template=="clock12")
+     at <- 2*at
+   at <- conversion.circular(at, units="radians", modulo="2pi", zero=0, rotation="counter")
    attr(at, "circularp") <- attr(at, "class") <- NULL
    if (rotation=="clock")
             at <- -at
@@ -74,13 +88,15 @@ axis.circular <- function(at=NULL, labels=NULL,  units = NULL, template=NULL, mo
          } else {
             if (units=="radians") {
                labels <- c("0", expression(frac(pi,2)), expression(pi), expression(frac(3*pi,2)))
-            } else {
+            } else if (units=="degrees") {
                labels <- c("0", "90", "180", "270")      
             }
          }
       } else if (units=="degrees") {
                 labels <- as.character(round(atasis, digits=digits))
-             }
+      } else if (units=="hours") {
+                labels <- as.character(round(atasis, digits=digits))
+      }
   }
 
   if (!is.null(labels) && length(at)!=length(labels))

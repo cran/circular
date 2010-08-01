@@ -23,21 +23,16 @@ random sample from the specified stable distribution.
 
 \details{
 This function return random variates from the Levy skew stable
-distribution with \code{index}=$\alpha$, \code{scale}=$c$ and \code{skewness}=$\beta$.  The \code{skewness} parameter must lie in the range [-1,1] while the \code{index} parameter must lie in the range (0,2].  The Levy skew stable probability distribution is defined by a fourier transform,
-\eqn{
+distribution with \code{index}=\eqn{\alpha}{alpha}, \code{scale}=\eqn{c}{c} and \code{skewness}=\eqn{\beta}{beta}.  The \code{skewness} parameter must lie in the range [-1,1] while the \code{index} parameter must lie in the range (0,2].  The Levy skew stable probability distribution is defined by a fourier transform,
+\deqn{
 p(x) = {1 \over 2 \pi} \int_{-\infty}^{+\infty} dt \exp(-it x - |c t|^\alpha (1-i \beta sign(t) \tan(\pi\alpha/2)))
 }
 
-When $\alpha = 1$ the term $\tan(\pi \alpha/2)$ is replaced by $-(2/\pi)\log|t|$.   For $\alpha = 2$ the distribution reduces to a Gaussian distribution with $\sigma = \sqrt{2} scale$ and the skewness parameter has no effect.  
-For $\alpha < 1$ the tails of the distribution become extremely
-wide.  The symmetric distribution corresponds to $\beta =0$.
+When \eqn{\alpha = 1}{alpha = 1} the term \eqn{\tan(\pi \alpha/2)}{tan(pi alpha/2)} is replaced by \eqn{-(2/\pi)\log|t|}{-(2/pi) log|t|}.   For \eqn{\alpha = 2}{alpha = 2} the distribution reduces to a Gaussian distribution with \eqn{\sigma = \sqrt{2} scale}{sigma = sqrt(2) scale} and the skewness parameter has no effect. For \eqn{\alpha < 1}{alpha < 1} the tails of the distribution become extremely wide. The symmetric distribution corresponds to \eqn{\beta = 0}{beta = 0}.
 
-The Levy alpha-stable distributions have the property that if $N$
-alpha-stable variates are drawn from the distribution $p(c, \alpha,
-\beta)$ then the sum $Y = X_1 + X_2 + \dots + X_N$ will also be
-distributed as an alpha-stable variate, $p(N^{1/\alpha} c, \alpha, \beta)$.
+The Levy alpha-stable distributions have the property that if \eqn{N}{N} alpha-stable variates are drawn from the distribution \eqn{p(c, \alpha, \beta)}{p(c, alpha, beta)} then the sum \eqn{Y = X_1 + X_2 + \dots + X_N}{Y = X_1 + X_2 + ... + X_N} will also be distributed as an alpha-stable variate, \eqn{p(N^{1/\alpha} c, \alpha, \beta)}{p(N^{1/alpha} c, alpha, beta)}.
 
-There is no explicit solution for the form of $p(x)$ and there are no density, probability or quantile functions supplied for this distribution.
+There is no explicit solution for the form of \eqn{p(x)}{p(x)} and there are no density, probability or quantile functions supplied for this distribution.
 }
 
 \author{Claudio Agostinelli}
@@ -45,7 +40,7 @@ There is no explicit solution for the form of $p(x)$ and there are no density, p
 \references{
 Chambers, J. M., Mallows, C. L. and Stuck, B. W. (1976). A Method for Simulating Stable Random Variables. Journal of the American Statistical Association 71, 340-344.
 
-Lo\"{g}ae\"{v}e, M. (1977). Probability Theory I. (fourth edition) Springer-Verlag, New York.
+Logaeve, M. (1977). Probability Theory I. (fourth edition) Springer-Verlag, New York.
 }
 
 \seealso{

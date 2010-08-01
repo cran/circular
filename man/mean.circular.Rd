@@ -44,8 +44,8 @@ Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Se
 
 \examples{
 # Compute the mean direction of a random sample of observations.
-data <- circular(runif(50, circular(0), pi))
-mean(data)
+x <- circular(runif(50, circular(0), pi))
+mean(x)
 }
 
 \keyword{univar}

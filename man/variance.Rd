@@ -8,7 +8,7 @@
 The \code{var} function from the \pkg{base} is replace by a new
 \code{method} in order to report the variance of circular data
 appropriatly. \code{var.default} is an alias of the original function
-\code{\link[base]{var}}. The behavior would be the same for objects which are not
+\code{var} see \code{\link[stats]{cor}}. The behavior would be the same for objects which are not
 from \code{\link{class}} \code{\link{data.frame}} and
 \code{\link{circular}} (in the last case the variance is define as one
 minus the mean resultant length divided by the sample size of data, see
@@ -36,7 +36,7 @@ var(x, \dots)
 }
 
 \seealso{
-\code{\link[base]{var}}, \code{\link{var.circular}}, \code{\link{rho.circular}} and \code{\link{summary.circular}}.
+\code{\link[stats]{cor}}, \code{\link{var.circular}}, \code{\link{rho.circular}} and \code{\link{summary.circular}}.
 }
 
 \keyword{univar}

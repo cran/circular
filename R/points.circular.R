@@ -3,10 +3,10 @@
 #   points.circular function                                #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: June, 06, 2006                                    #
-#   Version: 0.2-1                                          #
+#   Date: October, 19, 2009                                 #
+#   Version: 0.3                                            #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2009 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
@@ -70,19 +70,23 @@ return(invisible(list(zero=zero, rotation=rotation, next.points=next.points+nser
 }
 
 PointsCircularRad <- function(x, bins, stack, col, pch, iseries, nseries, sep, next.points, shrink, cex, ...) {
-#### x must in modulo 2pi  
+#### x musts be in modulo 2pi  
    if (!stack) {
       z <- cos(x)
       y <- sin(x)
       r <- 1+((iseries-1)*sep+next.points)*shrink
       points.default(z*r, y*r, cex=cex, pch=pch[iseries], col = col[iseries], ...)
    } else {
+      x[x >= 2*pi] <- 2*pi-4*.Machine$double.eps
       arc <- (2 * pi)/bins
       pos.bins <- ((1:nseries)-1/2)*arc/nseries-arc/2
-      bins.count <- c(1:bins)
-      for (i in 1:bins) {
-         bins.count[i] <- sum(x <= i * arc & x > (i - 1) * arc)
-      }
+#      bins.count <- c(1:bins)
+#      for (i in 1:bins) {
+#         bins.count[i] <- sum(x < i * arc & x >= (i - 1) * arc)
+#      }
+      breaks <- seq(0,2*pi,length.out=(bins+1))
+      bins.count <- hist.default(x, breaks=breaks, plot=FALSE, right=TRUE)$counts
+###### TO BE USED IN THE FUTURE .C("bincount", x, as.integer(length(x)), seq(0,2*pi,length.out=bins), as.integer(bins+1), counts = integer(bins), right = as.logical(TRUE), include = as.logical(FALSE), naok = FALSE, NAOK = FALSE, DUP = FALSE, PACKAGE = "base")$counts
       mids <- seq(arc/2, 2 * pi - pi/bins, length = bins) + pos.bins[iseries]
       index <- cex*sep
       for (i in 1:bins) {

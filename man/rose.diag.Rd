@@ -6,10 +6,10 @@
 Creates a rose diagram of a circular data set on the current graphics device.}
 
 \usage{rose.diag(x, pch = 16, cex = 1, axes = TRUE, shrink = 1, bins = NULL, 
-     ticks = TRUE, tcl = 0.025, tcl.text = 0.125, col = NULL, tol = 0.04, uin = NULL, 
-     xlim = c(-1, 1), ylim = c(-1, 1), prop = 1, digits = 2, plot.info = NULL, 
-     units = NULL, template = NULL, zero = NULL, rotation = NULL, 
-     main = "", xlab = "", ylab = "", add = FALSE, ...)
+  ticks = TRUE, tcl = 0.025, tcl.text = 0.125, col = NULL, tol = 0.04,
+  uin = NULL, xlim = c(-1, 1), ylim = c(-1, 1), prop = 1, digits = 2, 
+  plot.info = NULL, units = NULL, template = NULL, zero = NULL, 
+  rotation = NULL, main = "", xlab = "", ylab = "", add = FALSE, ...)
 }
 
 \arguments{
@@ -51,7 +51,7 @@ a list with information on the plot: zero, rotation and next.points.
 \note{some codes from \code{\link{eqscplot}} in MASS is used.}
 
 \details{
-The circumference of the circle is split into groups, the number of groups specified by bins.  For each group, a sector is drawn.  The radii of the sectors are by default equal to the square root of the relative frequencies of observations in each group.  This ensures that the area of the sector is proportional to the group frequency.  The length of the radii can be controlled by varying the parameter prop. 
+The circumference of the circle is split into groups, the number of groups specified by bins. For each group, a sector is drawn. The radii of the sectors are by default equal to the square root of the relative frequencies of observations in each group. This ensures that the area of the sector is proportional to the group frequency. The length of the radii can be controlled by varying the parameter prop. Since version 0.3-9 the intervals are on the form [a,b).
 }
 
 \author{Claudio Agostinelli and Ulric Lund}
@@ -72,7 +72,8 @@ points(x)
 x <- rvonmises(n=50, mu=circular(0), kappa=5, control.circular=list(zero=pi/4))
 y <- rose.diag(x, bins=18) # Points fall out of bounds.
 points(x, plot.info=y, stack=TRUE)
-y <- rose.diag(x, bins=18, prop=1.5, shrink=1.5) # Adjust optional parameters to fit all points on plot.
+y <- rose.diag(x, bins=18, prop=1.5, shrink=1.5) # Adjust optional parameters to fit
+######## all points on plot.
 points(x, plot.info=y, stack=TRUE)
 
 # Add the rose diag to a plot

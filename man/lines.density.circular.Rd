@@ -6,7 +6,11 @@
    The \code{lines} add a plot for \code{density.circular} objects.
 }
 \usage{
-\method{lines}{density.circular}(x, type = "l", zero.line = TRUE, points.plot = FALSE, points.col = 1, points.pch = 1, points.cex = 1, plot.type = c("circle", "line"), bins = NULL, shrink = 1, tcl = 0.025, sep = 0.025, join = TRUE, nosort = FALSE, plot.info = NULL, zero = NULL, rotation = NULL, ...)
+\method{lines}{density.circular}(x, type = "l", zero.line = TRUE,
+  points.plot = FALSE, points.col = 1, points.pch = 1, points.cex = 1,
+  plot.type = c("circle", "line"), bins = NULL, offset=1, shrink = 1,
+  tcl = 0.025, sep = 0.025, join = TRUE, nosort = FALSE,
+  plot.info = NULL, zero = NULL, rotation = NULL, ...)
 }
 
 \arguments{
@@ -19,9 +23,9 @@
   \item{points.col, points.pch, points.cex}{parameters used to draw the points.}
   \item{plot.type}{type of the plot.}
   \item{bins}{number of ticks to plot. }
-  \item{shrink}{parameter that controls the size of the plotted circle.
-  Default is 1.  Larger values shrink the circle, while smaller values
-  enlarge the circle.}
+  \item{offset}{the radius of the circle}  
+  \item{shrink}{parameter that controls the size of the plotted function.
+  Default is 1.}
   \item{tcl}{length of the ticks.}
   \item{sep}{constant used to specify the distance between stacked points. Default is 0.025; smaller values will create smaller spaces.}
   \item{join}{logical: should the first and the last point joined.}
@@ -34,7 +38,8 @@
 }
 
 \value{
-A list with information on the plot: zero, rotation and next.points.
+A list with information on the plot: zero, rotation and next.points and,
+if available, the coordinates x and y.
 }
 
 \author{Claudio Agostinelli}
