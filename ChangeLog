@@ -1,12 +1,11 @@
 Library circular
 =================
-Version 0.4-1 2011/02/02
-New functions:
-dgenvonmises, Density for the Generalized von Mises circular distribution. 
-djonespewsey, Density for the Jones and Pewsey circular distribution.
-dkatojones, Density for the Kato and Jones distribution
-dcarthwrite, Density for the Carthwrite's power-of-cosine distribution
-Fix a bug in density.circular
+Version 0.4-1, 2010/08/18
+rose.diag function has new parameters and better control of the colors. Now it use polygon instead of lines.default and it draws edges of sectors as arcs. 
+Fixed bug on qvonmises and its documentation
+Fixed bug on qwrappednormal
+Fixed bug on arrows.circular
+Now range.circular do not retain the rotation attributes. Always return a counter rotation angle.
 
 Version 0.4, 2010/08/01
 Refix range.circular

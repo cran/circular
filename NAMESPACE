@@ -142,7 +142,15 @@ export(
 # file unique.circular.R
  unique.circular,       
 # file var.circular.R
- var, var.default, var.data.frame, var.circular
+ var, var.default, var.data.frame, var.circular,
+# file carthwrite.R
+ dcarthwrite,
+# file genvonmises.R
+ dgenvonmises,
+# file jonespewsey.R
+ djonespewsey,
+# file katojones.R
+ dkatojones, rkatojones
 )
 
 

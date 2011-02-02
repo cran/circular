@@ -3,10 +3,10 @@
 #   arrows.circular function                                #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: March, 31, 2009                                   #
-#   Version: 0.2                                            #
+#   Date: August, 14, 2010                                  #
+#   Version: 0.3                                            #
 #                                                           #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 # patche suggests by Peter Cowan (pdc)
@@ -29,7 +29,7 @@ arrows.circular <- function(x, y=NULL, x0=0, y0=0, na.rm=FALSE, shrink=1, plot.i
     zero <- plot.info$zero
     rotation <- plot.info$rotation
   }
-  x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
+  x <- conversion.circular(x, units="radians")
   attr(x, "class") <- attr(x, "circularp") <-  NULL
   if (rotation=="clock")
     x <- -x

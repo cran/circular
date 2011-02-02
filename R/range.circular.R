@@ -11,10 +11,10 @@
 #   range.circular function                                 #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: August, 31, 2010                                  #
+#   Date: August, 12, 2010                                  #
 #   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.4                                             #
+#   Version 0.4-1                                           #
 #############################################################
 
 range.circular <- function(x, test = FALSE, na.rm=FALSE, finite=FALSE, control.circular=list(), ...) {
@@ -54,9 +54,9 @@ range.circular <- function(x, test = FALSE, na.rm=FALSE, finite=FALSE, control.c
   result <- RangeCircularRad(x, test)
    
   if (test) {
-    result$range <- conversion.circular(x=circular(result$range), units=dc$units, type=dc$type, template=dc$template, modulo="2pi", zero=0, dc$rotation)
+    result$range <- conversion.circular(x=circular(result$range), units=dc$units, type=dc$type, template=dc$template, modulo="2pi", zero=0, rotation='counter')
   } else {
-    result <- conversion.circular(x=circular(result), units=dc$units, type=dc$type, template=dc$template, modulo="2pi", zero=0, dc$rotation)
+    result <- conversion.circular(x=circular(result), units=dc$units, type=dc$type, template=dc$template, modulo="2pi", zero=0, rotation='counter')
   }
   return(result)
 }

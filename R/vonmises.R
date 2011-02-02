@@ -138,13 +138,13 @@ DvonmisesRad <- function(x, mu, kappa) {
 #   pvonmises function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: March, 31, 2009                                   #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Date: August, 12, 2010                                  #
+#   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.3                                             #
+#   Version 0.4                                             #
 #############################################################
 
-pvonmises <- function(q, mu, kappa, tol = 1e-020) {
+pvonmises <- function(q, mu, kappa, from=NULL, tol = 1e-020) {
   if (missing(mu) || length(mu)!=1)
     stop("the mean direction parameter 'mu' is mandatory and it must have length 1")
   if (missing(kappa) || length(kappa)!=1)
@@ -156,9 +156,17 @@ pvonmises <- function(q, mu, kappa, tol = 1e-020) {
   kappa <- as.vector(kappa)
   if (kappa < 0)
     stop("the concentration parameter 'kappa' must be non negative")
+   if (is.null(from)) {
+      from <- mu - pi
+   } else {
+      from <- conversion.circular(from, units="radians", zero=0, rotation="counter", modulo="2pi")    
+   }  
   attr(q, "class") <- attr(q, "circularp") <-  NULL    
   attr(mu, "class") <- attr(mu, "circularp") <-  NULL
-
+  attr(from, "class") <- attr(from, "circularp") <- NULL
+  mu <- (mu-from)%%(2*pi)
+  q <- (q-from)%%(2*pi)
+  
   PvonmisesRad(q, mu, kappa, tol)
 }
 
@@ -208,15 +216,15 @@ PvonmisesRad <- function(q, mu, kappa, tol) {
 #   qvonmises function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: May, 13, 2010                                     #
+#   Date: August, 12, 2010                                  #
 #   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1-1                                           #
+#   Version 0.2                                             #
 #############################################################
 
-qvonmises <- function(p, mu=circular(0), kappa=NULL, tol = .Machine$double.eps^(0.6), control.circular=list(), ...) {
+qvonmises <- function(p, mu=circular(0), kappa=NULL, from=NULL, tol = .Machine$double.eps^(0.6), control.circular=list(), ...) {
    epsilon <- 10 * .Machine$double.eps
-   if (any(p > 1 & p<0))
+   if (any(p>1) | any(p<0))
       stop("p must be in [0,1]")
 
    if (is.circular(mu)) {
@@ -258,10 +266,11 @@ qvonmises <- function(p, mu=circular(0), kappa=NULL, tol = .Machine$double.eps^(
 
    zeroPvonmisesRad <- function(x, p, mu, kappa) {
       if (is.na(x)) {    
-         return(NA)
-      } else {   
-         return(integrate(DvonmisesRad, mu=mu, kappa=kappa, ...)$value - p)
+         y <- NA
+      } else {
+         y <- integrate(DvonmisesRad, mu=mu, kappa=kappa, lower=0, upper=x)$value - p
       }
+      return(y)
    }
 
    value <- rep(NA, length(p))

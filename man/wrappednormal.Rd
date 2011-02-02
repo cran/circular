@@ -72,8 +72,8 @@ curve.circular(ff, join=FALSE, xlim=c(-2, 2), ylim=c(-2, 2), from=-pi,
   main="Probability of a Wrapped Normal Distribution \n mu=pi, 
   rho=0.7, from=pi")
 
-curve(qwrappednormal, from=0, to=1)
-
+plot(qwrappednormal, from=0, to=1)
+plot(function(x) qwrappednormal(p=x, mu=circular(pi)), from=0, to=1)
 }
 
 

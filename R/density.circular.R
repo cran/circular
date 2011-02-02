@@ -3,10 +3,10 @@
 #   density.circular function                               #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   date: August, 10, 2006                                  #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   date: January, 31, 2011                                 #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-2                                           #
+#   Version 0.2-3                                           #
 #                                                           #
 #############################################################
 
@@ -35,7 +35,7 @@ density.circular <- function(x, z=NULL, bw, adjust = 1, type = c("K", "L"), kern
     } else if (is.circular(x))
               datacircularp <- circularp(x)
     else {
-       datacircularp <- type(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
+       datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
     }
     dc <- control.circular
     if (is.null(dc$type))
@@ -80,7 +80,6 @@ density.circular <- function(x, z=NULL, bw, adjust = 1, type = c("K", "L"), kern
         if (!is.numeric(z))
            stop("argument 'z' must be numeric")
         namez <- deparse(substitute(z))
-        z <- as.vector(z)
         z.na <- is.na(z)
         if (any(z.na)) {
             if (na.rm) {
@@ -97,7 +96,8 @@ density.circular <- function(x, z=NULL, bw, adjust = 1, type = c("K", "L"), kern
     zz <- conversion.circular(z, dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
     z <- conversion.circular(z, units="radians", zero=0, rotation="counter")
     attr(z, "class") <- attr(z, "circularp") <- NULL
-
+    z <- as.vector(z)
+    
     bw <- adjust * bw
     if (!is.numeric(bw))
         stop("argument 'bw' and 'adjust' must be numeric")        

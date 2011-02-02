@@ -54,7 +54,7 @@ EqualKappaTestRad <- function(x, group) {
       U  <- sum(ws*g1s^2) - sum(ws*g1s)^2/sum(ws)
       if (any(is.na(g1s))) {
          warn1 <- 1
-         warning("An argument outide of [-1,1] was passed to asin function in calculation of approximate chi-squared test statistic. Bartlett's test of homogeneity was used instead of the approximation using asin.")
+         warning("An argument outside of [-1,1] was passed to asin function in calculation of approximate chi-squared test statistic. Bartlett's test of homogeneity was used instead of the approximation using asin.")
       }
    }
    if (r.bar.all >= 0.45 & r.bar.all <= 0.70){
