@@ -11,10 +11,10 @@
 #   rose.diag function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: October, 18, 2009                                 #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Date: March, 15, 2011                                   #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-2                                           #
+#   Version 0.2-3                                           #
 #                                                           #
 #   Modified by Hiroyoshi Arai                              #
 #   Date: October, 19, 2010                                 #
@@ -27,7 +27,7 @@
 #                                                           #
 #############################################################
 
-rose.diag <- function(x, pch = 16, cex=1, axes = TRUE, shrink = 1, bins=NULL, upper=TRUE, ticks = TRUE, tcl=0.025, tcl.text=0.125, radii.scale = c("sqrt", "linear"), border=NULL, col=NULL, tol = 0.04, uin=NULL, xlim=c(-1, 1), ylim=c(-1, 1), prop = 1, digits=2, plot.info=NULL, units=NULL, template=NULL, zero=NULL, rotation=NULL, main="", xlab="", ylab="", add=FALSE, ...) {
+rose.diag <- function(x, pch = 16, cex=1, axes = TRUE, shrink = 1, bins=NULL, upper=TRUE, ticks = TRUE, tcl=0.025, tcl.text=0.125, radii.scale = c("sqrt", "linear"), border=NULL, col=NULL, tol = 0.04, uin=NULL, xlim=c(-1, 1), ylim=c(-1, 1), prop = 1, digits=2, plot.info=NULL, units=NULL, template=NULL, zero=NULL, rotation=NULL, main=NULL, sub=NULL, xlab="", ylab="", add=FALSE, control.circle = circle.control(), ...) {
 
    radii.scale <- match.arg(radii.scale)
    
@@ -67,7 +67,7 @@ rose.diag <- function(x, pch = 16, cex=1, axes = TRUE, shrink = 1, bins=NULL, up
    }
    
    if (!add) {
-      CirclePlotRad(xlim, ylim, uin, shrink, tol, 1000, main=main, xlab=xlab, ylab=ylab)
+      CirclePlotRad(xlim=xlim, ylim=ylim, uin=uin, shrink=shrink, tol=tol, main=main, sub=sub, xlab=xlab, ylab=ylab, control.circle=control.circle)
    }
    
    if (is.null(bins)) {

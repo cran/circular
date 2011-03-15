@@ -10,7 +10,8 @@ Creates a rose diagram of a circular data set on the current graphics device.}
   radii.scale = c("sqrt", "linear"), border=NULL, col=NULL, tol = 0.04,
   uin = NULL, xlim = c(-1, 1), ylim = c(-1, 1), prop = 1, digits = 2, 
   plot.info = NULL, units = NULL, template = NULL, zero = NULL, 
-  rotation = NULL, main = "", xlab = "", ylab = "", add = FALSE, ...)
+  rotation = NULL, main = NULL, sub = NULL, xlab = "", ylab = "",
+  add = FALSE, control.circle = circle.control(), ...)
 }
 
 \arguments{
@@ -47,8 +48,9 @@ color of the points. The values are recycled if needed.}
   \item{template}{the template of the plot. Ignored if \code{plot.info} is provided.}
   \item{zero}{the zero of the plot. Ignored if \code{plot.info} or \code{template} are provided.}
   \item{rotation}{the rotation of the plot. Ignored if \code{plot.info} or \code{template} are provided.}
- \item{main, xlab, ylab}{title, x label and y label of the plot.}
+ \item{main, sub, xlab, ylab}{title, subtitle, x label and y label of the plot.}
  \item{add}{add the rose diag to an existing plot.}
+\item{control.circle}{parameters passed to \code{\link{plot.default}} in order to draw the circle. The function \code{\link{circle.control}} is used to set the parameters.} 
  \item{...}{futher parameters passed to \code{\link{polygon}}.}
 }
 

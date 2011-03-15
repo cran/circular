@@ -2,17 +2,17 @@ Title: Circular Statistics
 LazyLoad: yes
 LazyData: yes
 Package: circular
-Version: 0.4-1
+Version: 0.4-2
 Author: Ulric Lund <ulund@calpoly.edu>, Claudio Agostinelli
         <claudio@unive.it>
 Maintainer: Claudio Agostinelli <claudio@unive.it>
-Date: 2011-02-02
+Date: 2011-03-15
 Depends: boot
 Description: Circular Statistics, from "Topics in circular Statistics"
         (2001) S. Rao Jammalamadaka and A. SenGupta, World Scientific.
 License: GPL-2
 Repository: CRAN
 Repository/R-Forge/Project: circular
-Repository/R-Forge/Revision: 98
-Date/Publication: 2011-02-03 08:18:32
-Packaged: 2011-02-02 22:31:57 UTC; rforge
+Repository/R-Forge/Revision: 101
+Date/Publication: 2011-03-19 06:19:57
+Packaged: 2011-03-15 21:49:48 UTC; rforge
