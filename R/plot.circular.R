@@ -3,10 +3,10 @@
 #   plot.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: October, 19, 2009                                 #
-#   Version: 0.5                                            #
+#   Date: April, 20, 2011                                   #
+#   Version: 0.6                                            #
 #                                                           #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
@@ -32,7 +32,6 @@ plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, s
    } else if (template=="clock12") {
       zero <- pi/2
       rotation <- "clock"
-      modulo <- "pi"
    } else {
       if (is.null(zero))
          zero <- xcircularp$zero
@@ -59,14 +58,14 @@ plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, s
    }
    pch <- rep(pch, nseries, length.out=nseries)
 
-   if (axes) {
-      axis.circular(units=units, template=template, zero=zero, rotation=rotation, digits=digits, cex=cex, tcl=tcl, tcl.text=tcl.text)
-   }
-   
    if (!is.logical(ticks))
-      stop("ticks must be logical")
-   
-   if (ticks) {
+     stop("ticks must be logical")
+
+   if (axes) {
+     axis.circular(at=NULL, labels=NULL, units=units, template=template, modulo="2pi", zero=zero, rotation=rotation, tick=ticks, cex=cex, tcl=tcl, tcl.text=tcl.text, digits=digits)
+   }
+      
+   if (axes==FALSE & ticks) {
       at <- circular((0:bins)/bins*2*pi, zero=zero, rotation=rotation)
       ticks.circular(at, tcl=tcl)
    }
@@ -76,13 +75,13 @@ plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, s
       x <- na.omit(x)
       n <- length(x)      
       if (n) {
-         x <- conversion.circular(x, units="radians", modulo=modulo)
+         x <- conversion.circular(x, units="radians", modulo="2pi")
          attr(x, "circularp") <- attr(x, "class") <- NULL
          if (rotation=="clock")
             x <- -x
-         x <- x+zero
          if (template=="clock12")
-           x <- 2*x
+           x <- 2*x          
+         x <- x+zero
          x <- x%%(2*pi)
          PointsCircularRad(x, bins, stack, col, pch, iseries, nseries, sep, 0, shrink, cex, ...)
       }

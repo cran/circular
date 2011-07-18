@@ -11,10 +11,10 @@
 #   range.circular function                                 #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: August, 12, 2010                                  #
-#   Copyright (C) 2010 Claudio Agostinelli                  #
+#   Date: May, 06, 2011                                     #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.4-1                                           #
+#   Version 0.5                                             #
 #############################################################
 
 range.circular <- function(x, test = FALSE, na.rm=FALSE, finite=FALSE, control.circular=list(), ...) {
@@ -54,9 +54,9 @@ range.circular <- function(x, test = FALSE, na.rm=FALSE, finite=FALSE, control.c
   result <- RangeCircularRad(x, test)
    
   if (test) {
-    result$range <- conversion.circular(x=circular(result$range), units=dc$units, type=dc$type, template=dc$template, modulo="2pi", zero=0, rotation='counter')
+    result$range <- conversion.circular(x=circular(result$range, template=dc$template, rotation='counter'), units=dc$units, type=dc$type, modulo="asis", zero=NULL)
   } else {
-    result <- conversion.circular(x=circular(result), units=dc$units, type=dc$type, template=dc$template, modulo="2pi", zero=0, rotation='counter')
+    result <- conversion.circular(x=circular(result, template=dc$template, rotation='counter'), units=dc$units, type=dc$type, modulo="asis", zero=NULL)
   }
   return(result)
 }
@@ -69,7 +69,7 @@ RangeCircularRad <- function(x, test=TRUE) {
    if (test == TRUE) {
        stop <- floor(1/(1 - range/(2*pi)))
        index <- c(1:stop)
-       sequence <- ((-1)^(index - 1)) * exp(log(gamma(n + 1)) - log(gamma(index + 1)) - log(gamma(n - index + 1))) * (1 - index * (1 - range/(2 * pi)))^(n - 1)
+       sequence <- ((-1)^(index - 1)) * exp(lgamma(n + 1) - lgamma(index + 1) - lgamma(n - index + 1)) * (1 - index * (1 - range/(2 * pi)))^(n - 1)
        p.value <- sum(sequence)
        result <- list(range=range, p.value=p.value)
    } else {

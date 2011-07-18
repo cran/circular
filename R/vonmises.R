@@ -297,13 +297,13 @@ qvonmises <- function(p, mu=circular(0), kappa=NULL, from=NULL, tol = .Machine$d
 #   dmixedvonmises function                                 #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: March, 31, 2009                                   #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Date: July, 18, 2011                                    #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.9-1                                           #
+#   Version 0.9-2                                           #
 #############################################################
 
-dmixedvonmises <- function(x, mu1, mu2, kappa1, kappa2, p) {
+dmixedvonmises <- function(x, mu1, mu2, kappa1, kappa2, prop) {
   if (missing(mu1) || length(mu1)!=1)
     stop("the mean direction parameter 'mu1' is mandatory and it must have length 1")
   if (missing(kappa1) || length(kappa1)!=1)
@@ -312,6 +312,8 @@ dmixedvonmises <- function(x, mu1, mu2, kappa1, kappa2, p) {
     stop("the mean direction parameter 'mu2' is mandatory and it must have length 1")
   if (missing(kappa2) || length(kappa2)!=1)
     stop("the concentration parameter 'kappa2' is mandatory and it must have length 1")
+  if (missing(prop) || length(prop)!=1 || prop > 1 || prop < 0)
+    stop("the proportion parameter 'prop' is mandatory and it must have a value between 0 and 1")  
   x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
   mu1 <- conversion.circular(mu1, units="radians", zero=0, rotation="counter")
   mu2 <- conversion.circular(mu2, units="radians", zero=0, rotation="counter")
@@ -327,11 +329,11 @@ dmixedvonmises <- function(x, mu1, mu2, kappa1, kappa2, p) {
   attr(mu1, "class") <- attr(mu1, "circularp") <-  NULL
   attr(mu2, "class") <- attr(mu2, "circularp") <-  NULL
     
-  DmixedvonmisesRad(x, mu1, mu2, kappa1, kappa2, p)
+  DmixedvonmisesRad(x, mu1, mu2, kappa1, kappa2, prop)
 }
 
-DmixedvonmisesRad <- function(x, mu1, mu2, kappa1, kappa2, p) {
-  vm <- p/(2 * pi * besselI(x=kappa1, nu=0, expon.scaled = TRUE)) * (exp(cos(x - mu1) - 1))^kappa1 + (1 - p)/(2 * pi * besselI(x=kappa2, nu=0, expon.scaled = TRUE)) * (exp(cos(x - mu2) - 1))^kappa2
+DmixedvonmisesRad <- function(x, mu1, mu2, kappa1, kappa2, prop) {
+  vm <- prop/(2 * pi * besselI(x=kappa1, nu=0, expon.scaled = TRUE)) * (exp(cos(x - mu1) - 1))^kappa1 + (1 - prop)/(2 * pi * besselI(x=kappa2, nu=0, expon.scaled = TRUE)) * (exp(cos(x - mu2) - 1))^kappa2
   return(vm)
 }
 
@@ -340,13 +342,13 @@ DmixedvonmisesRad <- function(x, mu1, mu2, kappa1, kappa2, p) {
 #   rmixedvonmises function                                 #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: March, 31, 2009                                   #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Date: July, 18, 2011                                    #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-5                                           #
+#   Version 0.2-6                                           #
 #############################################################
 
-rmixedvonmises <- function(n, mu1, mu2, kappa1, kappa2, p, control.circular=list()) {
+rmixedvonmises <- function(n, mu1, mu2, kappa1, kappa2, prop, control.circular=list()) {
   if (missing(mu1) || length(mu1)!=1)
     stop("the mean direction parameter 'mu1' is mandatory and it must have length 1")
   if (missing(kappa1) || length(kappa1)!=1)
@@ -355,6 +357,8 @@ rmixedvonmises <- function(n, mu1, mu2, kappa1, kappa2, p, control.circular=list
     stop("the mean direction parameter 'mu2' is mandatory and it must have length 1")
   if (missing(kappa2) || length(kappa2)!=1)
     stop("the concentration parameter 'kappa2' is mandatory and it must have length 1")
+  if (missing(prop) || length(prop)!=1 || prop > 1 || prop < 0)
+    stop("the proportion parameter 'prop' is mandatory and it must have a value between 0 and 1")  
   if (is.circular(mu1)) {
     datacircularp <- circularp(mu1)
   } else if  (is.circular(mu2)) {
@@ -389,19 +393,70 @@ rmixedvonmises <- function(n, mu1, mu2, kappa1, kappa2, p, control.circular=list
   attr(mu1, "class") <- attr(mu1, "circularp") <-  NULL
   attr(mu2, "class") <- attr(mu2, "circularp") <-  NULL
 
-  vm <- RmixedvonmisesRad(n, mu1, mu2, kappa1, kappa2, p)
+  vm <- RmixedvonmisesRad(n, mu1, mu2, kappa1, kappa2, prop)
   vm <- conversion.circular(circular(vm), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)    
   return(vm)
 }
 
-RmixedvonmisesRad <- function(n, mu1, mu2, kappa1, kappa2, p) {
+RmixedvonmisesRad <- function(n, mu1, mu2, kappa1, kappa2, prop) {
   result <- rep(NA, n)
   test <- runif(n)
-  n1 <- sum(test < p)
+  n1 <- sum(test < prop)
   n2 <- n - n1
   res1 <- RvonmisesRad(n1, mu1, kappa1)
   res2 <- RvonmisesRad(n2, mu2, kappa2)
-  result[test < p] <- res1
-  result[test >= p] <- res2
+  result[test < prop] <- res1
+  result[test >= prop] <- res2
   return(result)
 }
+
+#############################################################
+#                                                           #
+#   pmixedvonmises function                                 #
+#   Author: Claudio Agostinelli                             #
+#   Email: claudio@unive.it                                 #
+#   Date: July, 18, 2011                                    #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
+#                                                           #
+#   Version 0.1                                             #
+#############################################################
+
+pmixedvonmises <- function(q, mu1, mu2, kappa1, kappa2, prop, from=NULL, tol = 1e-020) {
+  if (missing(mu1) || length(mu1)!=1)
+    stop("the mean direction parameter 'mu1' is mandatory and it must have length 1")
+  if (missing(kappa1) || length(kappa1)!=1)
+    stop("the concentration parameter 'kappa1' is mandatory and it must have length 1")
+  if (missing(mu2) || length(mu2)!=1)
+    stop("the mean direction parameter 'mu2' is mandatory and it must have length 1")
+  if (missing(kappa2) || length(kappa2)!=1)
+    stop("the concentration parameter 'kappa2' is mandatory and it must have length 1")
+  if (missing(prop) || length(prop)!=1 || prop > 1 || prop < 0)
+    stop("the proportion parameter 'prop' is mandatory and it must have a value between 0 and 1")
+  q <- conversion.circular(q, units="radians", zero=0, rotation="counter")
+  mu1 <- conversion.circular(mu1, units="radians", zero=0, rotation="counter")
+  mu2 <- conversion.circular(mu2, units="radians", zero=0, rotation="counter")
+  mu1 <- as.vector(mu1)
+  kappa1 <- as.vector(kappa1)
+  mu2 <- as.vector(mu2)
+  kappa2 <- as.vector(kappa2)    
+  if (kappa1 < 0)
+    stop("the concentration parameter 'kappa1' must be non negative")
+  if (kappa2 < 0)
+    stop("the concentration parameter 'kappa2' must be non negative")
+  attr(q, "class") <- attr(q, "circularp") <-  NULL
+  attr(mu1, "class") <- attr(mu1, "circularp") <-  NULL
+  attr(mu2, "class") <- attr(mu2, "circularp") <-  NULL
+  
+  if (is.null(from)) {
+    from <- 0
+  } else {
+    from <- conversion.circular(from, units="radians", zero=0, rotation="counter", modulo="2pi")    
+  }  
+  mu1 <- (mu1-from)%%(2*pi)
+  mu2 <- (mu2-from)%%(2*pi)  
+  q <- (q-from)%%(2*pi)
+  
+  p <- prop*PvonmisesRad(q, mu1, kappa1, tol)+(1-prop)*PvonmisesRad(q, mu2, kappa2, tol)
+  return(p)
+}
+

@@ -21,7 +21,7 @@ Returns the p-th order Bessel function of the first kind, evaluated at a specifi
 
 
 \seealso{
-\code{\link{besselI}}.
+\code{\link[base]{besselI}}.
 }
 
 \keyword{math}

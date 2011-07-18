@@ -40,7 +40,7 @@ aov.circular(x, group, kappa = NULL,
   \item{df}{degrees of freedom.}
   \item{statistic}{the value of the test statistic.}
   \item{p.value}{the p.value of the test statistic.}
-  \item{call}{match.call().}
+  \item{call}{the \code{\link[base]{match.call}} result.}
 
   If the \code{method} is \code{"F.test"} then the object contains also:
 

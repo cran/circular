@@ -3,10 +3,10 @@
 #   density.circular function                               #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   date: January, 31, 2011                                 #
+#   date: July, 02, 2011                                    #
 #   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-3                                           #
+#   Version 0.3                                             #
 #                                                           #
 #############################################################
 
@@ -50,6 +50,8 @@ density.circular <- function(x, z=NULL, bw, adjust = 1, type = c("K", "L"), kern
        dc$zero <- datacircularp$zero
     if (is.null(dc$rotation))
        dc$rotation <- datacircularp$rotation
+    if (dc$modulo=="pi")
+      stop("The function does not work yet for modulo='pi'")
 
     x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
     attr(x, "class") <- attr(x, "circularp") <- NULL
@@ -106,7 +108,7 @@ density.circular <- function(x, z=NULL, bw, adjust = 1, type = c("K", "L"), kern
     if (bw <= 0) 
         stop("`bw' is not positive.")
     
-    y <- DensityCircularRad(x, z, bw, kernel)
+    y <- DensityCircularRad(x=x, z=z, bw=bw, kernel=kernel, K=K, min.k=min.k)
 
     structure(list(data = data, x = zz, y = y, bw = bw, n = nx, kernel=kernel, call = match.call(), data.name=name, has.na = FALSE), class = "density.circular")
 } 
@@ -130,14 +132,14 @@ DensityCircularRad <- function(x, z, bw, kernel, K=NULL, min.k=10) {
 #   plot.density.circular function                          #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: March, 29, 2010                                   #
-#   Copyright (C) 2010 Claudio Agostinelli                  #
+#   Date: July, 5, 2011                                     #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.4-4                                           #
+#   Version 0.5-1                                           #
 #                                                           #
 #############################################################
 
-plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="Density circular", type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, points.cex=1, plot.type = c("circle", "line"), axes=TRUE, ticks=TRUE, bins=NULL, offset=1, shrink=1, tcl=0.025,  tcl.text=0.125, sep=0.025, tol = 0.04, digits=2, cex=1, uin=NULL, xlim=NULL, ylim=NULL, join=FALSE, nosort=FALSE, units=NULL, template=NULL, zero=NULL, rotation=NULL, control.circle=circle.control(), ...) {
+plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="Density circular", type = "l", zero.line = TRUE, points.plot=FALSE, points.col=1, points.pch=1, points.cex=1, plot.type = c("circle", "line"), axes=TRUE, ticks=FALSE, bins=NULL, offset=1, shrink=1, tcl=0.025,  tcl.text=0.125, sep=0.025, tol = 0.04, digits=2, cex=1, uin=NULL, xlim=NULL, ylim=NULL, join=FALSE, nosort=FALSE, units=NULL, template=NULL, zero=NULL, rotation=NULL, control.circle=circle.control(), ...) {
    xcircularp <- attr(x$x, "circularp")
    if (is.null(xcircularp))
       stop("the component 'x' of the object must be of class circular")
@@ -147,9 +149,13 @@ plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="
       units <- xcircularp$units
    if (is.null(template))
       template <- xcircularp$template
-   if (template=="geographics") {
+   if (template=="geographics" | template=="clock24") {
       zero <- pi/2
       rotation <- "clock"
+   } else if (template=="clock12") {
+      zero <- pi/2
+      rotation <- "clock"
+      modulo <- "pi"
    } else {
       if (is.null(zero))
          zero <- xcircularp$zero
@@ -157,6 +163,10 @@ plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="
          rotation <- xcircularp$rotation
    }
    next.points <- 0
+   if (template=="clock12") {
+     x$x <- 2*x$x
+     x$data <- 2*x$data
+   } 
    x$x <- conversion.circular(x$x, units="radians", modulo="2pi")
    x$data <- conversion.circular(x$data, units="radians", modulo="2pi")
    attr(x$x, "class") <- attr(x$x, "circularp") <- NULL
@@ -165,25 +175,36 @@ plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="
    plot.type <- match.arg(plot.type)
 
    if (is.null(xlab))
-      xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
+      xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw), " Unit =", units)
    if (is.null(main))
       main <- deparse(x$call)
 #### as scatter plot
-   if (plot.type == "line") {     
+   if (plot.type == "line") {
+      if (units=='degrees') {
+        x$x <- x$x/pi*180
+        x$data <- x$data/pi*180
+      }
+      if (units=='hours') {
+        x$x <- x$x/pi*12
+        x$data <- x$data/pi*12
+      }
       if (is.null(xlim))
          xlim <- range(c(x$x, x$data))
-      if (is.null(ylim))
+      if (is.null(ylim)) {
          ylim <- range(x$y)
+         if (points.plot)
+           ylim[1] <- ylim[1]-0.04*points.cex
+      }
       
       xorder <- order(x$x)
       x$x <- x$x[xorder]
       x$y <- x$y[xorder]
       
-      plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, ...)
+      plot.default(x, type = type, xlim=xlim, ylim=ylim, main = main, xlab = xlab, ylab = ylab, ...)
       if (zero.line) 
-         abline(h = 0, lwd = 0.1, col = "gray")
+         abline(h = 0, lwd = 0.2, col = "gray")
       if (points.plot)
-         points(x$data, rep(min(x$y), length(x$data)), col=points.col, pch=points.pch, cex=points.cex)
+         points(x$data, rep(ylim[1]+0.02*points.cex, length(x$data)), col=points.col, pch=points.pch, cex=points.cex)
       return(NULL)
    } else {
 #### as circular plot
@@ -201,10 +222,13 @@ plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="
     
       CirclePlotRad(xlim=xlim, ylim=ylim, uin=uin, shrink=shrink, tol=tol, main=main, sub=sub, xlab=xlab, ylab=ylab, control.circle=control.circle)
 
+      if (!is.logical(ticks))
+        stop("ticks must be logical")
+      
       if (axes) {
-	 axis.circular(units = units, template=template, modulo = modulo, zero=zero, rotation=rotation, digits=digits, cex=cex, tcl=tcl, tcl.text=tcl.text)
+	 axis.circular(at=NULL, labels=NULL, units=units, template=template, modulo=modulo, zero=zero, rotation=rotation, tick=ticks, cex=cex, tcl=tcl, tcl.text=tcl.text, digits=digits)
       }
-      if (ticks) {
+      if (axes==FALSE & ticks) {
          at <- circular((0:bins)/bins*2*pi, zero=zero, rotation=rotation)
          ticks.circular(at, tcl=tcl)
       }
@@ -233,10 +257,10 @@ plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="
 #   lines.density.circular function                         #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: June, 05, 2010                                    #
+#   Date: July, 5, 2011                                     #
 #   Copyright (C) 2010 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.3                                             #
+#   Version 0.5-1                                           #
 #                                                           #
 #############################################################
 
@@ -246,18 +270,33 @@ lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=
       stop("the component 'x' of the object must be of class circular")
 ##   type <- xcircularp$type
    modulo <- xcircularp$modulo
+   units <- xcircularp$units
+   template <- xcircularp$template
    if (is.null(plot.info)) {
-      if (is.null(zero))
-         zero <- xcircularp$zero
-      if (is.null(rotation))
-         rotation <- xcircularp$rotation
+      if (is.null(zero)) {
+        if (template=="geographics" | template=="clock24" | template=="clock12")
+           zero <- pi/2
+        else
+           zero <- xcircularp$zero
+      }
+      if (is.null(rotation)) {
+        if (template=="geographics" | template=="clock24" | template=="clock12")
+          rotation <- "clock"
+        else
+          rotation <- xcircularp$rotation
+      }
       next.points <- 0
    } else {
       zero <- plot.info$zero
       rotation <- plot.info$rotation
       next.points <- plot.info$next.points
    }
-  
+   
+   if (template=="clock12") {
+     x$x <- 2*x$x
+     x$data <- 2*x$data
+   } 
+   
    x$x <- conversion.circular(x$x, units="radians")
    x$data <- conversion.circular(x$data, units="radians")
    attr(x$x, "circularp") <- attr(x$x, "class") <- NULL
@@ -275,14 +314,22 @@ lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=
    }
     
     if (plot.type == "line") {
+        if (units=='degrees') {
+          x$x <- x$x/pi*180
+          x$data <- x$data/pi*180
+        }
+        if (units=='hours') {
+          x$x <- x$x/pi*12
+          x$data <- x$data/pi*12
+        }
         xorder <- order(x$x)
         x$x <- x$x[xorder]
         x$y <- x$y[xorder] 
         lines.default(x, type = type, ...)
         if (zero.line) 
-            abline(h = 0, lwd = 0.1, col = "gray")
+            abline(h = 0, lwd = 0.2, col = "gray")
         if (points.plot)
-            points.default(x$data, rep(min(x$y),length(x$data)), col=points.col, pch=points.pch)
+            points.default(x$data, rep(min(x$y)-0.02*points.cex, length(x$data)), col=points.col, pch=points.pch)
     } else {
       if (rotation=="clock")
          x$x <- -x$x

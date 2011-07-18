@@ -31,7 +31,7 @@ mle.vonmises(x, mu=NULL, kappa=NULL, bias=FALSE, control.circular=list())
 \value{
   Returns a list with the following components:
 
-  \item{call}{the match.call().}
+  \item{call}{the \code{\link[base]{match.call}} result.}
   \item{mu}{the estimate of the mean direction or the value supplied as an object of class \code{circular}.}
   \item{kappa}{the estimate of the concentration parameter or the
     value supplied}

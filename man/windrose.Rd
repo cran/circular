@@ -9,39 +9,44 @@
 \usage{windrose(x, y=NULL, breaks=NULL, bins=12, increment = 10, 
   main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, 
   mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, 
-  tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), 
-  ylim=c(-1.2, 1.2), uin, tol=0.04, right=FALSE, shrink=NULL, 
+  tcl.text=-0.15, cex=1, digits=2, units=NULL,
+  template=NULL, zero=NULL, rotation=NULL,
+  num.ticks=12, xlim=c(-1.2, 1.2), ylim=c(-1.2, 1.2),
+  uin, tol=0.04, right=FALSE, shrink=NULL, 
   label.freq=FALSE, calm=c("0", "NA"), ...)
 }
 
 \arguments{
-         \item{x}{a vector contains direction or a two columns data frame, where the first component is the direction and the second the magnitude.  The vector or the first column in the case of data frame is coerced to class \code{\link{circular}}.}
-         \item{y}{a vector contains magnitude. If 'y' is not NULL and 'x' is a dataframe,  only the first column of 'x' is used for direction.}
-         \item{breaks}{the extremes of the pedals. The biggest value (in 2*pi) is recycled for building the first pedal. The vector is coerced to class \code{\link{circular}} but only the units is used.}
-	 \item{bins}{Number of pedals. Ignored if 'breaks' is not NULL.}
-	 \item{increment}{Grouping size of magnitude. These are the bins
-	 of the magnitudes displayed on each pedal.}
-	 \item{main}{Title for plot.}
-	 \item{cir.ind}{Percent intervals expressed on each circle if the pedals are equally spaced, otherwise values of density}
-	 \item{fill.col}{colors used to fill the pedals for each magnitude. The colors are recycled if necessary. The default is to use 'blue' and 'red'.} 
-         \item{plot.mids}{plot lines at the midpoints of the pedals.}
-         \item{mids.size}{length of the lines for midpoints.}
-         \item{osize}{radius of the circle draws at the center of the plot.}
-         \item{axes}{if TRUE axes are added to the plot. The function \code{\link{axis.circular}} is used.}
-         \item{ticks}{if TRUE ticks are added to the plot. The function \code{\link{ticks.circular}} is used.}
-         \item{tcl}{length of the ticks.}
-         \item{tcl.text}{The position of the axis labels.}
-         \item{cex}{point character size.  See help on \code{\link{par}}.}
-         \item{digits}{number of digits used to print axis values and other numbers.}
-         \item{num.ticks}{number of tick marks draw.}
-         \item{tol}{proportion of white space at the margins of plot}
-         \item{uin}{desired values for the units per inch parameter. If of length 1, the desired units per inch on the x axis.}
-         \item{xlim, ylim}{the ranges to be encompassed by the x and y axes. Useful for centering the plot.}
-         \item{right}{logical; if TRUE, the pedals are right-closed (left open) intervals.}
-         \item{shrink}{maximum length of the pedals, it can be used to plot several graphics with the same scale.}
-         \item{label.freq}{logical; if TRUE, the relative frequencies are used in the magnitude instead of intensities, when the breaks are equally spaced.}
-         \item{calm}{"0" or "NA", see details below.}
-         \item{\dots}{further parameters ignored for now.}
+  \item{x}{a vector contains direction or a two columns data frame, where the first component is the direction and the second the magnitude.  The vector or the first column in the case of data frame is coerced to class \code{\link{circular}}.}
+  \item{y}{a vector contains magnitude. If 'y' is not NULL and 'x' is a dataframe,  only the first column of 'x' is used for direction.}
+  \item{breaks}{the extremes of the pedals. The biggest value (in 2*pi) is recycled for building the first pedal. The vector is coerced to class \code{\link{circular}} but only the units is used.}
+  \item{bins}{Number of pedals. Ignored if 'breaks' is not NULL.}
+  \item{increment}{Grouping size of magnitude. These are the bins of the magnitudes displayed on each pedal.}
+  \item{main}{Title for plot.}
+  \item{cir.ind}{Percent intervals expressed on each circle if the pedals are equally spaced, otherwise values of density}
+  \item{fill.col}{colors used to fill the pedals for each magnitude. The colors are recycled if necessary. The default is to use 'blue' and 'red'.} 
+  \item{plot.mids}{plot lines at the midpoints of the pedals.}
+  \item{mids.size}{length of the lines for midpoints.}
+  \item{osize}{radius of the circle draws at the center of the plot.}
+  \item{axes}{if TRUE axes are added to the plot. The function \code{\link{axis.circular}} is used.}
+  \item{ticks}{if TRUE ticks are added to the plot. The function \code{\link{ticks.circular}} is used.}
+  \item{tcl}{length of the ticks.}
+  \item{tcl.text}{The position of the axis labels.}
+  \item{cex}{point character size.  See help on \code{\link{par}}.}
+  \item{digits}{number of digits used to print axis values and other numbers.}
+  \item{units}{the units used in the plot.}
+  \item{template}{the template used in the plot.}
+  \item{zero}{the zero used in the plot.}
+  \item{rotation}{the rotation used in the plot.} 
+  \item{num.ticks}{number of tick marks draw.}
+  \item{tol}{proportion of white space at the margins of plot}
+  \item{uin}{desired values for the units per inch parameter. If of length 1, the desired units per inch on the x axis.}
+  \item{xlim, ylim}{the ranges to be encompassed by the x and y axes. Useful for centering the plot.}
+  \item{right}{logical; if TRUE, the pedals are right-closed (left open) intervals.}
+  \item{shrink}{maximum length of the pedals, it can be used to plot several graphics with the same scale.}
+  \item{label.freq}{logical; if TRUE, the relative frequencies are used in the magnitude instead of intensities, when the breaks are equally spaced.}
+  \item{calm}{"0" or "NA", see details below.}
+  \item{\dots}{further parameters ignored for now.}
 }
 
 \details{Following the convention of the National Weather Service, winds
@@ -62,7 +67,7 @@
 	 \item{number.calm}{The number of calm observations omitted from the wind rose plot.}
          \item{breaks}{extremes of the pedals.}
          \item{mids}{midpoints of pedals.}
-         \item{call}{the \code{\link{match.call}} result.}
+         \item{call}{the \code{\link[base]{match.call}} result.}
 }
 
 \note{some codes from \code{\link{eqscplot}} in 'MASS' is used.}

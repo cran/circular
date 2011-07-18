@@ -51,7 +51,7 @@ lm.circular.cl(y, x, init = NULL, verbose = FALSE, tol = 1e-10,
 If \code{type=="c-c"} or \code{lm.circular.cc} is called directly an
 object of class \code{lm.circular.cc} is returned with the following components:
 
-\item{call}{match.call().}
+\item{call}{the \code{\link[base]{match.call}} result.}
 \item{rho}{square root of the average of the squares of the estimated
 conditional concentration parameters of y given x.}
 \item{fitted}{fitted values of the model of class \code{circular}.}
@@ -71,7 +71,7 @@ significantly different from zero.}
 If \code{type=="c-l"} or \code{lm.circular.cl} is called directly an
 object of class \code{lm.circular.cc} is returned with the following components:
 
-\item{call}{match.call().}
+\item{call}{the \code{\link[base]{match.call}} result.}
 \item{x}{the independent variables.}
 \item{y}{the dependent variable.}
 \item{mu}{the circular mean of the dependent variable of class \code{circular}.}

@@ -30,7 +30,7 @@ equal.kappa.test(x, group)
   \item{df}{degrees of freedom for chi-squared distribution.}
   \item{statistic}{the value of the chi-squared test statistic.}
   \item{p.value}{the p.value of the test statistic.}
-  \item{call}{match.call()}
+  \item{call}{the \code{\link[base]{match.call}} result.}
 }
 
 \details{

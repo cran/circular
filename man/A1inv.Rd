@@ -38,7 +38,7 @@ values by Gumbel, Greenwood and Durand (1953).
 }
 
 \seealso{
-\code{\link{mle.vonmises}}, \code{\link{A1}}, \code{\link{besselI}}.
+\code{\link{mle.vonmises}}, \code{\link{A1}}, \code{\link[base]{besselI}}.
 }
 
 \examples{

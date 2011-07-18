@@ -8,7 +8,7 @@
 \usage{
 \method{plot}{density.circular}(x, main=NULL, sub=NULL, xlab=NULL, ylab="Density circular", type="l",
   zero.line=TRUE, points.plot=FALSE, points.col=1, points.pch=1, 
-  points.cex=1, plot.type=c("circle", "line"), axes=TRUE, ticks=TRUE, 
+  points.cex=1, plot.type=c("circle", "line"), axes=TRUE, ticks=FALSE, 
   bins=NULL, offset=1, shrink=1, tcl=0.025, tcl.text = 0.125, sep=0.025, tol=0.04, 
   digits=2, cex=1, uin=NULL, xlim=NULL, ylim=NULL, join=FALSE, nosort=FALSE, 
   units=NULL, template=NULL, zero=NULL, rotation=NULL, 

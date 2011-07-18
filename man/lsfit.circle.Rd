@@ -56,7 +56,7 @@ squared residuals between the observations and the optimally fitting circle.
     coordinate}
   \item{convergence}{value from the function optim.}
   \item{optim}{the output from the function optim.}
-  \item{call}{match.call().}
+  \item{call}{the \code{\link[base]{match.call}} result.}
 }
 \references{ 
 Coope, I. (1993). Circle fitting by linear and non-linear least squares. 

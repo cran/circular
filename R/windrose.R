@@ -18,14 +18,14 @@
 #   windrose function                                       #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: October, 19, 2009                                 #
-#   Version: 0.4-1                                          #
+#   Date: April, 21, 2011                                   #
+#   Version: 0.5                                            #
 #                                                           #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Copyright (C) 2011 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
-windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex = 1, digits=2, num.ticks=12, xlim=c(-1.2, 1.2), ylim=c(-1.2, 1.2), uin=NULL, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, calm=c("0", "NA"), ...) {
+windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind Rose', cir.ind = 0.05, fill.col=NULL, plot.mids=TRUE, mids.size=1.2, osize=0.1, axes=TRUE, ticks=TRUE, tcl=0.025, tcl.text=-0.15, cex=1, digits=2, units=NULL, template=NULL, zero=NULL, rotation=NULL, num.ticks=12, xlim=c(-1.2, 1.2), ylim=c(-1.2, 1.2), uin=NULL, tol=0.04, right=FALSE, shrink=NULL, label.freq=FALSE, calm=c("0", "NA"), ...) {
 
    calm <- match.arg(calm)
 ###### internal function used to plot circles
@@ -89,15 +89,26 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
    result <- list()
    result$x <- x
    result$y <- y
-
    xcircularp <- attr(as.circular(x), "circularp")
    type <- xcircularp$type
-   units <- xcircularp$units
-   template <- xcircularp$template
    modulo <- xcircularp$modulo
-   zero <- xcircularp$zero
-   rotation <- xcircularp$rotation
-   
+   if (is.null(units)) 
+      units <- xcircularp$units
+   if (is.null(template))
+      template <- xcircularp$template
+   if (template=="geographics" | template=="clock24") {
+      zero <- pi/2
+      rotation <- "clock"
+   } else if (template=="clock12") {
+      zero <- pi/2
+      rotation <- "clock"
+   } else {
+      if (is.null(zero))
+         zero <- xcircularp$zero
+      if (is.null(rotation))
+         rotation <- xcircularp$rotation
+   }
+
    op <- par(mar = c(1,1,2,1))
    mai <- par("mai") 
    on.exit(par(op))
@@ -119,23 +130,25 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
    }    
    xlim <- midx + oxuin/xuin * c(-1, 1) * diff(xlim) * 0.5
    ylim <- midy + oyuin/yuin * c(-1, 1) * diff(ylim) * 0.5
-
+       
    if (any(is.null(breaks))) {
-       step <- 2*pi/bins
-       breaks <- circular(seq(0, 2*pi, by=step), units="radians")
+     step <- 2*pi/bins
+     breaks <- circular(seq(0, 2*pi, by=step), units="radians")
    } else {
        breaks <- as.circular(breaks)
    }
    breaks <- conversion.circular(breaks, units="radians", zero=0, rotation="counter", modulo="2pi")
    attr(breaks, "class") <- attr(breaks, "circularp") <-  NULL
+   if (template=="clock12") { ### added for clock12
+     breaks <- 2*breaks
+     breaks <- breaks%%(2*pi)
+   }
    breaks <- sort(unique(breaks))
    if (breaks[1]!=0) {
        breaks <- c(breaks[length(breaks)]-2*pi, breaks)
    } else {
        breaks <- c(breaks, 2*pi)
-   }
-   attr(breaks, "class") <- attr(breaks, "circularp") <-  NULL
-   
+   }   
    bins <- length(breaks)-1
    step <- diff(breaks) # the step for the breaks which include zero degrees is the first one
    
@@ -235,17 +248,17 @@ windrose <- function(x, y=NULL, breaks=NULL, bins=12, increment = 10, main='Wind
 
    circles(osize, fill = TRUE)
               
-   if (ticks) {
+   if (axes) {
+     axis.circular(at=NULL, labels=NULL, units=units, template=template, modulo="2pi", zero=zero, rotation=rotation, tick=ticks, cex=cex, tcl=tcl, tcl.text=tcl.text, digits=digits)
+   }
+
+   if (axes==FALSE & ticks) {
        at <- (0:num.ticks)/num.ticks*2*pi
        if (rotation=="clock") at <- -at
        at <- at + zero
        ticks.circular(circular(x=at, type="angles", units="radians", modulo="asis", zero=zero, rotation=rotation), tcl=tcl)
    }
-
-   if (axes) {
-       axis.circular(units = units, template=template, zero=zero, rotation=rotation, digits=digits, cex=cex, tcl=tcl, tcl.text=tcl.text)
-   }
-
+   
    OUT <- round(new/sum(OUT[m,]),3)
    colnamesout <- rep("", bins)
    breaks <- conversion.circular(circular(breaks), units=units)
