@@ -37,7 +37,7 @@ sd.circular <- function (x, na.rm=FALSE, ...)  {
     # Checks
     if (length(x) == 0) {
       warning("No observations (at least after removing missing values)")
-      return(circular(NA))
+      return(NA)
     }
 
     # Possibly set and then get the circular attributes of the input data

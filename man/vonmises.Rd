@@ -12,7 +12,7 @@
 
 \usage{
 rvonmises(n, mu, kappa, control.circular=list())
-dvonmises(x, mu, kappa)
+dvonmises(x, mu, kappa, log)
 pvonmises(q, mu, kappa, from=NULL, tol = 1e-020)
 qvonmises(p, mu = circular(0), kappa=NULL, from=NULL, tol = .Machine$double.eps^(0.6), 
   control.circular = list(), \dots)
@@ -25,6 +25,7 @@ qvonmises(p, mu = circular(0), kappa=NULL, from=NULL, tol = .Machine$double.eps^
   \item{mu}{mean direction of the distribution. The object is coerced to class \code{\link{circular}}.}
   \item{kappa}{non-negative numeric value for the concentration parameter
     of the distribution.}
+	\item{log}{logical; if TRUE, probabilities p are given as log(p).}
   \item{from}{if \code{NULL}  is set to \eqn{mu-pi}. This is the value from which the pvonmises and qvonmises are evaluated. It should be a \code{circular} object.}
   \item{tol}{the precision in evaluating the distributon function or the
   quantile.}

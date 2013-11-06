@@ -7,7 +7,7 @@ Add points to a plot of circular data points on the current graphics device.
 }
 
 \usage{
-points.circular(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, 
+\method{points}{circular}(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, 
   shrink = 1, bins = NULL, col = NULL, next.points = NULL, 
   plot.info = NULL, zero = NULL, rotation = NULL, ...)
 }

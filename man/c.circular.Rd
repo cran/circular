@@ -7,7 +7,7 @@ A method for circular object, which combines its arguments
 }
 
 \usage{
-c.circular(..., recursive = FALSE)
+\method{c}{circular}(..., recursive = FALSE)
 }
 
 \arguments{

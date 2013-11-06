@@ -55,7 +55,7 @@ rkatojones <- function(n, mu=NULL, nu=NULL, r=NULL, kappa=NULL, control.circular
 }
 
 rkatojonesRad <- function(n, mu, nu, r, kappa) {
-   x <- vector(len = n)
+   x <- vector(length = n)
    if (kappa) {
 	t <- NULL
         j <- 1

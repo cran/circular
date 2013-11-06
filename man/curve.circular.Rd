@@ -9,13 +9,13 @@
   plot circular density functions.
 }
 \usage{
-curve.circular(expr, from=NULL, to=NULL, n=101, add=FALSE, 
+\method{curve}{circular}(expr, from=NULL, to=NULL, n=101, add=FALSE, 
   cex=1, axes=TRUE, ticks=FALSE, shrink=1, tcl=0.025, 
   tcl.text=0.125, tol=0.04, uin=NULL, xlim=c(-1, 1), 
   ylim=c(-1, 1), digits=2, modulo=c("2pi", "asis", "pi"), 
   main=NULL, sub=NULL, xlab="", ylab="", 
   control.circle=circle.control(), \dots)
-plot.function.circular(x, from=0, to=2*pi, \dots)
+\method{plot}{function.circular}(x, from=0, to=2*pi, \dots)
 }
 \arguments{
   \item{expr}{an expression written as a function of \code{x}, or

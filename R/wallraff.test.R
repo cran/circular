@@ -15,6 +15,8 @@
 #
 #------------------------------------------------------------
 
+# added drop=TRUE 20131106 Claudio
+
 # Generic function
 wallraff.test <- function(x, ...) {
 	UseMethod("wallraff.test", x)
@@ -29,7 +31,7 @@ wallraff.test.default <- function(x, group, ref=NULL, ...) {
 	# check arguments
 	ok <- complete.cases(x, group)
 	x <- x[ok]
-	group <- group[ok]
+	group <- group[ok,drop=TRUE]
 	if (length(x)==0 | length(table(group)) < 2) {
 		stop("No observations or no groups (at least after removing missing values)")
 	}

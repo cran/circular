@@ -1,12 +1,13 @@
 
-R version 2.12.2 (2011-02-25)
-Copyright (C) 2011 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: i686-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -24,21 +25,21 @@ Type 'q()' to quit R.
 > suppressMessages(library("circular"))
 > # ?wallraff.test
 > 
-> angles = circular(c(70, 80, 80, 85, 85, 90, 95, 95, 5, 5, 15, 55, 55, 65, 105, 120, 340), units="degrees", template="geographics")
-> group = c(rep("control", 8), rep("experimental", 9))
+> angles <- circular(c(70, 80, 80, 85, 85, 90, 95, 95, 5, 5, 15, 55, 55, 65, 105, 120, 340), units="degrees", template="geographics")
+> group <- factor(c(rep("control", 8), rep("experimental", 9)))
 > 
-> homeDir = 40
+> homeDir <- 40
 > 
 > # expect:
 > # W = 2 (in wilcox.test) and p < 0.01 for the dispersion test
-> # W = 26 (in wilcox test) and p > 0.05 for the homing test
+> # W = 26 (in wilcox.test) and p > 0.05 for the homing test
 > 
-> xn = angles
+> xn <- angles
 > wallraff.test(xn, group)
 
 	Wallraff rank sum test of angular distance
 
-data:  xn by group 
+data:  xn by group
 Kruskal-Wallis chi-squared = 10.7697, df = 1, p-value = 0.001032
 
 > 
@@ -46,56 +47,50 @@ Kruskal-Wallis chi-squared = 10.7697, df = 1, p-value = 0.001032
 
 	Wallraff rank sum test of angular distance
 
-data:  xn by group 
+data:  xn by group
 Kruskal-Wallis chi-squared = 0.9328, df = 1, p-value = 0.3341
 
-Warning message:
-In wallraff.test.default(xn, group, ref = homeDir) :
-  "group" was converted into a factor.
-  The levels were kept in the order of the original vector:
-    control, experimental
-  Please make sure the elements of "ref" match this order
 > wallraff.test(xn, as.factor(group), ref=homeDir)
 
 	Wallraff rank sum test of angular distance
 
-data:  xn by as.factor(group) 
+data:  xn by as.factor(group)
 Kruskal-Wallis chi-squared = 0.9328, df = 1, p-value = 0.3341
 
 > 
 > 
-> xl = split(xn, group)
+> xl <- split(xn, group)
 > wallraff.test(xl, ref=homeDir)
 
 	Wallraff rank sum test of angular distance
 
-data:  control and experimental 
+data:  control and experimental
 Kruskal-Wallis chi-squared = 0.9328, df = 1, p-value = 0.3341
 
 > wallraff.test(xl)
 
 	Wallraff rank sum test of angular distance
 
-data:  control and experimental 
+data:  control and experimental
 Kruskal-Wallis chi-squared = 10.7697, df = 1, p-value = 0.001032
 
 > 
-> xl = split(xn, group)
-> names(xl) = NULL
+> xl <- split(xn, group)
+> names(xl) <- NULL
 > wallraff.test(xl)
 
 	Wallraff rank sum test of angular distance
 
-data:  1 and 2 
+data:  1 and 2
 Kruskal-Wallis chi-squared = 10.7697, df = 1, p-value = 0.001032
 
 > 
-> xd = data.frame(group=group, angles=angles)
+> xd <- data.frame(group=group, angles=angles)
 > wallraff.test(angles ~ group, xd)
 
 	Wallraff rank sum test of angular distance
 
-data:  angles by group 
+data:  angles by group
 Kruskal-Wallis chi-squared = 10.7697, df = 1, p-value = 0.001032
 
 > 

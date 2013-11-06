@@ -40,7 +40,6 @@ rayleigh.test <- function(x, mu=NULL) {
     return(result)
 }
 
-
 RayleighTestRad <- function(x, mu=NULL) {
     n <- length(x)
     if (is.null(mu)) {
@@ -50,16 +49,18 @@ RayleighTestRad <- function(x, mu=NULL) {
        z <- (n * rbar^2)
        p.value <- exp( - z)
        if (n < 50)
-          temp <- (1 + (2 * z - z^2)/(4 * n) - (24 * z - 132 * z^2 + 76 * z^3 - 9 * z^4)/(288 * n^2))
+          temp <- 1 + (2 * z - z^2)/(4 * n) - (24 * z - 132 * z^2 + 76 * z^3 - 9 * z^4)/(288 * n^2)
        else
           temp <- 1
-       result <- list(statistic = rbar, p.value = p.value * temp, mu=NA)
+       p.value <- min(max(p.value * temp,0),1)
+       result <- list(statistic = rbar, p.value = p.value, mu=NA)
     } else {
        r0.bar <- (sum(cos(x - mu)))/n
        z0 <- sqrt(2 * n) * r0.bar
        pz <- pnorm(z0)
        fz <- dnorm(z0)
        p.value <- 1 - pz + fz * ((3 * z0 - z0^3)/(16 * n) + (15 * z0 + 305 * z0^3 - 125 * z0^5 + 9 * z0^7)/(4608 * n^2))
+       p.value <- min(max(p.value,0),1)
        result <- list(statistic = r0.bar, p.value = p.value, mu=mu)
     }
     return(result)

@@ -19,7 +19,7 @@ Returns the zeroth order Bessel function of the first kind evaluated at a specif
 }
 
 \seealso{
-\code{\link[base]{besselI}}.
+\code{\link{besselI}}.
 }
 
 \keyword{math}

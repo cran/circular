@@ -6,7 +6,7 @@
   This function is a method of \code{\link{as.data.frame}} for a circular object.
 }
 \usage{
-as.data.frame.circular(x, row.names = NULL, optional = FALSE, ...)
+\method{as.data.frame}{circular}(x, row.names = NULL, optional = FALSE, ...)
 }
 \arguments{
   \item{x}{object of class \code{\link{circular}}.}

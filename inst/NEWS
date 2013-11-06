@@ -1,6 +1,37 @@
 Library circular
 =================
-Version 0.4-1, 2010/08/18
+Version 0.4-6 2013/10/30
+Added function dasytriangular for the density of asymmetric triangular distribution as described in Mardia (1972)
+In this version two functions are available for evaluating the median (medianCircular which allows for the dispersion parameter and median.circular with only the median reported), however medianCircular is deprecated and it will be removed in the next releases. 
+Added mean.circular.c to calculate the circular mean in C language.
+New algorithm for circular median. The implementation is in C language.
+Added function for Hodges Lehmann estimate of the median for circular and non circular data.
+Several bugs fixed.
+
+Version 0.4-3 2011/07/18
+Fixed a bug in c.circular function.
+New functions: watson.williams.test, wallraff.test.
+Add a summary introduction to the package.
+Add citation information.
+Fixed the behaviour of axis.circular for template 'clock12' and 'clock24'.
+Fixed windrose and plot.density.circular for template 'clock12' and 'clock24'.
+Function range.circular use lgamma(x) instead of log(gamma(x)).
+Fixed a bug in density.circular. Now the arguments K and min.k are passed to the internal function.
+Added functions bw.cv.mse.circular and bw.cv.ml.circular for bandwidth selection using crossvalidation and mse or ml.
+Added functions sd.default, sd.data.frame, sd.circular (with sd method), angular.variance and angular.deviation. 
+Added pmixedvonmises function. Now *mixedvonmises functions use argument prop instead of p.
+Added function quantile.circular
+
+Version 0.4-2 2011/03/15
+Fixed a bug in rose.diag function. Now the rose.diag function has two new parameters: sub and control.circle
+
+Version 0.4-1 2011/02/02
+New functions:
+dgenvonmises, Density for the Generalized von Mises circular distribution. 
+djonespewsey, Density for the Jones and Pewsey circular distribution.
+dkatojones, Density for the Kato and Jones distribution
+dcarthwrite, Density for the Carthwrite's power-of-cosine distribution
+Fixed a bug in density.circular
 rose.diag function has new parameters and better control of the colors. Now it use polygon instead of lines.default and it draws edges of sectors as arcs. 
 Fixed bug on qvonmises and its documentation
 Fixed bug on qwrappednormal
@@ -8,7 +39,7 @@ Fixed bug on arrows.circular
 Now range.circular do not retain the rotation attributes. Always return a counter rotation angle.
 
 Version 0.4, 2010/08/01
-Refix range.circular
+Refixed range.circular
 
 Version 0.3-9, 2010/07/31
 Fixed bug #729 on watson.two.test function.

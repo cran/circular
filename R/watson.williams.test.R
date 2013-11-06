@@ -12,10 +12,12 @@
 #		Directional statistics, Mardia, K.V. and Jupp, P.E. (2000)
 #		p. 135
 #
-# (c) Copyright 2010-211 Jean-Olivier Irisson
+# (c) Copyright 2010-2011 Jean-Olivier Irisson
 #     GNU General Public License, v.3
 #
 #------------------------------------------------------------
+
+# added drop=TRUE 20131106 Claudio
 
 # Generic function
 watson.williams.test <- function(x, ...) {
@@ -31,7 +33,7 @@ watson.williams.test.default <- function(x, group, ...) {
 	# check arguments
 	ok <- complete.cases(x, group)
 	x <- x[ok]
-	group <- group[ok]
+	group <- group[ok,drop=TRUE]
 	if (length(x)==0 | length(table(group)) < 2) {
 		stop("No observations or no groups (at least after removing missing values)")
 	}
@@ -47,17 +49,28 @@ watson.williams.test.default <- function(x, group, ...) {
 
 	# compute concentration parameters and check assumptions
 	kt <- EqualKappaTestRad(x, group)
+
 	# equality of concentration parameters
 	if (kt$p.value < 0.05) {
-		warning("Concentration parameters: ", format(kt$kappa, digits=5) ," not equal between groups. The test might not be applicable")
+		warning("Concentration parameters (", paste(format(kt$kappa, digits=3), collapse=", ") ,") not equal between groups. The test might not be applicable")
 	}
+
 	# sufficiently large concentration
-	# Batschelet provides kappa > 2 in the two sample case but no indication in the multisample one
-	# Zar's conditions are sample size dependent
-	# Mardia & Jupp cite Stephens 1972 to justify that kappa >= 1 is OK
-	if ( kt$kappa.all < 1 ) {
-		warning("Global concentration parameter: ", format(kt$kappa.all, digits=3)," < 1. The test is probably not applicable")
+	# Batschelet provides kappa.all > 2 (or equivalently rho.all > 0.75) in the two sample case (but no indication in the multisample one)
+	# Mardia & Jupp cite Stephens 1972 to justify that kappa.all >= 1 (or equivalently rho.all >= 0.45) in the multisample case
+	# Zar's adds conditions on minimum sample size to use the smaller thresholds of the concentration parameter -- but there is no discussion of how things change when the sample size smaller but the concentration larger) :
+	#   N / 2 >= 25 in the two sample case
+	#   N / k >= 6 in the multisample case
+	# determine whether we are doing a two or multisample test
+	if (length(table(group)) == 2) {
+	   kappa.thresh <- 2
+	} else {
+	   kappa.thresh <- 1
 	}
+	if ( kt$kappa.all < kappa.thresh ) {
+		warning("Global concentration parameter: ", format(kt$kappa.all, digits=3)," < ", kappa.thresh, ". The test is probably not applicable")
+	}
+
 	# TODO : also check that distributions conform to Von Mises?
 
 	result <- WatsonWilliamsTestRad(x, group, kt)

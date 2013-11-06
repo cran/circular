@@ -11,10 +11,10 @@
 #   equal.kappa.test function                               #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: May, 27, 2006                                     #
-#   Version: 0.3                                            #
+#   Date: November, 06, 2013                                #
+#   Version: 0.4                                            #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2013 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -22,7 +22,7 @@ equal.kappa.test <- function(x, group) {
     # Handling missing values
     ok <- complete.cases(x, group)
     x <- x[ok]
-    group <- group[ok]
+    group <- group[ok, drop = TRUE]
     if (length(x)==0 | length(table(group)) < 2) {
         warning("No observations or no groups (at least after removing missing values)")
         return(NULL)
@@ -77,8 +77,6 @@ EqualKappaTestRad <- function(x, group) {
    result <- list(kappa=kappas, kappa.all=kappa.all, rho=r.bars, rho.all=r.bar.all, df=grps-1, statistic=U, p.value=p.value)
    return(result)
 }
-
-
 
 #############################################################
 #                                                           #

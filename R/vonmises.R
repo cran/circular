@@ -10,10 +10,10 @@
 #   rvonmises function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: March, 31, 2009                                   #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Date: November, 06, 2013                                #
+#   Copyright (C) 2013 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-5                                           #
+#   Version 0.2-6                                           #
 #############################################################
 
 rvonmises <- function(n, mu, kappa, control.circular=list()) {
@@ -81,7 +81,7 @@ rvonmises <- function(n, mu, kappa, control.circular=list()) {
 #}
 
 RvonmisesRad <- function(n, mu, kappa) {
-   x <- vector(len = n)
+   x <- vector(length = n)
    if (kappa) {
      vm <- .C("rvm",
        as.double(x),
@@ -90,7 +90,7 @@ RvonmisesRad <- function(n, mu, kappa) {
        as.double(kappa),
        PACKAGE="circular")[[1]] %% (2 * pi)
    } else {
-     vm <- stats:::runif(n=n, min=0, max=2*pi)
+     vm <- stats::runif(n=n, min=0, max=2*pi)
    }
    return(vm)
 }
@@ -100,18 +100,19 @@ RvonmisesRad <- function(n, mu, kappa) {
 #   dvonmises function                                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: March, 31, 2009                                   #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Date: February, 07, 2013                                #
+#   Copyright (C) 2013 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-1                                           #
+#   Version 0.3                                             #
 #############################################################
 
-dvonmises <- function (x, mu, kappa) {
+dvonmises <- function (x, mu, kappa, log=FALSE) {
   if (missing(mu) || length(mu)!=1)
     stop("the mean direction parameter 'mu' is mandatory and it must have length 1")
   if (missing(kappa) || length(kappa)!=1)
     stop("the concentration parameter 'kappa' is mandatory and it must have length 1")   
-
+  if (!is.logical(log))
+    stop("'log' must be logical")
   x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
   mu <- conversion.circular(mu, units="radians", zero=0, rotation="counter")
   mu <- as.vector(mu)
@@ -121,14 +122,24 @@ dvonmises <- function (x, mu, kappa) {
   attr(x, "class") <- attr(x, "circularp") <-  NULL
   attr(mu, "class") <- attr(mu, "circularp") <-  NULL    
   
-  DvonmisesRad(x, mu, kappa)
+  DvonmisesRad(x, mu, kappa, log)
 }
 
-DvonmisesRad <- function(x, mu, kappa) {
-  if (kappa) {
-    vm <- 1/(2 * pi * besselI(x = kappa, nu = 0, expon.scaled = TRUE)) * (exp(cos(x - mu) -1))^kappa
+DvonmisesRad <- function(x, mu, kappa, log=FALSE) {
+  if (log) {
+    if (kappa == 0)
+      vm <- log(rep(1/(2*pi), length(x)))
+    else if (kappa < 100000)
+      vm <- -(log(2*pi)+log(besselI(kappa, nu = 0, expon.scaled=TRUE)) + kappa) + kappa*(cos(x - mu))
+    else
+      vm <- ifelse(((x-mu)%%(2*pi))==0, Inf, -Inf)
   } else {
-    vm <- rep(1/(2*pi), length(x))
+    if (kappa == 0)
+      vm <- rep(1/(2*pi), length(x))
+    else if (kappa < 100000)
+      vm <- 1/(2 * pi * besselI(x = kappa, nu = 0, expon.scaled = TRUE)) * (exp(cos(x - mu) -1))^kappa
+    else
+      vm <- ifelse(((x-mu)%%(2*pi))==0, Inf, 0)
   }
   return(vm)
 }

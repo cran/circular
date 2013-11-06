@@ -17,13 +17,13 @@ If I1(kappa) is the first order Bessel function and I0(kappa) is the zeroth orde
 }
 
 \details{
-The function uses \code{\link[base]{besselI}}.
+The function uses \code{\link{besselI}}.
 }
 
 \author{Claudio Agostinelli}
 
 \seealso{
- \code{\link[base]{besselI}}, \code{\link{A1inv}}.
+ \code{\link{besselI}}, \code{\link{A1inv}}.
 }
 
 

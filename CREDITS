@@ -1,4 +1,0 @@
-Most of the functions are originally written for S by Ulric Lund <ulund@calpoly.edu>. 
-rstable function is based on C functions gsl_ran_levy and gsl_ran_levy_skew from GNU Scientifi Library copyrighted under GNU general license by James Theiler, Brian Gough and Keith Briggs.
-The function summary.circular is written with David Andel <andel@ifi.unizh.ch>
-The function windrose was originally written by Matt Pocernich <pocernic@rap.ucar.edu>

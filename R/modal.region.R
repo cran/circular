@@ -8,8 +8,8 @@ modal.region.default <- function(x, ...) .NotYetImplemented()
 #       GNU General Public Licence 2.0 
 #	Author: Claudio Agostinelli
 #	E-mail: claudio@unive.it
-#	Date: July, 5, 2011
-#	Version: 0.5-1
+#	Date: July, 21, 2011
+#	Version: 0.6
 #
 #	Copyright (C) 2011 Claudio Agostinelli
 #
@@ -18,10 +18,12 @@ modal.region.default <- function(x, ...) .NotYetImplemented()
 modal.region.circular <- function(x, z=NULL, q=0.95, bw, adjust = 1, type = c("K", "L"), kernel = c("vonmises", "wrappednormal"), na.rm = FALSE, step=0.01, eps.lower=10^(-4), eps.upper=10^(-4), ...) {
   if (is.null(z))
     z <- circular(seq(0,2*pi+step,step))
-  if (!is.circular(x)) {
-    x <- circular(x)
-    cat("'x' is coerced to circular object assuming default values for the 'circular' function\n")
-  }  
+  if (is.circular(x))
+    xcp <- circularp(x)     
+  else
+    xcp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")   
+  x <- conversion.circular(x, units="radians", zero=0, rotation="counter", modulo="2pi")
+  z <- conversion.circular(z, units="radians", zero=0, rotation="counter", modulo="asis")  
   object <- density.circular(x=x, z=z, bw=bw, adjust=adjust, type=type, kernel=kernel, na.rm=na.rm)
   
   if (q > 1 | q < 0)
@@ -46,9 +48,9 @@ modal.region.circular <- function(x, z=NULL, q=0.95, bw, adjust = 1, type = c("K
   }
   result <- list()
   xunits <- circularp(x)$units
-  result$zeros <- conversion.circular(circular(zeros), units=xunits)
+  result$zeros <- conversion.circular(circular(zeros), xcp$units, xcp$type, xcp$template, 'asis', xcp$zero, xcp$rotation)
   result$areas <- areas
-  object$x <- conversion.circular(object$x, units=xunits)
+  object$x <- conversion.circular(object$x, xcp$units, xcp$type, xcp$template, 'asis', xcp$zero, xcp$rotation)
   result$density <- object
   result$q <- q
   result$level <- l
@@ -221,7 +223,7 @@ area <- function(x, object, ...) {
 #x: is a matrix with two columns
 #object: an object from density.circular
 #...: values passed to integrate function
-  den <- approxfun(x=object$x, y=object$y)
+  den <- approxfun(x=c(object$x-2*pi,object$x,object$x+2*pi), y=rep(object$y, 3))
   int <- function(x) integrate(f=den, lower=x[1], upper=x[2], ...)$value
   areas <- apply(x, 1, int)
   tot <- sum(areas)

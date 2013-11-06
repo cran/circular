@@ -1,27 +1,24 @@
 
-###############################################################
-#                                                             #
-#       Original Splus: Ulric Lund                            #
-#       E-mail: ulund@calpoly.edu                             #
-#                                                             #
-###############################################################
+#############################################################
+#                                                           #
+#       Original Splus: Ulric Lund                          #
+#       E-mail: ulund@calpoly.edu                           #
+#                                                           #
+#############################################################
 
 #############################################################
 #                                                           #
 #   mle.vonmises.bootstrap.ci function                      #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: August, 10, 2006                                  #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Date: November, 06, 2013                                #
+#   Copyright (C) 2013 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.3-2                                           #
+#   Version 0.3-3                                           #
 #############################################################
 
 mle.vonmises.bootstrap.ci <- function(x, mu=NULL, bias = FALSE, alpha = 0.05, reps = 1000, control.circular=list()) {
-
-  if (!require(boot))
-     stop("To use this function you have to install the package 'boot' \n")
-
+  
   # Handling missing values
   x <- na.omit(x)
   if (length(x)==0) {

@@ -7,7 +7,7 @@ Computes the circular range of a data set and performs a test of uniformity if s
 }
 
 \usage{
-range.circular(x, test=FALSE, na.rm = FALSE, finite = FALSE, 
+\method{range}{circular}(x, test=FALSE, na.rm = FALSE, finite = FALSE, 
   control.circular=list(), ...)
 }
 
@@ -27,13 +27,16 @@ Returns the circular range as a \code{circular} object.  If the significance tes
 }
 
 \details{
-The circular range is the shortest arc on the circle containing the entire set of data.  The p-value is computed using the exact distribution of the circular range under the hypothesis of uniformity.
+The circular range is the shortest arc on the circle containing the
+entire set of data.  The p-value is computed using the exact
+distribution of the circular range under the hypothesis of uniformity,
+details can be found in Mardia and Jupp (1999) pag. 107.
 }
 
 \author{Claudio Agostinelli and Ulric Lund}
 
 \references{
-Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Section 7.4, World Scientific Press, Singapore.
+  K.V. Mardia and P.E. Jupp (1999) Directional Statistics, Wiley.
 }
 
 \seealso{

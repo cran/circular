@@ -1,12 +1,13 @@
 
-R version 2.12.2 (2011-02-25)
-Copyright (C) 2011 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: i686-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -24,8 +25,8 @@ Type 'q()' to quit R.
 > suppressMessages(library("circular"))
 > # ?watson.williams.test
 > 
-> angles = circular( c(rep(c(-20, -10, 0), c(1,7,2)), rep(c(-10, 0, 10, 20), c(3,3,3,1))), units="degrees", template="geographics")
-> group = rep(c("exp", "control"), each=10)
+> angles <- circular( c(rep(c(-20, -10, 0), c(1,7,2)), rep(c(-10, 0, 10, 20), c(3,3,3,1))), units="degrees", template="geographics")
+> group <- factor(rep(c("exp", "control"), each=10))
 > 
 > # expect this:
 > # F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
@@ -33,13 +34,13 @@ Type 'q()' to quit R.
 > #        1.988969       -9.000615 
 > 
 > # Test interfaces
-> xn = angles
+> xn <- angles
 > watson.williams.test(xn, group)
 
 	Watson-Williams test for homogeneity of means
 
-data:  xn by group 
-F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
+data:  xn by group
+F = 8.7329, df1 = 1, df2 = 18, p-value = 0.008472
 sample estimates:
 Circular Data: 
 Type = angles 
@@ -52,13 +53,13 @@ mean of control     mean of exp
        1.988969       -9.000615 
 
 > 
-> xl = split(xn, group)
+> xl <- split(xn, group)
 > watson.williams.test(xl)
 
 	Watson-Williams test for homogeneity of means
 
-data:  control and exp 
-F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
+data:  control and exp
+F = 8.7329, df1 = 1, df2 = 18, p-value = 0.008472
 sample estimates:
 Circular Data: 
 Type = angles 
@@ -71,14 +72,14 @@ mean of control     mean of exp
        1.988969       -9.000615 
 
 > 
-> xl = split(xn, group)
-> names(xl) = NULL
+> xl <- split(xn, group)
+> names(xl) <- NULL
 > watson.williams.test(xl)
 
 	Watson-Williams test for homogeneity of means
 
-data:  1 and 2 
-F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
+data:  1 and 2
+F = 8.7329, df1 = 1, df2 = 18, p-value = 0.008472
 sample estimates:
 Circular Data: 
 Type = angles 
@@ -91,13 +92,13 @@ mean of 1 mean of 2
  1.988969 -9.000615 
 
 > 
-> xd = data.frame(group=group, angles=angles)
+> xd <- data.frame(group=group, angles=angles)
 > watson.williams.test(angles ~ group, xd)
 
 	Watson-Williams test for homogeneity of means
 
-data:  angles by group 
-F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
+data:  angles by group
+F = 8.7329, df1 = 1, df2 = 18, p-value = 0.008472
 sample estimates:
 Circular Data: 
 Type = angles 
@@ -111,17 +112,17 @@ mean of control     mean of exp
 
 > 
 > # Test the influence of ordering the groups
-> id = c(9, 8, 7, 4, 6, 5, 12, 18, 10, 17, 1, 19, 3, 20, 2, 16, 15, 14, 13, 11)
-> angles = angles[id]
-> group = group[id]
+> id <- c(9, 8, 7, 4, 6, 5, 12, 18, 10, 17, 1, 19, 3, 20, 2, 16, 15, 14, 13, 11)
+> angles <- angles[id]
+> group <- group[id]
 > 
-> xn = angles
+> xn <- angles
 > watson.williams.test(xn, group)
 
 	Watson-Williams test for homogeneity of means
 
-data:  xn by group 
-F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
+data:  xn by group
+F = 8.7329, df1 = 1, df2 = 18, p-value = 0.008472
 sample estimates:
 Circular Data: 
 Type = angles 
@@ -133,13 +134,13 @@ Rotation = clock
 mean of control     mean of exp 
        1.988969       -9.000615 
 
-> xl = split(xn, group)
+> xl <- split(xn, group)
 > watson.williams.test(xl)
 
 	Watson-Williams test for homogeneity of means
 
-data:  control and exp 
-F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
+data:  control and exp
+F = 8.7329, df1 = 1, df2 = 18, p-value = 0.008472
 sample estimates:
 Circular Data: 
 Type = angles 
@@ -151,13 +152,13 @@ Rotation = clock
 mean of control     mean of exp 
        1.988969       -9.000615 
 
-> xd = data.frame(group=group, angles=angles)
+> xd <- data.frame(group=group, angles=angles)
 > watson.williams.test(angles ~ group, xd)
 
 	Watson-Williams test for homogeneity of means
 
-data:  angles by group 
-F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
+data:  angles by group
+F = 8.7329, df1 = 1, df2 = 18, p-value = 0.008472
 sample estimates:
 Circular Data: 
 Type = angles 
@@ -171,15 +172,16 @@ mean of control     mean of exp
 
 > 
 > # Test NAs
-> angles[length(angles)+1] = NA
-> group[length(group)+1] = "bar"
-> xn = angles
+> angles[length(angles)+1] <- NA
+> levels(group) <- c("exp", "control", "bar")
+> group[length(group)+1] <- "bar"
+> xn <- angles
 > watson.williams.test(xn, group)
 
 	Watson-Williams test for homogeneity of means
 
-data:  xn by group 
-F = 8.7329, df1 = 1, df2 = 18, p-value = 0.003108
+data:  xn by group
+F = 8.7329, df1 = 1, df2 = 18, p-value = 0.008472
 sample estimates:
 Circular Data: 
 Type = angles 
@@ -188,7 +190,7 @@ Template = geographics
 Modulo = asis 
 Zero = 1.570796 
 Rotation = clock 
-mean of control     mean of exp 
+    mean of exp mean of control 
        1.988969       -9.000615 
 
 > 

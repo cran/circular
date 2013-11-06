@@ -3,10 +3,10 @@
 #   rcircularuniform function                               #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio@unive.it                                 #
-#   Date: March, 31, 2009                                   #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Date: November, 06, 2013                                #
+#   Copyright (C) 2013 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1                                             #
+#   Version 0.1-1                                           #
 #############################################################
 
 rcircularuniform <- function(n, control.circular=list()) {
@@ -31,7 +31,7 @@ rcircularuniform <- function(n, control.circular=list()) {
 }
 
 RuniformRad <- function(n) {
-   un <- stats:::runif(n=n, min=0, max=2*pi)
+   un <- stats::runif(n=n, min=0, max=2*pi)
    return(un)
 }
 

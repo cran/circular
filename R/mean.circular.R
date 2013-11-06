@@ -11,10 +11,10 @@
 #   mean.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: August, 10, 2006                                  #
-#   Version: 0.4-3                                          #
+#   Date: September, 11, 2012                               #
+#   Version: 0.5                                            #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2012 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -44,24 +44,19 @@ mean.circular <- function(x, na.rm=FALSE, control.circular=list(), ...) {
       dc$zero <- datacircularp$zero
    if (is.null(dc$rotation))
       dc$rotation <- datacircularp$rotation
-   x <- conversion.circular(x, units="radians", zero=0, rotation="counter")
+   x <- conversion.circular(x, units="radians")
    attr(x, "class") <- attr(x, "circularp") <-  NULL
    circmean <- MeanCircularRad(x)
-   circmean <- conversion.circular(circular(circmean), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
+   circmean <- conversion.circular(circular(circmean, template=datacircularp$template, zero=datacircularp$zero, rotation=datacircularp$rotation), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
    return(circmean)
 }
 
-MeanCircularRad <- function(x) {
+MeanCircularRad <- function(x)
+{
    if (any(is.na(x))) {
        circmean <- NA
    } else {
-       sinr <- sum(sin(x))
-       cosr <- sum(cos(x))
-       if (sqrt((sinr^2 + cosr^2))/length(x) > .Machine$double.eps) {
-           circmean <- atan2(sinr, cosr)
-       } else {
-           circmean <- NA
-       }
+      circmean <- .C("MeanCircularRad",x=as.double(x),n=as.integer(length(x)),result=as.double(0),PACKAGE="circular")$result
    }
    return(circmean)
 }

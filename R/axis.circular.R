@@ -3,10 +3,11 @@
 #   axis.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 21, 2011                                   #
-#   Version: 0.6                                            #
+#   Date: October, 04, 2012                                 #
+#   Version: 0.7                                            #
 #                                                           #
-#   Copyright (C) 2011 Claudio Agostinelli                  #
+#   Copyright (C) 2012 Claudio Agostinelli                  #
+#                                 and Alessandro Gagliardi  #
 #                                                           #
 #############################################################
  
@@ -20,12 +21,12 @@ axis.circular <- function(at=NULL, labels=NULL,  units = NULL, template=NULL, mo
 
   if (is.null(at)) {
     if (is.null(template) | template=="none" | template=="geographics") {
-      at <- circular(c(0, pi/2, pi, 3/2*pi))
+      at <- circular(c(0, pi/2, pi, 3/2*pi),rotation=rotation,zero=zero)
     } else if (template=="clock24") {
-      at <- circular(seq(0, 23), units="hours")
+      at <- circular(seq(0, 23), units="hours",rotation=rotation,zero=zero)
       units <- "hours"
     } else if (template=="clock12") {
-      at <- circular(seq(0, 11), units="hours")
+      at <- circular(seq(0, 11), units="hours",rotation=rotation,zero=zero)
       units <- "hours"
     }
   }
@@ -79,9 +80,9 @@ axis.circular <- function(at=NULL, labels=NULL,  units = NULL, template=NULL, mo
     at <- 2*at
   at <- conversion.circular(at, units="radians", modulo="2pi", zero=0, rotation="counter")
   attr(at, "circularp") <- attr(at, "class") <- NULL
-  if (rotation=="clock")
-    at <- -at
-  at <- at+zero
+  ## if (rotation=="clock")
+  ##   at <- -at
+  ## at <- at+zero
   if (is.null(labels)) {
     if (length(atasis)==4 && all(atasis==c(0, pi/2, pi, 3/2*pi))) { 
       if (template=="geographics") {

@@ -4,7 +4,11 @@ useDynLib(circular)
 importFrom(graphics, axis)
 importFrom(stats, density)
 importFrom(stats, quantile)
-###importFrom(stats, median)
+importFrom(stats, median)
+importFrom(stats, weights)
+importFrom(stats, runif)
+importFrom(utils, packageDescription)
+importFrom(boot, boot)
 
 #Export directive
 
@@ -12,6 +16,10 @@ importFrom(stats, quantile)
 export(
 # file A1.R
  A1,
+# file A1FirstDerivative.R
+ A1FirstDerivative,
+# file A1SecondDerivative.R
+ A1SecondDerivative,
 # file A1inv.R
  A1inv,
 # file I.0.R
@@ -32,6 +40,8 @@ export(
  as.circular,
 # file as.data.frame.circular.R
  as.data.frame.circular,
+# asytriangular.R
+ dasytriangular,
 # file axialvonmises.R
  daxialvonmises,
 # file bw.circular.R
@@ -46,6 +56,13 @@ export(
  circular, conversion.circular, circularp, "circularp<-", is.circular,
 # file circular.colors.R
  circular.colors,
+## # file clm.R,
+##  clm,
+##  clm.fit,
+##  summary.clm,
+##  model.frame.clm,
+##  clm.control,
+  
 # file coord2rad.R
  coord2rad,
 # file cor.circular.R
@@ -58,6 +75,8 @@ export(
  dist.circular,
 # file equal.kappa.test.R
  equal.kappa.test,
+## # file family.circular.R
+##  vonMises,      
 # file heatmap.circular.R
  heatmap.circular,
 # file kuiper.test.R
@@ -66,6 +85,12 @@ export(
  lm.circular,
 # file lsfit.circle.R
  lsfit.circle,
+## # file make.circular.link.R
+##  make.circular.link,
+# file meandeviation.R
+ meandeviation,
+# file minuspipluspi.R
+ minusPiPlusPi,
 # file mle.vonmises.R
  mle.vonmises,
 # file mle.vonmises.bootstrap.ci.R
@@ -74,8 +99,10 @@ export(
  mle.wrappedcauchy,
 # file mle.wrappednormal.R
  mle.wrappednormal,
-# file ticks.circular.R
- ticks.circular,
+# file modal.region.R
+ modal.region,
+ modal.region.default,
+ modal.region.circular,
 # file plot.edf.R
  plot.edf, lines.edf,
 # file pp.plot.R
@@ -98,8 +125,12 @@ export(
  rstable,
 # file triangular.R
  rtriangular, dtriangular,
+# file ticks.circular.R
+ ticks.circular,
 # file trigonometric.moment.R
  trigonometric.moment,
+# file totalvariation.R
+ totalvariation.circular,      
 # file uniform.R
  rcircularuniform, dcircularuniform,      
 # file vonmises.R
@@ -137,7 +168,10 @@ export(
 # file mean.circular.R
  mean.circular,
 # file median.circular.R
+ median.circular,
  medianCircular,
+# file medianHL.circular.R
+ medianHL.circular,
 # file axis.circular.R
  axis.circular,
 # file lines.circular.R
@@ -166,6 +200,8 @@ export(
  dkatojones, rkatojones,
 # file watson.williams.test.R
  watson.williams.test, watson.williams.test.default, watson.williams.test.list, watson.williams.test.formula,
+# file watson.wheeler.test.R
+ watson.wheeler.test, watson.wheeler.test.default, watson.wheeler.test.list, watson.wheeler.test.formula,
 # file wallraff.test.R
  wallraff.test, wallraff.test.default, wallraff.test.list, wallraff.test.formula
 )
@@ -221,9 +257,13 @@ S3method(c, circular)
 #density
 S3method(density, circular)
 
+## #formula
+## S3method(formula, clm)
+
 #lines
 S3method(lines, circular)
 S3method(lines, density.circular)
+S3method(lines, modal.region.circular)
 
 ###S3method(lines, edf)
 
@@ -231,8 +271,7 @@ S3method(lines, density.circular)
 S3method(mean, circular)
 
 #median
-####S3method(median, default)
-##S3method(median, circular)
+S3method(median, circular)
 
 #print
 S3method(print, aov.circular)
@@ -249,6 +288,7 @@ S3method(print, mle.wrappednormal)
 S3method(print, rao.spacing.test)
 S3method(print, rao.test)
 S3method(print, rayleigh.test)
+S3method(print, summary.clm)
 S3method(print, watson.test)
 S3method(print, watson.two.test)
 #plot
@@ -256,7 +296,8 @@ S3method(plot, density.circular)
 S3method(plot, circular)
 ###S3method(plot, edf)
 S3method(plot, lsfit.circle)
-
+S3method(plot, modal.region.circular)
+S3method(plot, totalvariation.circular)
 #points
 S3method(points, circular)
 
@@ -283,10 +324,16 @@ S3method(var, default)
 S3method(var, data.frame)
 S3method(var, circular)
 
+#weights
+S3method(weights, clm)
+
 # tests
 S3method(watson.williams.test, default)
 S3method(watson.williams.test, list)
 S3method(watson.williams.test, formula)
+S3method(watson.wheeler.test, default)
+S3method(watson.wheeler.test, list)
+S3method(watson.wheeler.test, formula)
 S3method(wallraff.test, default)
 S3method(wallraff.test, list)
 S3method(wallraff.test, formula)
