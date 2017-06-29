@@ -5,7 +5,7 @@
 \alias{var.data.frame}
 
 \description{
-The \code{var} function from the \pkg{base} is replace by a new
+The \code{var} function from the \pkg{stats} is replace by a new
 \code{method} in order to report the variance of circular data
 appropriatly. \code{var.default} is an alias of the original function
 \code{var} see \code{\link[stats]{cor}}. The behavior would be the same for objects which are not

@@ -7,20 +7,20 @@
 #                                                           
 #   median.circular function                                  
 #   Author: Claudio Agostinelli and Alessandro Gagliardi
-#   E-mail: claudio@unive.it                                
-#   Date: September, 11, 2012                                  
-#   Version: 0.4                                          
+#   E-mail: claudio.agostinelli@unitn.it                                
+#   Date: June, 26, 2017                                  
+#   Version: 0.5                                          
 #                                                           
-#   Copyright (C) 2012 Claudio Agostinelli and Alessandro Gagliardi
+#   Copyright (C) 2015-2017 Claudio Agostinelli and Alessandro Gagliardi
 #                                                           
 #############################################################
 
-median.circular <- function(x, na.rm=FALSE) {
+median.circular <- function(x, na.rm=FALSE, ...) {
   if (na.rm)
     x <- x[!is.na(x)]
   if (length(x)==0) {
     warning("No observations (at least after removing missing values)")
-    return(NULL)
+    return(circular(NA))
   }   
   if (is.circular(x)) {
     dc <- circularp(x)
@@ -36,13 +36,12 @@ median.circular <- function(x, na.rm=FALSE) {
   return(circmedian)
 }
 
-MedianCircularRad <- function(x)
-{
-	n <- length(x)
-	res <- .C("MedianCircularRad",x=as.double(x),n=as.integer(n),result=as.double(0),medians=double(length(x)),lMedians=as.integer(n))
-	median <- res$result
-	attr(median, "medians") <- unique(res$medians[1:res$lMedians])
-	return(median)
+MedianCircularRad <- function(x) {
+  n <- length(x)
+  res <- .C("MedianCircularRad",x=as.double(x),n=as.integer(n),result=as.double(0),medians=double(length(x)),lMedians=as.integer(n))
+  median <- res$result
+  attr(median, "medians") <- unique(res$medians[1:res$lMedians])
+  return(median)
 }
 
 medianCircular <- function(x, na.rm=FALSE, type="Fisher", deviation=FALSE, control.circular=list(), ...) {

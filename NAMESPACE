@@ -1,15 +1,13 @@
 useDynLib(circular)
 
 #Import directive
-importFrom(graphics, axis)
-importFrom(stats, density)
-importFrom(stats, quantile)
-importFrom(stats, median)
-importFrom(stats, weights)
-importFrom(stats, runif)
-importFrom(utils, packageDescription)
-importFrom(boot, boot)
-
+importFrom("graphics", "axis", "text", "lines.default", "text.default", "par", "plot.default", "points.default", "hist.default", "arrows", "layout", "image", "mtext", "plot", "frame", "title", "abline", "lines", "polygon", "axTicks", "points", "segments")  
+importFrom("stats", "density", "quantile", "median", "weights", "runif", "weighted.mean", "pnorm", "dnorm", "qnorm", "rnorm", "pf", "qf", "pchisq", "qchisq", "integrate", "median.default", "uniroot", "lm.wfit", "lm", "optim", "optimize", "rcauchy", "kruskal.test", "approxfun", "na.omit", "complete.cases", "is.empty.model", "model.response", "model.matrix", "model.weights", "model.offset", "model.extract", "model.frame", "formula", "hclust", "reorder", "as.dendrogram", "order.dendrogram", "coef", "naprint", "printCoefmat", "setNames", "symnum", "rexp", "pt", "residuals", ".getXlevels", "as.formula", "naresid", "knots")    
+importFrom("utils", "packageDescription", "data")
+importFrom("boot", "boot")
+importFrom("mvtnorm", "rmvnorm", "dmvnorm")
+importFrom("grDevices", "hsv", "dev.flush", "dev.hold", "xy.coords")
+      
 #Export directive
 
 # functions
@@ -31,7 +29,7 @@ export(
 # file angular.deviation.R
  angular.deviation,
 # file angular.variance.R
- angular.variance,       
+ angular.variance,
 # file aov.circular.R
  aov.circular,
 # file arrows.circular.R
@@ -56,13 +54,6 @@ export(
  circular, conversion.circular, circularp, "circularp<-", is.circular,
 # file circular.colors.R
  circular.colors,
-## # file clm.R,
-##  clm,
-##  clm.fit,
-##  summary.clm,
-##  model.frame.clm,
-##  clm.control,
-  
 # file coord2rad.R
  coord2rad,
 # file cor.circular.R
@@ -76,7 +67,7 @@ export(
 # file equal.kappa.test.R
  equal.kappa.test,
 ## # file family.circular.R
-##  vonMises,      
+ vonMises,      
 # file heatmap.circular.R
  heatmap.circular,
 # file kuiper.test.R
@@ -99,6 +90,10 @@ export(
  mle.wrappedcauchy,
 # file mle.wrappednormal.R
  mle.wrappednormal,
+# file intersect.modal.region.R    
+ intersect.modal.region,
+ intersect.modal.region.default,
+ intersect.modal.region.circular,    
 # file modal.region.R
  modal.region,
  modal.region.default,
@@ -107,6 +102,10 @@ export(
  plot.edf, lines.edf,
 # file pp.plot.R
  pp.plot,
+# file pp.unif.plot.R
+ pp.unif.plot,
+# file projectednormal.R
+ rpnorm, dpnorm, 
 # file quantile.circular.R
  quantile.circular,
 # file rad.R
@@ -135,8 +134,6 @@ export(
  rcircularuniform, dcircularuniform,      
 # file vonmises.R
  rvonmises, dvonmises, pvonmises, qvonmises, rmixedvonmises, dmixedvonmises, pmixedvonmises,
-# file var.circular.R 
-### var,
 # file watson.test.R
  watson.test,
 # file watson.two.test.R
@@ -167,9 +164,10 @@ export(
  density.circular,
 # file mean.circular.R
  mean.circular,
+# file weighted.mean.circular.R
+ weighted.mean.circular,    
 # file median.circular.R
  median.circular,
- medianCircular,
 # file medianHL.circular.R
  medianHL.circular,
 # file axis.circular.R
@@ -257,18 +255,16 @@ S3method(c, circular)
 #density
 S3method(density, circular)
 
-## #formula
-## S3method(formula, clm)
-
 #lines
 S3method(lines, circular)
 S3method(lines, density.circular)
 S3method(lines, modal.region.circular)
 
-###S3method(lines, edf)
-
 #mean
 S3method(mean, circular)
+
+#weighted mean
+S3method(weighted.mean, circular)
 
 #median
 S3method(median, circular)
@@ -288,13 +284,11 @@ S3method(print, mle.wrappednormal)
 S3method(print, rao.spacing.test)
 S3method(print, rao.test)
 S3method(print, rayleigh.test)
-S3method(print, summary.clm)
 S3method(print, watson.test)
 S3method(print, watson.two.test)
 #plot
 S3method(plot, density.circular)
 S3method(plot, circular)
-###S3method(plot, edf)
 S3method(plot, lsfit.circle)
 S3method(plot, modal.region.circular)
 S3method(plot, totalvariation.circular)
@@ -324,9 +318,6 @@ S3method(var, default)
 S3method(var, data.frame)
 S3method(var, circular)
 
-#weights
-S3method(weights, clm)
-
 # tests
 S3method(watson.williams.test, default)
 S3method(watson.williams.test, list)
@@ -337,3 +328,14 @@ S3method(watson.wheeler.test, formula)
 S3method(wallraff.test, default)
 S3method(wallraff.test, list)
 S3method(wallraff.test, formula)
+
+S3method(modal.region, default)
+S3method(modal.region, circular)
+S3method(intersect.modal.region, default)
+S3method(intersect.modal.region, circular)
+
+S3method(as.data.frame, circular)
+
+S3method(plot, edf)
+S3method(lines, edf)
+S3method(plot, function.circular)    

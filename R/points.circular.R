@@ -3,14 +3,14 @@
 #   points.circular function                                #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: October, 19, 2009                                 #
-#   Version: 0.3                                            #
+#   Date: August, 08, 2014                                  #
+#   Version: 0.4                                            #
 #                                                           #
-#   Copyright (C) 2009 Claudio Agostinelli                  #
+#   Copyright (C) 2014 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
-points.circular <- function(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, shrink=1, bins=NULL, col=NULL, next.points=NULL, plot.info=NULL, zero=NULL, rotation=NULL, ...) {
+points.circular <- function(x, pch = 16, cex = 1, stack = FALSE, start.sep=0, sep = 0.025, shrink=1, bins=NULL, col=NULL, next.points=NULL, plot.info=NULL, zero=NULL, rotation=NULL, ...) {
    if (is.matrix(x) | is.data.frame(x)) {
       nseries <- ncol(x)
    } else {
@@ -63,18 +63,18 @@ points.circular <- function(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, sh
             x <- -x
          x <- x+zero
          x <- x%%(2*pi)
-         PointsCircularRad(x, bins, stack, col, pch, iseries, nseries, sep, next.points, shrink, cex, ...) 
+         PointsCircularRad(x, bins, stack, col, pch, iseries, nseries, start.sep, sep, next.points, shrink, cex, ...) 
       }
    }
 return(invisible(list(zero=zero, rotation=rotation, next.points=next.points+nseries*sep)))
 }
 
-PointsCircularRad <- function(x, bins, stack, col, pch, iseries, nseries, sep, next.points, shrink, cex, ...) {
+PointsCircularRad <- function(x, bins, stack, col, pch, iseries, nseries, start.sep, sep, next.points, shrink, cex, ...) {
 #### x musts be in modulo 2pi  
    if (!stack) {
       z <- cos(x)
       y <- sin(x)
-      r <- 1+((iseries-1)*sep+next.points)*shrink
+      r <- 1+((iseries-1)*sep+next.points+start.sep)*shrink
       points.default(z*r, y*r, cex=cex, pch=pch[iseries], col = col[iseries], ...)
    } else {
       x[x >= 2*pi] <- 2*pi-4*.Machine$double.eps
@@ -92,7 +92,7 @@ PointsCircularRad <- function(x, bins, stack, col, pch, iseries, nseries, sep, n
       for (i in 1:bins) {
          if (bins.count[i] != 0) {
             for (j in 0:(bins.count[i] - 1)) {
-               r <- 1 + j * index
+               r <- 1 + start.sep + j * index
                z <- r * cos(mids[i])
                y <- r * sin(mids[i])
                points.default(z, y, cex=cex, pch=pch[iseries], col=col[iseries], ...)

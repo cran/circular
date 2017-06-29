@@ -3,10 +3,10 @@
 #   median.circular function                                  
 #   Author: Claudio Agostinelli and Alessandro Gagliardi
 #   E-mail: claudio@unive.it                                
-#   Date: October, 12, 2012                                  
-#   Version: 0.4                                          
+#   Date: May, 12, 2015                                  
+#   Version: 0.4-1                                          
 #                                                           
-#   Copyright (C) 2012 Claudio Agostinelli and Alessandro Gagliardi
+#   Copyright (C) 2015 Claudio Agostinelli and Alessandro Gagliardi
 #                                                           
 #############################################################
 
@@ -19,7 +19,7 @@ medianHL.circular <- function(x, na.rm=FALSE, method=c("HL1","HL2","HL3"), prop=
       x <- x[!is.na(x)]
    if (length(x)==0) {
       warning("No observations (at least after removing missing values)")
-      return(NULL)
+      return(circular(NA))
    }
    if (is.circular(x)) {
       dc <- circularp(x)
@@ -39,15 +39,13 @@ MedianHLCircularRad <- function(x, method, prop) {
    x <- x%%(2*pi)
    x <- MinusPiPlusPiRad(x)
    n <- length(x)
-   mediancirc = NA
+   mediancirc <- NA
 	methods <- c("HL2","HL1","HL3")
    if (is.null(prop))
 	{
    	mediancirc <- .C("MedianHLCircularRad",x=as.double(x),y=as.double(x),n=as.integer(n),whichMethod=as.integer(which(methods==method) - 1),result=as.double(0))$result
-   }
-	else
-	{
-		mediancirc <- .C("MedianHLCircularPropRad",x=as.double(x),n=as.integer(n),whichMethod=as.integer(which(methods==method) - 1),prop=as.double(prop),result=as.double(0))$result
+   } else {
+     mediancirc <- .C("MedianHLCircularPropRad",x=as.double(x),n=as.integer(n),whichMethod=as.integer(which(methods==method) - 1),prop=as.double(prop),result=as.double(0))$result
    }
    return(mediancirc)
 }

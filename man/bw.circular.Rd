@@ -84,7 +84,7 @@ those cases, the use of \code{kappa.est="trigmoments"} could be of help.
 P. Hall and G.S. Watson and J. Cabrera (1987). Kernel Density Estimation
 with Spherical Data, Biometrika, 74, 4, 751--762.
 
-C.C Taylor (2008). Automatic bandwidth selection for circular density estimation. Computational Statistics and Data Analysis, 53, 7, 3493--256.
+C.C Taylor (2008). Automatic bandwidth selection for circular density estimation. Computational Statistics and Data Analysis, 52, 7, 3493--3500.
 }
 
 \author{Claudio Agostinelli and Eduardo Garcia--Portugues}

@@ -1,16 +1,13 @@
-\name{medianCircular}
+\name{median.circular}
 \alias{median.circular}
-\alias{medianCircular}
 \title{
 Median Direction
 }
 \description{
-Sample median direction and corresponding deviation measure for a vector of circular data
+Sample median direction for a vector of circular data
 }
 \usage{
-\method{median}{circular}(x, na.rm = FALSE)
-medianCircular(x, na.rm = FALSE, type = "Fisher", 
-  deviation = FALSE, control.circular = list(), \dots)
+\method{median}{circular}(x, na.rm = FALSE, ...)
 }
 \arguments{
   \item{x}{a vector. The object is coerced to class
@@ -19,28 +16,18 @@ medianCircular(x, na.rm = FALSE, type = "Fisher",
   \item{na.rm}{logical, indicating if \code{\link{NA}}'s should be
 	omitted.
   }
-  \item{type}{the only implemented method is \code{Fisher}.}
-  \item{deviation}{
-  if \code{TRUE} a list with two objects is returned, the first component be the median, the second component be the deviation associated with the median.
-  }
-  \item{control.circular}{the attribute of the resulting object.}
   \item{\dots}{NotYetUsed.}
 }
 \details{
 The Definition in equations 2.32 & 2.33 from N.I. Fisher's 'Statistical Analysis of Circular Data', Cambridge Univ. Press 1993. is implemented.
 Since version 0.4-4, the algorithm (not the definition) for the
-calculation of the median is changed. The function \code{medianCircular}
-is deprecated and it will be remove in the next release of the
-package. For a measure of spread associated to the circular median use
-function \code{\link{meandeviation}}.
+calculation of the median is changed. For a measure of spread associated to the circular median use function \code{\link{meandeviation}}.
 }
 
 \value{
-If \code{dispersion==FALSE} a scalar with the median of the data otherwise a list with the following two components
-\item{median}{the median.}
-\item{deviation}{the associated deviation from the median.} 
+A scalar with the circular median value.
 
-The median is returned as an object of class \code{circular} with the attribute given by \code{control.circular} or from \code{x} if missed in \code{control.circular}.
+The median is returned as an object of class \code{circular}.
 }
 
 \references{
@@ -64,9 +51,5 @@ Claudio Agostinelli and Alessandro Gagliardi
 x <- circular(runif(50, circular(0), pi))
 median(x) #only the median is returned
 meandeviation(x) #mean deviation is reported
-\dontrun{
-  medianCircular(x) #only the median is returned
-  medianCircular(x, deviation=TRUE) #both median and deviation are reported
-}
 }
 \keyword{univar}

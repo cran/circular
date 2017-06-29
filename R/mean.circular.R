@@ -11,10 +11,10 @@
 #   mean.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: September, 11, 2012                               #
-#   Version: 0.5                                            #
+#   Date: May, 12, 2015                                     #
+#   Version: 0.5-1                                          #
 #                                                           #
-#   Copyright (C) 2012 Claudio Agostinelli                  #
+#   Copyright (C) 2015 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -23,7 +23,7 @@ mean.circular <- function(x, na.rm=FALSE, control.circular=list(), ...) {
        x <- x[!is.na(x)]
    if (length(x)==0) {
         warning("No observations (at least after removing missing values)")
-        return(NULL)
+        return(circular(NA))
    }
 
    if (is.circular(x)) {

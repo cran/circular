@@ -35,12 +35,14 @@
 #include <Rmath.h>
 #include <Rinternals.h>
 #include <float.h>
+#include "distance.h"
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) dgettext ("stats", String)
 #else
 #define _(String) (String)
 #endif
+
 
 
 #define both_FINITE(a,b) (R_FINITE(a) && R_FINITE(b))
@@ -50,7 +52,8 @@
 #define both_non_NA(a,b) (!ISNAN(a) && !ISNAN(b))
 #endif
 
-static double R_angularseparation(double *x, int nr, int nc, int i1, int i2)
+
+double R_angularseparation(double *x, int nr, int nc, int i1, int i2)
 {
     double dev, dist;
     int count, j;
@@ -73,7 +76,7 @@ static double R_angularseparation(double *x, int nr, int nc, int i1, int i2)
     return (double) dist/count;
 }
 
-static double R_chord(double *x, int nr, int nc, int i1, int i2)
+double R_chord(double *x, int nr, int nc, int i1, int i2)
 {
     double dev, dist;
     int count, j;
@@ -96,7 +99,7 @@ static double R_chord(double *x, int nr, int nc, int i1, int i2)
     return dist/count;
 }
 
-static double R_geodesic(double *x, int nr, int nc, int i1, int i2)
+double R_geodesic(double *x, int nr, int nc, int i1, int i2)
 {
   double dev, dist, dif;
     int count, j;
@@ -123,7 +126,7 @@ static double R_geodesic(double *x, int nr, int nc, int i1, int i2)
     return (double) dist/count;
 }
 
-static double R_correlation(double *x, int nr, int nc, int i1, int i2)
+double R_correlation(double *x, int nr, int nc, int i1, int i2)
 {
   double dev, dist, sin1, sin2, cos1, cos2, mu1, mu2, num, den, den1, den2;
     int count, j, i1t, i2t;

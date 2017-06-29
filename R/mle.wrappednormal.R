@@ -2,11 +2,11 @@
 #                                                           #
 #   mle.wrappednormal function                              #
 #   Author: Claudio Agostinelli                             #
-#   Email: claudio@unive.it                                 #
-#   Date: August, 10, 2006                                  #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Email: claudio.agostinelli@unitn.it                     #
+#   Date: 05 June 2017                                      #
+#   Copyright (C) 2017 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.2-2                                           #
+#   Version 0.3                                             #
 #############################################################
 
 mle.wrappednormal <- function(x, mu=NULL, rho=NULL, sd=NULL, K=NULL, tol=1e-5, min.sd=1e-3, min.k=10, max.iter=100, verbose=FALSE, control.circular=list()) {
@@ -120,7 +120,7 @@ MlewrappednormalRad <- function(x, mu=NULL, rho=NULL, sd=NULL, min.sd, K=NULL, m
       if (est.mu) {
          mu <- sum(x)/n
          if (any(wk!=0)) {
-            mu <- mu + 2*pi*mean.default(wk[wk!=0]/w[wk!=0])
+            mu <- mu + 2*pi*sum(wk[wk!=0]/w[wk!=0])/n
          }
       }
       if (est.rho) {

@@ -3,15 +3,14 @@
 #   MinusPiPlusPiRad function                                  
 #   Author: Claudio Agostinelli                             
 #   E-mail: claudio@unive.it                                
-#   Date: October, 14, 2007                                  
-#   Version: 0.1                                          
+#   Date: November, 25, 2013                                  
+#   Version: 0.2                                          
 #                                                           
-#   Copyright (C) 2007 Claudio Agostinelli                  
+#   Copyright (C) 2013 Claudio Agostinelli                  
 #                                                           
 #############################################################
 
-minusPiPlusPi <- function(x)
-{
+minusPiPlusPi <- function(x) {
   if (is.circular(x)) {
     datacircularp <- circularp(x)
   } else {
@@ -32,18 +31,15 @@ minusPiPlusPi <- function(x)
   if (is.null(dc$rotation)) 
     dc$rotation <- datacircularp$rotation
   
-  	x <- conversion.circular(x, units = "radians", zero = 0, rotation = "counter", modulo = "2pi")
-  	attr(x, "class") <- attr(x, "circularp") <- NULL
-	x <- MinusPiPlusPiRad(x)
-	x <- conversion.circular(circular(x), dc$units, dc$type, dc$template, dc$modulo, dc$zero, dc$rotation)
-
-	return(x)
+  x <- conversion.circular(x, units = "radians", zero = 0, rotation = "counter", modulo = "2pi")
+  attr(x, "class") <- attr(x, "circularp") <- NULL
+  x[!is.na(x)] <- MinusPiPlusPiRad(x[!is.na(x)])
+  x <- conversion.circular(circular(x), dc$units, dc$type, dc$template, "asis", dc$zero, dc$rotation)
+  return(x)
 }
 
-
-MinusPiPlusPiRad  <- function(x)
-{
-	x <- .C("MinusPiPlusPiRad",x=as.double(x),n=as.integer(length(x)))$x
- 	return(x) 
-} 
+MinusPiPlusPiRad  <- function(x) {
+  x <- .C("MinusPiPlusPiRad",x=as.double(x),n=as.integer(length(x)))$x
+  return(x) 
+}
 

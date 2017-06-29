@@ -1,5 +1,6 @@
 \name{vonMises}
 \title{von Mises Density Function}
+\alias{vonMises}  
 \alias{dvonmises}
 \alias{rvonmises}
 \alias{pvonmises}

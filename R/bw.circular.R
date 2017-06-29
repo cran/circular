@@ -1,10 +1,10 @@
 #############################################################
 #
 #   bw.cv.mse.circular function
-#   Author: Claudio Agostinelli and Eduardo García Portugués
+#   Author: Claudio Agostinelli and Eduardo Garcia Portugues
 #   Email: claudio@unive.it
 #   date: June, 23, 2011
-#   Copyright (C) 2011 Claudio Agostinelli and Eduardo García Portugués
+#   Copyright (C) 2011 Claudio Agostinelli and Eduardo Garcia Portugues
 #
 #   Version 0.2
 #
@@ -59,10 +59,10 @@ bw.cv.mse.circular <- function(x, lower=NULL, upper=NULL, tol = 1e-4, kernel = c
 #############################################################
 #
 #   bw.cv.ml.circular function
-#   Author: Claudio Agostinelli and Eduardo García Portugués
+#   Author: Claudio Agostinelli and Eduardo Garcia Portugues
 #   Email: claudio@unive.it
 #   date: June, 23, 2011
-#   Copyright (C) 2011 Claudio Agostinelli and Eduardo García Portugués
+#   Copyright (C) 2011 Claudio Agostinelli and Eduardo Garcia Portugues
 #
 #   Version 0.2
 #
@@ -98,10 +98,10 @@ bw.cv.ml.circular <- function(x, lower=NULL, upper=NULL, tol = 1e-4, kernel = c(
 #############################################################
 #
 #   bw.nrd.circular function
-#   Author: Claudio Agostinelli and Eduardo García Portugués
+#   Author: Claudio Agostinelli and Eduardo Garcia Portugues
 #   Email: claudio@unive.it
 #   date: July, 22, 2011
-#   Copyright (C) 2011 Claudio Agostinelli and Eduardo García Portugués
+#   Copyright (C) 2011 Claudio Agostinelli and Eduardo Garcia Portugues
 #
 #   Version 0.3
 #

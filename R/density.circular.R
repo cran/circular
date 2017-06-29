@@ -245,7 +245,7 @@ plot.density.circular <- function(x, main = NULL, sub=NULL, xlab = NULL, ylab ="
             x$data <- -x$data
          x$data <- x$data+zero
          x$data <- x$data%%(2*pi)
-         PointsCircularRad(x$data, bins, FALSE, points.col, points.pch, 1, 1, sep, next.points, shrink, points.cex)
+         PointsCircularRad(x$data, bins, FALSE, points.col, points.pch, 1, 1, 0, sep, next.points, shrink, points.cex)
       }
       return(invisible(list(x=ll$x, y=ll$y, zero=zero, rotation=rotation, next.points=next.points)))
    }
@@ -342,7 +342,7 @@ lines.density.circular <- function(x, type = "l", zero.line = TRUE, points.plot=
          x$data <- x$data+zero
          x$data <- x$data%%(2*pi)
          next.points <- next.points+sep
-         PointsCircularRad(x$data, bins, FALSE, points.col, points.pch, 1, 1, sep, next.points, shrink, points.cex)
+         PointsCircularRad(x$data, bins, FALSE, points.col, points.pch, 1, 1, 0, sep, next.points, shrink, points.cex)
       }
     }
       

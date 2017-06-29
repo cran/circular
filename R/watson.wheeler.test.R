@@ -5,9 +5,9 @@
 #
 #	Based on
 #		Circular statistics in biology, Batschelet, E (1981)
-#		§6.3, p. 104
+#		6.3, p. 104
 #		Biostatistical analysis, Zar, J H (1999)
-#		§27.5, p. 640
+#		27.5, p. 640
 #
 # (c) Copyright 2010-211 Jean-Olivier Irisson
 #     GNU General Public License, v.3

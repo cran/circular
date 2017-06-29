@@ -6,9 +6,9 @@
 #
 #	Based on
 #		Circular statistics in biology, Batschelet, E (1981)
-#		§6.2, p. 99
+#		6.2, p. 99
 #		Biostatistical analysis, Zar, J H (1999)
-#		§27.4, p. 634
+#		27.4, p. 634
 #		Directional statistics, Mardia, K.V. and Jupp, P.E. (2000)
 #		p. 135
 #

@@ -2,11 +2,11 @@
 #                                                           #
 #   heatmap.circular function                               #
 #   Author: Claudio Agostinelli                             #
-#   E-mail: claudio@unive.it                                #
-#   Date: October, 7, 2007                                  #
-#   Version: 0.7                                            #
+#   E-mail: claudio.agostinelli@unitn.it                    #
+#   Date: December, 27, 2015                                #
+#   Version: 0.8                                            #
 #                                                           #
-#   Copyright (C) 2007 Claudio Agostinelli                  #
+#   Copyright (C) 2015 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 ## This is a modified version of the heatmap function in package stats.
@@ -164,7 +164,7 @@ heatmap.circular <- function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     if(!is.null(ylab)) mtext(ylab, side = 4, line = margins[2] - 1.25)
 
     if (!missing(add.expr))
-	eval(substitute(add.expr))
+	eval.parent(substitute(add.expr))
 
     ## the two dendrograms :
     par(mar = c(margins[1], 0, 0, 0))

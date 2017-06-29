@@ -1,5 +1,12 @@
 Library circular
 =================
+Version 0.4-91
+Fixed a bug in heatmap.circular
+
+Version 0.4-8 2014/08/08
+minusPiPlusPi now accepts missing values
+Added the start.sep argument to plot.circular and points.circular. Also the internal function PointsCircularRad has changed the API.
+
 Version 0.4-6 2013/10/30
 Added function dasytriangular for the density of asymmetric triangular distribution as described in Mardia (1972)
 In this version two functions are available for evaluating the median (medianCircular which allows for the dispersion parameter and median.circular with only the median reported), however medianCircular is deprecated and it will be removed in the next releases. 

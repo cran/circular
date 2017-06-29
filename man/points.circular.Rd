@@ -7,7 +7,8 @@ Add points to a plot of circular data points on the current graphics device.
 }
 
 \usage{
-\method{points}{circular}(x, pch = 16, cex = 1, stack = FALSE, sep = 0.025, 
+\method{points}{circular}(x, pch = 16, cex = 1, stack = FALSE,
+  start.sep=0, sep = 0.025, 
   shrink = 1, bins = NULL, col = NULL, next.points = NULL, 
   plot.info = NULL, zero = NULL, rotation = NULL, ...)
 }
@@ -16,7 +17,11 @@ Add points to a plot of circular data points on the current graphics device.
 \item{x}{a vector, matrix or data.frame. The object is coerced to class \code{\link{circular}}.}
 \item{pch}{point character to use.  See help on \code{\link{par}}.}
 \item{cex}{point character size.  See help on par.}
-\item{stack}{logical: if \code{TRUE}, points are stacked on the perimeter of the circle.  Otherwise, all points are plotted on the perimeter of the circle.  Default is \code{FALSE}.}
+\item{stack}{logical: if \code{TRUE}, points are stacked on the
+  perimeter of the circle.  Otherwise, all points are plotted on the
+  perimeter of the circle.  Default is \code{FALSE}.}
+\item{start.sep}{constant used to specify the distance between the
+  center of the point and the axis.}
 \item{sep}{constant used to specify the distance between stacked points,
   if \code{stack==TRUE} or in the case of more than one dataset.  Default is 0.025; smaller values will create smaller spaces.}
 \item{shrink}{parameter that controls the size of the plotted circle.

@@ -46,7 +46,7 @@
 #   For alpha = 1, beta=0, we get the Lorentz distribution
 #   For alpha = 2, beta=0, we get the Gaussian distribution
 #
-#   See A. Weron and R. Weron: Computer simulation of Lévy alpha-stable 
+#   See A. Weron and R. Weron: Computer simulation of Levy alpha-stable 
 #   variables and processes, preprint Technical University of Wroclaw.
 #   http://www.im.pwr.wroc.pl/~hugo/Publications.html
 #

@@ -20,9 +20,9 @@ the R-Forge repository at \url{https://r-forge.r-project.org/projects/circular/}
 }
 
 \section{Author}{
-Claudio Agostinelli, Department of Environmental Sciences, Informatics
-and Statistics, Ca' Foscari University, Venice, Italy
-(\url{http://www.dst.unive.it/~claudio})
+Claudio Agostinelli, Department of Mathematics
+University of Trento, Italy
+(\url{http://www.science.unitn.it/~claudio})
 
 Ulric Lund, Department of Statistics, California Polytechnic State
 University, San Luis Obispo, California, USA
@@ -37,17 +37,20 @@ if a reference is inserted in publications or other work
 which makes use of it; for this purpose, see the command
 \code{citation("circular")}. 
 }
+  
 \section{Acknowledgements}{
 The package has evolved through several versions, developed over some years.
 
 Many thanks to all that points out bugs, provide suggestions and comments.
 
+The functions \code{median} and \code{medianHS} are developed together with
+Alessandro Gagliardi \url{mailto:gagliardi@stud.unive.it}
+  
 The functions \code{watson.wiliams.test} and \code{wallraff.test} are
 developed by Jean-Olivier Irisson (\url{http://jo.irisson.com/})
 
 The functions \code{dcarthwrite}, \code{dgenvonmises},
-\code{(d,r)katojones}, \code{djonespewsey} are developed by Federico
-Rotolo (\url{http://www.stat.unipd.it/cv/federico_rotolo})
+\code{(d,r)katojones}, \code{djonespewsey} are developed by Federico Rotolo
 
 The function \code{rose.diag} has contribution by Hiroyoshi Arai (\url{mailto:h_arai@aoni.waseda.jp})
 
@@ -55,7 +58,9 @@ The function \code{windrose} is developed by Matthew Pocernich \url{http://www.r
 
 Dataset \code{swallows} is kindly provided by Dimitri Giunchi \url{http://unimap.unipi.it/cercapersone/dettaglio.php?ri=2504&template=dettaglio.tpl}
 
-If I miss to report your contribution please let me know by email at \url{mailto:claudio@unive.it}
+The function \code{bw.circular} is developed together with Eduardo Garcia Portugues \url{mailto:}
+  
+If I miss to report your contribution please let me know by email at \url{mailto:claudio.agostinelli@unitn.it}
 }
 
 \keyword{circle}

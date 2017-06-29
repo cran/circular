@@ -1,3 +1,15 @@
+#############################################################
+#
+#   vonMises
+#   Author: Claudio Agostinelli and Alessandro Gagliardi
+#   E-mail: claudio@unive.it
+#   Date: November, 07, 2013
+#   Version: 0.1
+#
+#   Copyright (C) 2013 Claudio Agostinelli and Alessandro Gagliardi
+#
+#############################################################
+
 vonMises <- function (link = "tan") {
   linktemp <- substitute(link)
   if (!is.character(linktemp)) linktemp <- deparse(linktemp)
@@ -26,9 +38,9 @@ vonMises <- function (link = "tan") {
     variance = function(mu) rep.int(1, length(mu)),
     dev.resids = function(y, mu, mulinear, kappa, wt) {
       if (kappa < 100000)
-        llik <- 2*sum(wt)*(log(2*pi)+log(besselI(kappa,nu=0,expon.scaled=TRUE))+kappa) -2*sum(wt * kappa * cos(y-mu-mulinear))
+        llik <- 2*sum(wt)*(log(2*pi)+log(besselI(kappa,nu=0,expon.scaled=TRUE))+kappa) - 2*sum(wt * kappa * cos(y-mu-mulinear))
       else
-        llik <- ifelse((y-mu-mulinear)==0, -Inf, Inf)
+        llik <- ifelse((y-mu-mulinear)==0, -sqrt(.Machine$double.xmax), sqrt(.Machine$double.xmax))
       return(llik)
     },
     aic = function(dev,rank){

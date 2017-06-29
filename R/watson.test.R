@@ -10,11 +10,11 @@
 #                                                           #
 #   watson.test function                                    #
 #   Author: Claudio Agostinelli                             #
-#   E-mail: claudio@unive.it                                #
-#   Date: May, 31, 2006                                     #
-#   Version: 0.3-1                                          #
+#   E-mail: claudio.agostinelli@unive.it                    #
+#   Date: April, 18, 2016                                   #
+#   Version: 0.3-2                                          #
 #                                                           #
-#   Copyright (C) 2006 Claudio Agostinelli                  #
+#   Copyright (C) 2016 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
 
@@ -149,13 +149,13 @@ print.watson.test <- function(x, digits=4, ...) {
            if (Value < u2.crits[row, 2])
                cat("P-value > 0.10", "\n", "\n")
            else if ((Value >= u2.crits[row, 2]) && (Value < u2.crits[row, 3]))
-                cat("0.05 < P-value > 0.10", "\n", "\n")
+                cat("0.05 < P-value < 0.10", "\n", "\n")
            else if ((Value >= u2.crits[row, 3]) && (Value < u2.crits[row, 4]))
-                cat("0.01 < P-value > 0.05", "\n", "\n")
+                cat("0.01 < P-value < 0.05", "\n", "\n")
            else cat("P-value < 0.01", "\n", "\n")
            }
 
-           }
+         }
     invisible(x)
 }
 

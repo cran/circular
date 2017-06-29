@@ -8,8 +8,9 @@ Creates a plot of circular data points on the current graphics device.  Data poi
 
 \usage{
 \method{plot}{circular}(x, pch = 16, cex = 1, stack = FALSE,
-  axes = TRUE, sep = 0.025, shrink = 1, bins = NULL, ticks = FALSE,
-  tcl = 0.025, tcl.text = 0.125, col = NULL, tol = 0.04, uin = NULL,
+  axes = TRUE, start.sep=0, sep = 0.025, shrink = 1,
+  bins = NULL, ticks = FALSE, tcl = 0.025, tcl.text = 0.125,
+  col = NULL, tol = 0.04, uin = NULL,
   xlim = c(-1, 1), ylim = c(-1, 1), digits = 2, units = NULL,
   template = NULL, zero = NULL, rotation = NULL, 
   main = NULL, sub=NULL, xlab = "", ylab = "", 
@@ -21,7 +22,10 @@ Creates a plot of circular data points on the current graphics device.  Data poi
 \item{pch}{point character to use.  See help on \code{\link{par}}.}
 \item{cex}{point character size.  See help on \code{\link{par}}.}
 \item{stack}{logical; if \code{TRUE}, points are stacked on the perimeter of the circle.  Otherwise, all points are plotted on the perimeter of the circle.  Default is \code{FALSE}.}
-\item{axes}{logical; if \code{TRUE} axes are plotted according to properties of \code{x}.}
+\item{axes}{logical; if \code{TRUE} axes are plotted according to
+  properties of \code{x}.}
+\item{start.sep}{constant used to specify the distance between the
+  center of the point and the axis.}
 \item{sep}{constant used to specify the distance between stacked points,
   if \code{stack==TRUE} or in the case of more than one dataset.  Default is 0.025; smaller values will create smaller spaces.}
 \item{shrink}{parameter that controls the size of the plotted circle.

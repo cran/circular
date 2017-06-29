@@ -24,7 +24,7 @@ dist.circular <- function (x, method = "correlation", diag = FALSE, upper = FALS
     N <- nrow(x <- as.matrix(x))
     d <- .C("R_distance", x = as.double(x), nr = N, nc = ncol(x), 
         d = double(N * (N - 1)/2), diag = as.integer(FALSE), 
-        method = as.integer(method), DUP = FALSE, 
+        method = as.integer(method), 
         NAOK = TRUE, PACKAGE = "circular")$d
     attr(d, "Size") <- N
     attr(d, "Labels") <- dimnames(x)[[1]]

@@ -3,14 +3,14 @@
 #   plot.circular function                                  #
 #   Author: Claudio Agostinelli                             #
 #   E-mail: claudio@unive.it                                #
-#   Date: April, 20, 2011                                   #
-#   Version: 0.6                                            #
+#   Date: August, 08, 2014                                  #
+#   Version: 0.7                                            #
 #                                                           #
-#   Copyright (C) 2011 Claudio Agostinelli                  #
+#   Copyright (C) 2014 Claudio Agostinelli                  #
 #                                                           #
 #############################################################
  
-plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, shrink=1, bins=NULL, ticks=FALSE, tcl=0.025, tcl.text=0.125, col=NULL, tol=0.04, uin=NULL, xlim=c(-1, 1), ylim=c(-1, 1), digits=2, units=NULL, template=NULL, zero=NULL, rotation=NULL, main=NULL, sub=NULL, xlab="", ylab="", control.circle=circle.control(), ...) {
+plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, start.sep=0, sep=0.025, shrink=1, bins=NULL, ticks=FALSE, tcl=0.025, tcl.text=0.125, col=NULL, tol=0.04, uin=NULL, xlim=c(-1, 1), ylim=c(-1, 1), digits=2, units=NULL, template=NULL, zero=NULL, rotation=NULL, main=NULL, sub=NULL, xlab="", ylab="", control.circle=circle.control(), ...) {
 
    if (is.matrix(x) | is.data.frame(x)) {
       nseries <- ncol(x)
@@ -83,7 +83,7 @@ plot.circular <- function(x, pch=16, cex=1, stack=FALSE, axes=TRUE, sep=0.025, s
            x <- 2*x          
          x <- x+zero
          x <- x%%(2*pi)
-         PointsCircularRad(x, bins, stack, col, pch, iseries, nseries, sep, 0, shrink, cex, ...)
+         PointsCircularRad(x, bins, stack, col, pch, iseries, nseries, start.sep, sep, 0, shrink, cex, ...)
       }
    }
 return(invisible(list(zero=zero, rotation=rotation, next.points=nseries*sep)))

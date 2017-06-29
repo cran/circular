@@ -50,7 +50,7 @@ mle.wrappednormal(x, mu = NULL, rho = NULL, sd = NULL, K = NULL,
   \item{convergence}{TRUE if the convergence is achieved.}
 }
 
-\author{Claudio Agostinelli}
+\author{Claudio Agostinelli with a bug fix by Ana Nodehi}
 
 \references{
   Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular
