@@ -1,5 +1,5 @@
 0db8fb4a8a9148f3e8029eee41b77939 *COPYING
-57b07904b3c6df194171d8de843f078b *DESCRIPTION
+4fd550d55f1b4bb050e50c18c4b81027 *DESCRIPTION
 94183feac37aa2e9f4d16900e3af6fed *NAMESPACE
 cca22485e725dc1681e0f01723e1fd59 *R/A1.R
 d642acad73d30fd023af1e7cb5f53777 *R/A1FirstDerivative.R
@@ -66,8 +66,8 @@ f62fea5c5c724363af3a052936cd60e2 *R/modal.region.R
 e6f9e316fd7a89837e105e4d489289ef *R/points.circular.R
 4e1f7cd0c52b3d45a127d4448f813e12 *R/pp.plot.R
 ec0ab4792ac1957935e3a77941d56d96 *R/pp.unif.plot.R
-27718791daee4d0248b2e30a6bbb4027 *R/projectednormal.R
-cf93125a26abe355ffaa7f21fb49754b *R/quantile.circular.R
+d4c8fbf06aa04d3ad0f84b91cc9d7bb7 *R/projectednormal.R
+bc07445cbd641908b1e276f94fd9681c *R/quantile.circular.R
 c5a4cce9acd342b7c3020e30f89c367f *R/rad.R
 7ff0bbfbc470b5986f45bc706a3cad76 *R/range.circular.R
 9a7493eddd347de13967c0d97e891a03 *R/rao.spacing.test.R
@@ -165,7 +165,7 @@ c46632f09ccd66ec09808908b34b6f92 *man/aov.circular.Rd
 b81dbedbb3f95b908adb653f2db37eaa *man/carthwrite.Rd
 2915255744b743794f90f62f58904842 *man/change.point.Rd
 287871f7877d54a9f1a4bc16ffd52c2d *man/circle.control.Rd
-6619c59134cba8340455e016365cdb9e *man/circular-package.Rd
+d742fe3fa8d9c5b5595cdfffb7114fbc *man/circular-package.Rd
 ec7d71aa93030cb0f14d5ff978200b5f *man/circular.Rd
 37b958f4ea06b997dfb6c71142b2cdb3 *man/circular.colors.Rd
 4009077a917bf4b4f968a705bb8e3444 *man/circularp.Rd

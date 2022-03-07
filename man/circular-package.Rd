@@ -22,11 +22,11 @@ the R-Forge repository at \url{https://r-forge.r-project.org/projects/circular/}
 \section{Author}{
 Claudio Agostinelli, Department of Mathematics
 University of Trento, Italy
-(\url{http://www.science.unitn.it/~claudio})
+(\url{http://datascience.maths.unitn.it/~claudio/})
 
 Ulric Lund, Department of Statistics, California Polytechnic State
 University, San Luis Obispo, California, USA
-(\url{http://statweb.calpoly.edu/ulund/})
+(\url{https://statistics.calpoly.edu/ulric-lund})
 }
 
 \section{Licence}{
@@ -44,21 +44,21 @@ The package has evolved through several versions, developed over some years.
 Many thanks to all that points out bugs, provide suggestions and comments.
 
 The functions \code{median} and \code{medianHS} are developed together with
-Alessandro Gagliardi \url{mailto:gagliardi@stud.unive.it}
+Alessandro Gagliardi \url{mailto:alessandro.gagliardi@unipd.it}
   
 The functions \code{watson.wiliams.test} and \code{wallraff.test} are
-developed by Jean-Olivier Irisson (\url{http://jo.irisson.com/})
+developed by Jean-Olivier Irisson (\url{https://www.obs-vlfr.fr/~irisson/})
 
 The functions \code{dcarthwrite}, \code{dgenvonmises},
 \code{(d,r)katojones}, \code{djonespewsey} are developed by Federico Rotolo
 
 The function \code{rose.diag} has contribution by Hiroyoshi Arai (\url{mailto:h_arai@aoni.waseda.jp})
 
-The function \code{windrose} is developed by Matthew Pocernich \url{http://www.rap.ucar.edu/staff/pocernic/}
+The function \code{windrose} is developed by Matthew Pocernich 
 
 Dataset \code{swallows} is kindly provided by Dimitri Giunchi \url{http://unimap.unipi.it/cercapersone/dettaglio.php?ri=2504&template=dettaglio.tpl}
 
-The function \code{bw.circular} is developed together with Eduardo Garcia Portugues \url{mailto:}
+The function \code{bw.circular} is developed together with Eduardo Garcia Portugues \url{https://egarpor.github.io/}
   
 If I miss to report your contribution please let me know by email at \url{mailto:claudio.agostinelli@unitn.it}
 }

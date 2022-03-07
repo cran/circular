@@ -2,11 +2,11 @@
 #                                                           #
 #   quantile.circular function                              #
 #   Author: Claudio Agostinelli and Alessandro Gagliardi    #
-#   Email: claudio@unive.it                                 #
-#   Date: August, 26, 2013                                  #
-#   Copyright (C) 2013 Claudio Agostinelli                  #
+#   Email: claudio.agostinelli@unitn.it                     #
+#   Date: March, 07, 2022                                   #
+#   Copyright (C) 2013-2022 Claudio Agostinelli             #
 #                                                           #
-#   Version 0.2-1                                           #
+#   Version 0.2-2                                           #
 #############################################################
 
 
@@ -17,9 +17,12 @@ quantile.circular <- function(x, probs = seq(0, 1, 0.25), na.rm=FALSE, names = T
       warning("No observations (at least after removing missing values)")
       return(NULL)
    }
-   if(probs < 0 || probs > 1){
-      warning("'probs' outside [0,1]")
-      return(NULL)   
+   if(any(probs < 0 | probs > 1)) {
+      warning("'probs' outside [0,1] were removed")
+      probs <- probs[probs >=0 & probs <=1]
+   }
+   if (length(probs)==0) {
+     return(NULL)
    }
    if (is.circular(x)) {
       dc <- circularp(x)

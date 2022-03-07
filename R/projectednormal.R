@@ -3,16 +3,16 @@
 #   rpnorm function                                         #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio.agostinelli@unitn.it                     #
-#   Date: December, 08, 2016                                #
-#   Copyright (C) 2016 Claudio Agostinelli                  #
+#   Date: March, 07, 2022                                   #
+#   Copyright (C) 2022 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1                                             #
+#   Version 0.1-1                                           #
 #############################################################
 
 rpnorm <- function(n, mu, sigma, control.circular=list()) {
   if (missing(mu) || length(mu)!=2)
     stop("the mean direction parameter 'mu' is mandatory and it must have length 1")
-  if (missing(sigma) || dim(sigma)!=c(2,2))
+  if (missing(sigma) || !all(dim(sigma)==c(2,2)))
     stop("the variance matrix parameter 'Sigma' is mandatory and it must be a matrix of dimension 2 by 2")   
   datacircularp <- list(type="angles", units="radians", template="none", modulo="asis", zero=0, rotation="counter")
   dc <- control.circular
@@ -47,16 +47,16 @@ RpnormRad <- function(n, mu, sigma) {
 #   dpnorm function                                         #
 #   Author: Claudio Agostinelli                             #
 #   Email: claudio.agostinelli@unitn.it                     #
-#   Date: December, 08, 2016                                #
-#   Copyright (C) 2016 Claudio Agostinelli                  #
+#   Date: March, 07, 2022                                   #
+#   Copyright (C) 2022 Claudio Agostinelli                  #
 #                                                           #
-#   Version 0.1                                             #
+#   Version 0.1-1                                           #
 #############################################################
 
 dpnorm <- function (x, mu, sigma, log=FALSE) {
   if (missing(mu) || length(mu)!=2)
     stop("the mean direction parameter 'mu' is mandatory and it must have length 2")
-  if (missing(sigma) || dim(sigma)!=c(2,2))
+  if (missing(sigma) || !all(dim(sigma)==c(2,2)))
     stop("the variance matrix parameter 'sigma' is mandatory and it must be a matrix of dimension 2 by 2")   
   if (!is.logical(log))
     stop("'log' must be logical")
