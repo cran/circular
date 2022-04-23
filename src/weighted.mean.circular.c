@@ -20,7 +20,7 @@ void WeightedMeanCircularRad(double *x, double *w, int *n, double *result)
     cosr += cos(x[i])*w[i];
     sumw += w[i];
   }
-  if (sqrt(pow(sinr,2) + pow(cosr,2))/sumw > DOUBLE_EPS)
+  if (sqrt(pow(sinr,2) + pow(cosr,2))/sumw > DBL_EPSILON)
     circmean = atan2(sinr, cosr);
 
   *result = circmean;

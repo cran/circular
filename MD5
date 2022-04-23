@@ -1,5 +1,5 @@
 0db8fb4a8a9148f3e8029eee41b77939 *COPYING
-4fd550d55f1b4bb050e50c18c4b81027 *DESCRIPTION
+69598d4f3fde783e36410456fa5bbfb4 *DESCRIPTION
 94183feac37aa2e9f4d16900e3af6fed *NAMESPACE
 cca22485e725dc1681e0f01723e1fd59 *R/A1.R
 d642acad73d30fd023af1e7cb5f53777 *R/A1FirstDerivative.R
@@ -264,9 +264,9 @@ c6e0a746fc817ce2852659b326d41eb0 *src/distance.h
 6f4e96826745f34842f8ef6f8dbd504b *src/dwrappednormal.f
 d24375b035ddc3f136a71f16e5c5f8bb *src/dwrappednormal.h
 94323f47b9d46611d240fc160c5b6afb *src/init.c
-ea51b8bd819e62073e63b8338424e8ec *src/mean.circular.c
+3299eeecf9300f586a4a6d82920bf65f *src/mean.circular.c
 836d94c628d2c0b664cbcdad81a80571 *src/mean.circular.h
-faf4d3f6150f7e39f7c1d6a133aa1797 *src/median.circular.c
+cf57648f59185612560440f808888f43 *src/median.circular.c
 3e1a6400a16b04bb3f53cbbec9dae466 *src/median.circular.h
 a19f516602d29d4534197fc6170c7cc1 *src/medianHL.circular.c
 ef3057d063263aefb1bb6ce14e1cceb7 *src/medianHL.circular.h
@@ -276,7 +276,7 @@ e25024492be7d8bac2c7a7cc37650cda *src/mle.wrappednormal.f
 56f758e4f332166765182796c8706eb0 *src/mle.wrappednormal.h
 8164418337e95a437b28b6afbd57e407 *src/rvonmises.c
 5cf41b5c5c71638e39e1c10782a0b56f *src/rvonmises.h
-a5635a4715fa0b35aa5e26b8c63f5ca2 *src/weighted.mean.circular.c
+70cec631a756b6422ad86165096dce3e *src/weighted.mean.circular.c
 5d795c5df6f7485b2796b28bc557cb5e *src/weighted.mean.circular.h
 59e73bd7b067823d1f3f7e21a9cf2017 *tests/test-median.R
 4b228b0e90d4677613770414ccd40f54 *tests/test-walraff.test.R
