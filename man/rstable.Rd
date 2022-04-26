@@ -23,7 +23,7 @@ random sample from the specified stable distribution.
 
 \details{
 This function return random variates from the Levy skew stable
-distribution with \code{index}=\eqn{\alpha}{alpha}, \code{scale}=\eqn{c}{c} and \code{skewness}=\eqn{\beta}{beta}.  The \code{skewness} parameter must lie in the range [-1,1] while the \code{index} parameter must lie in the range (0,2].  The Levy skew stable probability distribution is defined by a fourier transform,
+distribution with \code{index}=\eqn{\alpha}{alpha}, \code{scale}=\eqn{c}{c} and \code{skewness}=\eqn{\beta}{beta}.  The \code{skewness} parameter must lie in the range [-1,1] while the \code{index} parameter must lie in the range (0,2].  The Levy skew stable probability distribution is defined by a Fourier transform,
 \deqn{
 p(x) = {1 \over 2 \pi} \int_{-\infty}^{+\infty} dt \exp(-it x - |c t|^\alpha (1-i \beta sign(t) \tan(\pi\alpha/2)))
 }

@@ -2,27 +2,24 @@ Title: Circular Statistics
 LazyLoad: yes
 LazyData: yes
 Package: circular
-Version: 0.4-94.1
+Version: 0.4-95
 Author: Ulric Lund <ulund@calpoly.edu> [aut],
-  Claudio Agostinelli <claudio.agostinelli@unitn.it> [aut, cre],
+  Claudio Agostinelli <claudio.agostinelli@unitn.it> [aut],
   Hiroyoshi Arai <h_arai@aoni.waseda.jp> [ctb],
   Alessando Gagliardi <gagliardi@stud.unive.it> [ctb],
-  Eduardo Garcia Portugues <edgarcia@est-econ.uc3m.es> [ctb],
+  Eduardo García-Portugués <edgarcia@est-econ.uc3m.es> [ctb, cre],
   Dimitri Giunchi <dimitri.giunchi@unipi.it> [ctb],
   Jean-Olivier Irisson <irisson@normalesup.org> [ctb],
   Matthew Pocernich <pocernic@ucar.edu> [ctb],
   Federico Rotolo [ctb]
-Maintainer: ORPHANED
-Date: 2022-03-07
+Maintainer: Eduardo García-Portugués <edgarcia@est-econ.uc3m.es>
+Date: 2022-04-26
 Depends: R (>= 3.0.0), stats
 Imports: boot, mvtnorm
 Description: Circular Statistics, from "Topics in circular Statistics" (2001) S. Rao Jammalamadaka and A. SenGupta, World Scientific.
 License: GPL-2
 NeedsCompilation: yes
-Packaged: 2022-04-20 13:21:40 UTC; ripley
+Encoding: UTF-8
+Packaged: 2022-04-26 17:09:50 UTC; Eduardo
 Repository: CRAN
-Date/Publication: 2022-04-23 08:00:26 UTC
-X-CRAN-Original-Maintainer: Claudio Agostinelli
-        <claudio.agostinelli@unitn.it>
-X-CRAN-Comment: Orphaned on 2022-04-23 as DOUBLE_* constants were still
-        in use.
+Date/Publication: 2022-04-26 22:20:02 UTC

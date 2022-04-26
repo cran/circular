@@ -80,8 +80,8 @@ object of class \code{lm.circular.cc} is returned with the following components:
 \item{se.kappa}{an estimated standard error of the concentration parameter.}
 \item{coefficients}{the estimated coefficients.}
 \item{cov.coef}{covariance matrix of the estimated coefficients.}
-\item{se.coef}{standard errord of the estimated coefficients.}
-\item{log.lik}{log-likehood.}
+\item{se.coef}{standard errors of the estimated coefficients.}
+\item{log.lik}{log-likelihood.}
 \item{t.values}{values of the t statistics for the coefficients.}
 \item{p.values}{p-values of the t statistics. Approximated values using
   Normal distribution.}
@@ -92,7 +92,7 @@ object of class \code{lm.circular.cc} is returned with the following components:
   trigonometric polynomial of x is fit against the cosine and sine of y.
   The order of trigonometric polynomial is specified by order.  Fitted
   values of y are obtained by taking the inverse tangent of the predicted
-  values of sin(y) devided by the predicted values of cos(y).  Details of
+  values of sin(y) divided by the predicted values of cos(y).  Details of
   the regression model can be found in Sarma and Jammalamadaka (1993).
   
   If \code{type=="c-l"} or \code{lm.circular.cl} is called directly, 

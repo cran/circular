@@ -17,7 +17,7 @@ watson.two.test(x, y, alpha=0)
     \code{\link{circular}}.}
 \item{y}{a vector. The object is coerced to class
     \code{\link{circular}}.}
-\item{alpha}{significance level of the test.  Valid levels are 0.001, 0.01, 0.05, 0.1.  This argument may be ommited, in which case, a range for the p-value will be returned.}
+\item{alpha}{significance level of the test.  Valid levels are 0.001, 0.01, 0.05, 0.1.  This argument may be omitted, in which case, a range for the p-value will be returned.}
   \item{digits}{integer indicating the precision to be used.}
   \item{\dots}{further arguments passed to or from other methods.}
 }

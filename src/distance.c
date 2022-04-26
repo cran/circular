@@ -108,9 +108,9 @@ double R_geodesic(double *x, int nr, int nc, int i1, int i2)
     dist = 0.0;
     for(j = 0 ; j < nc ; j++) {
 	if(both_non_NA(x[i1], x[i2])) {
-          dif = fabs(fmod((x[i1]-x[i2]+2.0*M_PI), (2.0*M_PI))); 
+          dif = fabs(fmod((x[i1]-x[i2]+2.0*M_PI), (2.0*M_PI)));
 	  if (dif > M_PI) {
-            dif = 2.0*M_PI - dif; 
+            dif = 2.0*M_PI - dif;
 	  }
 	  dev = M_PI - fabs(M_PI - dif);
 	    if(!ISNAN(dev)) {
@@ -128,11 +128,11 @@ double R_geodesic(double *x, int nr, int nc, int i1, int i2)
 
 double R_correlation(double *x, int nr, int nc, int i1, int i2)
 {
-  double dev, dist, sin1, sin2, cos1, cos2, mu1, mu2, num, den, den1, den2;
+  double sin1, sin2, cos1, cos2, mu1, mu2, num, den, den1, den2;
     int count, j, i1t, i2t;
 
     count= 0;
-    dist = 0.0;
+    //dist = 0.0;
     sin1 = 0.0;
     sin2 = 0.0;
     cos1 = 0.0;
@@ -170,7 +170,7 @@ double R_correlation(double *x, int nr, int nc, int i1, int i2)
 	i2t += nr;
     }
     den = sqrt(den1*den2);
-    
+
     if(count == 0) return NA_REAL;
     // if(count != nc) dist /= ((double)count/nc);
     return (double) sqrt(1.0 - num/den);
@@ -179,7 +179,7 @@ double R_correlation(double *x, int nr, int nc, int i1, int i2)
 enum { CORRELATION=1, ANGULARSEPARATION, CHORD, GEODESIC };
 /* == 1,2,..., defined by order in the R function dist */
 
-void R_distance(double *x, int *nr, int *nc, double *d, int *diag, 
+void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 		int *method)
 {
     int dc, i, j, ij;

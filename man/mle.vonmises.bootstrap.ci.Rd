@@ -4,7 +4,7 @@
 \alias{print.mle.vonmises.bootstrap.ci}
 
 \description{
-Generates simple bootstrap confidence intervals for the parameters of a von Mises distribtution: the mean direction mu, and the concentration parameter kappa.
+Generates simple bootstrap confidence intervals for the parameters of a von Mises distribution: the mean direction mu, and the concentration parameter kappa.
 }
 
 

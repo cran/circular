@@ -10,7 +10,7 @@ data(fisherB20c)
 }
 
 \description{
-Distances 'x' and directions 'theta' by small blue periwinkles, Nodilittorina unifasciata, after they had been transplanted downshore from the height at which they normaly live.
+Distances 'x' and directions 'theta' by small blue periwinkles, Nodilittorina unifasciata, after they had been transplanted downshore from the height at which they normally live.
 }
 \format{
 \code{fisherB20} is a \code{\link{data.frame}} of integer value.

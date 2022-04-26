@@ -19,7 +19,7 @@ circular(x, type = c("angles", "directions"),
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{a vector or a matrix. If a data.frame is supply then it is corced to a matrix.}
+  \item{x}{a vector or a matrix. If a data.frame is supply then it is coerced to a matrix.}
   \item{type}{the type of measures (Not Used Yet).}
   \item{units}{units of the measures.}
   \item{template}{how the data should be plotted. This set \code{modulo}, \code{zero} and \code{rotation} to some suitable values. For instance for 'geographics': zero=pi/2 and rotation='clock'. It is also used to set default labels on the plots.}

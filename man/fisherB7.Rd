@@ -10,7 +10,7 @@ data(fisherB7c)
 }
 
 \description{
-Directions chisen by 100 ants in response to an evenly illuminated black targed placed as shown.
+Directions chosen by 100 ants in response to an evenly illuminated black targets placed as shown.
 }
 \format{
 \code{fisherB7} a vector of 100 observations (in degrees).

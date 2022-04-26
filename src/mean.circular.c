@@ -23,8 +23,9 @@ void MeanCircularRad(double *x,int *n,double *result)
        cosr += cos(x[i]);
 	}
    if (sqrt(pow(sinr,2) + pow(cosr,2))/(*n) > DBL_EPSILON)
+   {
    	circmean = atan2(sinr, cosr);
-
+   }
 	*result = circmean;
 }
 

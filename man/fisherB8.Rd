@@ -10,7 +10,7 @@ data(fisherB8c)
 }
 
 \description{
-Horizontal axes of 100 outwash pebbles fromo a late Wisconsin outwash terrace alogn Fox river, near Cary, Illinois
+Horizontal axes of 100 outwash pebbles fromo a late Wisconsin outwash terrace along Fox river, near Cary, Illinois
 }
 \format{
 \code{fisherB8} a vector of 100 observations (in degrees).

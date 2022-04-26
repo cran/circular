@@ -34,7 +34,7 @@
   contains information on the \code{zero}, the \code{rotation} and \code{next.points}.}
   \item{zero}{the zero of the plot. Ignored if \code{plot.info} is provided.}
   \item{rotation}{the rotation of the plot. Ignored if \code{plot.info} is provided.}
-  \item{\dots}{futher parameters passed to \code{\link{lines.default}}.}
+  \item{\dots}{further parameters passed to \code{\link{lines.default}}.}
 }
 
 \value{

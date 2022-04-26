@@ -49,7 +49,7 @@ bw.nrd.circular(x, lower=NULL, upper=NULL,
 \code{bw.cv.mse.circular} and \code{bw.cv.ml.circular} implement cross validatory bandwidths minimizing squared--error loss and Kullback--Leibler loss, respectively. This is done by minimizing the second and third equations in section 5 of Hall, Watson and Cabrera (1987). Kullback--Leibler loss is equivalent to maximize the cross validation log--likelihood with respect to the bandwidth parameter.
 
 \code{bw.nrd.circular} implements a rule-of-thumb for choosing the
-bandwidth of a von Mises kernel density estimator with underlaying
+bandwidth of a von Mises kernel density estimator with underlying
 population von Mises. It was proposed by Taylor (2008, equation (7)) and
 is the circular analogue of the usual rule of thumb used for the normal
 distribution. The only remarkable difference between them is that
@@ -64,12 +64,12 @@ sample trigonometric moment. Let \eqn{k_p} be the estimates of
   \sum_{i=1}^n \cos(p x_i - \mu_p)}. We let \code{kappa} equal to
 \eqn{max(k_1, k_2, \cdots, k_P)}, see Taylor (2008) for further details.
 
-Note that circular bandwidth has a differet scale from linear bandwidth (see Hall, Watson and Cabrera (1987)). The behaviour of the circular bandwidth is the \emph{inverse} of the linear: large values overestimate the density, whereas small values underestimate. 
+Note that circular bandwidth has a different scale from linear bandwidth (see Hall, Watson and Cabrera (1987)). The behaviour of the circular bandwidth is the \emph{inverse} of the linear: large values overestimate the density, whereas small values underestimate. 
 }
 
 \section{Warning}{
 Plug-in bandwidth selector \code{bw.nrd.circular} assumes that the
-underlaying population is von Mises. If this is not true, it might lead
+underlying population is von Mises. If this is not true, it might lead
 to serious misestimations of the circular bandwidth. Example 2 below
 shows how this behaviour can appear with multimodality populations. In
 those cases, the use of \code{kappa.est="trigmoments"} could be of help.

@@ -15,7 +15,7 @@ watson.test(x, alpha=0, dist=c("uniform", "vonmises"))
 \arguments{
 \item{x}{a vector. The object is coerced to class
     \code{\link{circular}}.}
-\item{alpha}{significance level of the test.  Valid levels are 0.01, 0.05, 0.1.  This argument may be ommited, in which case, a range for the p-value will be returned.}
+\item{alpha}{significance level of the test.  Valid levels are 0.01, 0.05, 0.1.  This argument may be omitted, in which case, a range for the p-value will be returned.}
 \item{dist}{distribution to test for.  The default is the uniform
   distribution. To test for the von Mises distribution, set \code{dist}
   to "vonmises".}

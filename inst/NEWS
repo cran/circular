@@ -1,5 +1,9 @@
 Library circular
 =================
+Version 0.4-95
+Maintainer change to avoid archiving.
+Fixed documentation typos.
+
 Version 0.4-91
 Fixed a bug in heatmap.circular
 

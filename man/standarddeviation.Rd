@@ -7,7 +7,7 @@
 \description{
 The \code{sd} function from the \pkg{base} is replace by a new
 \code{method} in order to report the standard deviation of circular data
-appropriatly. \code{sd.default} is an alias of the original function
+appropriately. \code{sd.default} is an alias of the original function
 \code{sd} see \code{\link[stats]{sd}}. The behavior would be the same
 for objects which are not from \code{\link{class}}
 \code{\link{data.frame}} and \code{\link{circular}} (in the last case

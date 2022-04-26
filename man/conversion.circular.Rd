@@ -14,10 +14,10 @@ conversion.circular(x, units = c("radians", "degrees", "hours"), type = NULL,
   \item{x}{an object of class \code{\link{circular}}.}
   \item{units}{unit of the transformed data.}
   \item{type}{type of the transformed data. If \code{NULL} no action is performed.}
-  \item{template}{template of the tranformed data. If \code{NULL} no action is performed.}
+  \item{template}{template of the transformed data. If \code{NULL} no action is performed.}
   \item{modulo}{modulo of the transformed data. If \code{NULL} no action is performed.}
-  \item{zero}{zero of the tranformed data. If \code{NULL} no action is performed.}
-  \item{rotation}{rotation of the tranformed data. If \code{NULL} no action is performed.}
+  \item{zero}{zero of the transformed data. If \code{NULL} no action is performed.}
+  \item{rotation}{rotation of the transformed data. If \code{NULL} no action is performed.}
 }
 
 \value{
@@ -27,7 +27,7 @@ conversion.circular(x, units = c("radians", "degrees", "hours"), type = NULL,
 \author{Claudio Agostinelli}
 
 \seealso{
-\code{\link{deg}} and \code{\link{rad}}. If you want to set the properties of an object instead to tranform it, you can use \code{\link{circular}} or \code{\link{circularp<-}}.
+\code{\link{deg}} and \code{\link{rad}}. If you want to set the properties of an object instead to transform it, you can use \code{\link{circular}} or \code{\link{circularp<-}}.
 }
 
 \examples{

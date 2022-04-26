@@ -46,13 +46,13 @@ components
 \item{ovl}{the (conditional) overlapping coefficient.}
 \item{q}{the order of the modal regions.}
 \item{bw}{the bandwidth value as in input.} 
-\item{modal.x}{an obejct of class \code{\link{modal.region.circular}}
+\item{modal.x}{an object of class \code{\link{modal.region.circular}}
   for the \code{x} data set.}
-\item{modal.y}{an obejct of class \code{\link{modal.region.circular}}
+\item{modal.y}{an object of class \code{\link{modal.region.circular}}
   for the \code{y} data set.}
-\item{density.x}{an obejct of class \code{\link{density.circular}}
+\item{density.x}{an object of class \code{\link{density.circular}}
   for the \code{x} data set.}
-\item{density.y}{an obejct of class \code{\link{density.circular}}
+\item{density.y}{an object of class \code{\link{density.circular}}
   for the \code{y} data set.}
 \item{density}{a function which report the positive part of the
   difference between the estimated density of the two data sets.}

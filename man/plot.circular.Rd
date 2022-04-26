@@ -49,7 +49,7 @@ Creates a plot of circular data points on the current graphics device.  Data poi
 \item{zero}{the zero used in the plot.}
 \item{rotation}{the rotation used in the plot.}
 \item{control.circle}{parameters passed to \code{\link{plot.default}} in order to draw the circle. The function \code{\link{circle.control}} is used to set the parameters.}
-\item{\dots}{futher parameters passed to \code{\link{points.default}}.}
+\item{\dots}{further parameters passed to \code{\link{points.default}}.}
 }
 
 \details{

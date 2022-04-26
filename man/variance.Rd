@@ -7,7 +7,7 @@
 \description{
 The \code{var} function from the \pkg{stats} is replace by a new
 \code{method} in order to report the variance of circular data
-appropriatly. \code{var.default} is an alias of the original function
+appropriately. \code{var.default} is an alias of the original function
 \code{var} see \code{\link[stats]{cor}}. The behavior would be the same for objects which are not
 from \code{\link{class}} \code{\link{data.frame}} and
 \code{\link{circular}} (in the last case the variance is define as one

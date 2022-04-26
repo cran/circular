@@ -10,7 +10,7 @@ data(fisherB18c)
 }
 
 \description{
-19 measuremenents of wind direction 'theta' and ozone level 'x' taken at 6.00am at four-day intervals between April 18th and June 29th, 1975 at a weather station in Milwaukee.
+19 measurements of wind direction 'theta' and ozone level 'x' taken at 6.00am at four-day intervals between April 18th and June 29th, 1975 at a weather station in Milwaukee.
 }
 \format{
 \code{fisherB18} is a \code{\link{data.frame}} of integer value.

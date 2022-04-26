@@ -51,7 +51,7 @@ color of the points. The values are recycled if needed.}
  \item{main, sub, xlab, ylab}{title, subtitle, x label and y label of the plot.}
  \item{add}{add the rose diag to an existing plot.}
 \item{control.circle}{parameters passed to \code{\link{plot.default}} in order to draw the circle. The function \code{\link{circle.control}} is used to set the parameters.} 
- \item{...}{futher parameters passed to \code{\link{polygon}}.}
+ \item{...}{further parameters passed to \code{\link{polygon}}.}
 }
 
 \value{

@@ -8,7 +8,7 @@
     meta <- packageDescription("circular")
     packageStartupMessage(
          "Package 'circular', ", meta$Version, " (", meta$Date, "). ",
-         "Type 'help(Circular)' for summary information. \n Please report any bug or comments to Claudio Agostinelli <claudio.agostinelli@unitn.it>")
+         "Type 'help(Circular)' for summary information.")
   }
   invisible()
 }

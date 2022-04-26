@@ -18,7 +18,7 @@ Measurements of the directions taken by 76 turtles after treatment.
 }
 
 \source{
-Stephens, M.A. (1969) Techniques for directional data. Thechnical Report #150, Department of Statistics, Stanford University, Stanford, CA.
+Stephens, M.A. (1969) Techniques for directional data. Technical Report #150, Department of Statistics, Stanford University, Stanford, CA.
 }
 \seealso{
 N.I. Fisher (1993) Statistical analysis of circular data. Cambridge University Press. Pag. 241.

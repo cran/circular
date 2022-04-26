@@ -32,7 +32,7 @@
 
   The algorithm will proceed how described below:
    1) Linearize the circular observations.
-   2) Calulate the linear median like type establish.
+   2) Calculate the linear median like type establish.
    3) The value it will transformed in circular.
 }
 

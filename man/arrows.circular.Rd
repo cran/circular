@@ -21,7 +21,7 @@ arrows.circular(x, y = NULL, x0 = 0, y0 = 0, na.rm = FALSE,
   contains information on the \code{zero}, the \code{rotation} and \code{next.points}.}
   \item{zero}{the zero used in the plot. Ignored if \code{plot.info} is provided.}
   \item{rotation}{the rotation used in the plot. Ignored if \code{plot.info} is provided.}
-  \item{\dots}{futher parameters passed to \code{\link{arrows}}.}
+  \item{\dots}{further parameters passed to \code{\link{arrows}}.}
 }
 
 \author{Claudio Agostinelli}

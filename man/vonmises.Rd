@@ -28,7 +28,7 @@ qvonmises(p, mu = circular(0), kappa=NULL, from=NULL, tol = .Machine$double.eps^
     of the distribution.}
 	\item{log}{logical; if TRUE, probabilities p are given as log(p).}
   \item{from}{if \code{NULL}  is set to \eqn{mu-pi}. This is the value from which the pvonmises and qvonmises are evaluated. It should be a \code{circular} object.}
-  \item{tol}{the precision in evaluating the distributon function or the
+  \item{tol}{the precision in evaluating the distribution function or the
   quantile.}
   \item{control.circular}{the attribute of the resulting object.}
   \item{\dots}{parameters passed to \code{\link{integrate}}.}

@@ -46,7 +46,7 @@
  \item{zero}{position of the zero used in the plot.  If \code{NULL} the value is taken from the attribute of object 'x' from the argument 'x', i.e. \code{x$x}.}
  \item{rotation}{rotation used in the plot.  If \code{NULL} the value is taken from the attribute of object 'x' from the argument 'x', i.e. \code{x$x}.}
  \item{control.circle}{parameters passed to \code{\link{plot.default}} in order to draw the circle. The function \code{\link{circle.control}} is used to set the parameters.}
- \item{\dots}{futher parameters passed to \code{\link{plot.default}}.}
+ \item{\dots}{further parameters passed to \code{\link{plot.default}}.}
 }
 
 \value{

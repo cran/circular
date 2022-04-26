@@ -28,7 +28,7 @@ aov.circular(x, group, kappa = NULL,
 }
 
 \value{
-  An object of class \code{aov.circular} with the folowing components:
+  An object of class \code{aov.circular} with the following components:
 
   \item{mu}{mean direction for each sample with class \code{circular}.}
   \item{mu.all}{mean direction of all samples combined with class \code{circular}.}

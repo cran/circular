@@ -28,7 +28,7 @@
 
 \value{The density}
 
-\references{Jones , M.C. and Pewsey, A. (2005). A family of simmetric distributions on the circle. J. Am. Statist. Assoc. 100, 1422-1428}
+\references{Jones , M.C. and Pewsey, A. (2005). A family of symmetric distributions on the circle. J. Am. Statist. Assoc. 100, 1422-1428}
 \author{Federico Rotolo}
 
 \examples{

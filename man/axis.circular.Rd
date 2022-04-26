@@ -17,7 +17,7 @@ axis.circular(at=NULL, labels=NULL,  units = NULL, template=NULL,
 \item{at}{the points at which tick-marks are to be drawn. If \code{NULL} the
 tick-marks are placed to 0, pi/2, pi and 3pi/2 radians.}
 \item{labels}{a vector of character strings to be placed at the
-  tickpoints. If \code{NULL} the labels are choosen according to
+  tickpoints. If \code{NULL} the labels are chosen according to
   \code{units} and \code{template} arguments.}
 \item{units}{either \code{radians} or \code{degrees}. If \code{NULL} the value is taken from the attributes of the object \code{at}.}
 \item{template}{either \code{none} or \code{geographics}. If \code{NULL} the value is taken from the attributes of the object \code{at}.}

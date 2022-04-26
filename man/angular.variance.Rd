@@ -24,7 +24,7 @@ Returns twice one minus the mean resultant length divided by the sample size.
 \author{Claudio Agostinelli}
 
 \references{
-Batchelet, E. (1981) Circular Statistics in Biology. Academic Press, London.
+Batschelet, E. (1981) Circular Statistics in Biology. Academic Press, London.
  
 Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Section 1.3, World Scientific Press, Singapore.
 

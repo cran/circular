@@ -62,7 +62,7 @@ Z.D. Bai and C.R. Rao and L.C. Zhao (1988). Kernel Estimators of Density
 Function of Directional Data, Journal of Multivariate Analysis, 27, 24-39.
 
 J. Klemel\"a (2000). Estimation of densities and derivatives of
-densities with directioinal data, Journal of Multivariate Analysis, 73, 18-40.
+densities with directional data, Journal of Multivariate Analysis, 73, 18-40.
 
 V.R. Prayag and A.P. Gore (1990). Density Estimation for Randomly
 Distributed Circular Objects, Metrika, 1990, 37, 63-69.

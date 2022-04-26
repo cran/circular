@@ -23,8 +23,8 @@ pmixedvonmises(q, mu1, mu2, kappa1, kappa2, prop, from=NULL, tol = 1e-020)
   \item{kappa2}{concentration parameter of the other von Mises distribution.}
   \item{prop}{mixing proportion.}
   \item{from}{if \code{NULL} is set equal to \eqn{0} (Notice the
-  difference from the correspoding vonmises distribution). This is the value from which the pmixedvonmises is evaluated. It should be a \code{circular} object.}
-  \item{tol}{the precision in evaluating the distributon function or the
+  difference from the corresponding vonmises distribution). This is the value from which the pmixedvonmises is evaluated. It should be a \code{circular} object.}
+  \item{tol}{the precision in evaluating the distribution function or the
   quantile.}
   \item{control.circular}{the attribute of the resulting object.}
 }
