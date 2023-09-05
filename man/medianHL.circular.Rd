@@ -13,9 +13,9 @@
 \usage{
 medianHL(x, na.rm=FALSE, ...)
 \method{medianHL}{default}(x, na.rm=FALSE,
-       method=c("HL1","HL2","HL3"), prop=NULL)
+       method=c("HL1","HL2","HL3"), prop=NULL,...)
 \method{medianHL}{circular}(x, na.rm=FALSE,
-       method=c("HL1","HL2","HL3"), prop=NULL)
+       method=c("HL1","HL2","HL3"), prop=NULL,...)
 }
 \arguments{
   \item{x}{a vector. For the function \code{medianHL.circular} the object is

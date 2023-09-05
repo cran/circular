@@ -1,6 +1,6 @@
 0db8fb4a8a9148f3e8029eee41b77939 *COPYING
-0099a8ebce4c8baa3dc294f680e99e8d *DESCRIPTION
-94183feac37aa2e9f4d16900e3af6fed *NAMESPACE
+46932cf99856e5427fd5dc857b8e7e7a *DESCRIPTION
+3f533d73d1a227bc64e2853295601148 *NAMESPACE
 cca22485e725dc1681e0f01723e1fd59 *R/A1.R
 d642acad73d30fd023af1e7cb5f53777 *R/A1FirstDerivative.R
 87d8618f16f78bbbb817ef4ef06fc1e8 *R/A1SecondDerivative.R
@@ -19,7 +19,7 @@ dd4344db14a225130ec1dba98b64961d *R/as.circular.R
 0e0fa1a397d107b959d398d992e4b78f *R/as.data.frame.circular.R
 3a9f9c87b5990fc72c5e46492837b421 *R/asytriangular.R
 af0ede56a865552be4849a94000d6d32 *R/axialvonmises.R
-2357f5610cfc16bab011018e98639033 *R/axis.circular.R
+c4ea2fab3242862b7d192bbf7b0d296d *R/axis.circular.R
 efc3ab1f3ccfb2125dc80bc383dfb8cd *R/bw.circular.R
 b349fc64bf7cedd02c99574c56b9f231 *R/cardioid.R
 91df456953db048e805d615b05617880 *R/carthwrite.R
@@ -49,8 +49,8 @@ def2a476a0ffcf7d355ccd5d5e91f832 *R/make.circular.link.R
 9b1e7e9fa6e49fceb9095130ee1db9ad *R/mean.circular.R
 cb7f0142ef44b1d0c08862731cd79697 *R/meandeviation.R
 d386de06171c2024dae5bf544941dbd8 *R/median.circular.R
-64ceffa354a51a9b857f77badfd67a79 *R/medianHL.circular.R
-b6a405d857f3dfa0f33564a95db1efb0 *R/medianHL.default.R
+865fe6f6fca8fa6fb2a9304e925e8bb3 *R/medianHL.circular.R
+3cff3b44acf4d97156ea9b49653b0a91 *R/medianHL.default.R
 efa635a33462eff146538d3b979ab061 *R/medianaxis.circular.R
 a31fd3d9330f9a41effec4860b8405ec *R/minuspipluspi.R
 11bff10955d136642e9503bb9130508e *R/mle.cardioid.R
@@ -59,7 +59,7 @@ f5e6608c52e58aecdfcd7ad0ee353b32 *R/mle.vonmises.R
 411669bb0cf696bad51a0aa4f7cb1b31 *R/mle.wrappedcauchy.R
 0b2552574c4ed4b61ac8fbd71cc981b8 *R/mle.wrappednormal.R
 f62fea5c5c724363af3a052936cd60e2 *R/modal.region.R
-d00afa2b1d2adf76bf1a8824e6ce64fe *R/onAttach.R
+6cd2d61d470ade9bae415e578d4f3d7e *R/onAttach.R
 3e7bff7976ef6353a88b4a7a29857a43 *R/plot.circular.R
 1bc80292861692ec2c25f1126cd04450 *R/plot.edf.R
 018120a462b974e755e07b4175f359d2 *R/plot.lsfit.circle.R
@@ -102,7 +102,7 @@ ed6687ebea7f14a3d6b2d26ce111d404 *R/wrappedcauchy.R
 c7325939ad1becf1bffda1cb769ba061 *R/wrappednormal.R
 965baf8e9fc2169ca460ea6328d85297 *R/wrappedstable.R
 907fbf4d65ee3b0b9801d9f565c19b83 *R/zzz.R
-c262581fae4d87234a02d192f662c5ba *README
+7b1bc2dfc7a924c62d368a550ba95919 *README
 198c8d07013f2425941ba0917473ecd6 *data/coope.rda
 865bde81d23bce4eb4c218f0dbe15b86 *data/fisherB1.rda
 ba481790f28a43fc37b04bf84600b002 *data/fisherB10.rda
@@ -140,9 +140,9 @@ f0a42569153bdd948c03a06b71e5a1b1 *data/rao.table.rda
 c9b82ed81ebbae3ba963074e68de4e8b *data/swallows.rda
 bd47e4db763984f426323ae2b837994c *data/turtles.rda
 0b459167afcad0c183d820a93b085e71 *data/wind.rda
-8d344106f5da026dea580006e5d29a6c *inst/CITATION
+d2dd290fba7bf3b92502da054c060289 *inst/CITATION
 08ee0db1331c304a3def2f9baa28aec8 *inst/COPYRIGHTS
-77270df83e95bf67111195c6c3178278 *inst/NEWS
+79513bbb401143cd9437458bf234e297 *inst/NEWS
 c42c62f7601b5fed9fb658ce1ee1104c *man/A1.Rd
 5d600404e6ef69c891b62310a134a3b3 *man/A1FirstDerivative.Rd
 7d2317bea3e39eb5818204843016d4da *man/A1SecondDerivative.Rd
@@ -201,12 +201,12 @@ b3fed2a0aa37f168134ba15c6e7dd534 *man/intersect.modal.region.Rd
 1115fa6487a231034451bb0ddbc8af7b *man/kuiper.test.Rd
 d190a33c56dd12b73c1e05d8a748052f *man/lines.circular.Rd
 d1d6b82eb0f3935ed735c3dc91268901 *man/lines.density.circular.Rd
-b41db36e1293903bda29a63cd7daa794 *man/lm.circular.Rd
+1f92896fdd6416eae26d2d08421445c3 *man/lm.circular.Rd
 8f872bdca221efc6d700816a7da3fd25 *man/lsfit.circle.Rd
 27d847385f61622278175217e3700bb9 *man/mean.circular.Rd
 91325d6e85ac9c9efe99f3dc82e69663 *man/meandeviation.Rd
 8ad79083ca6ef8592f7b35b1833e6511 *man/median.circular.Rd
-ac1f9e46a49fed5b86bde0e6e35a9fb2 *man/medianHL.circular.Rd
+e44d80d2253214638f6c65dfaaa12dfd *man/medianHL.circular.Rd
 bb48454a57f904e41b2e389760bb6bf1 *man/minusPiPlusPi.Rd
 38e55097fbf41b85e226d4bae2a4fed8 *man/mixedvonmises.Rd
 d4a6afee943c43899c6487c0b542df12 *man/mle.vonmises.Rd
@@ -232,7 +232,7 @@ ef104113efae32a4505d2f4a690f2975 *man/rao.spacing.test.Rd
 c1093d7ae40f08671e78c9e885180ed6 *man/rao.test.Rd
 d1154ff1c4963b355d3381e1ada57c29 *man/rayleigh.test.Rd
 3fb0a67b26668cce809f19dfad03127d *man/rho.circular.Rd
-94f0205a2f7422f0dfb3e4f3f00ad652 *man/rose.diag.Rd
+ffad7036a2294f3f9a3dd37c0e95692e *man/rose.diag.Rd
 0e5e87f83fcf523f643a5c0c2a64b633 *man/rstable.Rd
 c95734bb89e2cf00a56a2f7b427fdc3b *man/rwrappedstable.Rd
 80906a98e6536724de3cfafc54a98d2f *man/sd.circular.Rd

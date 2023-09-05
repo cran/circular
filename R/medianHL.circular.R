@@ -10,7 +10,7 @@
 #                                                           
 #############################################################
 
-medianHL.circular <- function(x, na.rm=FALSE, method=c("HL1","HL2","HL3"), prop=NULL) {
+medianHL.circular <- function(x, na.rm=FALSE, method=c("HL1","HL2","HL3"), prop=NULL,...) {
    method <- match.arg(method)
    if (!is.null(prop))
       if (prop <= 0 | prop >=1)

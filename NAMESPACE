@@ -247,7 +247,7 @@ export(
 S3method("[", circular)
 
 #axis
-S3method(axis, circular)
+#S3method(axis, circular)
 
 #c
 S3method(c, circular)

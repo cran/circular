@@ -144,15 +144,18 @@ circ.lm <- lm.circular(y, x, order=1)
 # Obtain a crude plot of the data and fitted regression line.
 plot.default(x, y)
 circ.lm$fitted[circ.lm$fitted>pi] <- circ.lm$fitted[circ.lm$fitted>pi] - 2*pi 
-
 points.default(x[order(x)], circ.lm$fitted[order(x)], type='l')
 
-
-# Fit a circular-linear regression model.
+# Fit a circular-linear regression model and show predictions.
 set.seed(1234)
 x <- cbind(rnorm(10), rep(1, 10))
+x <- cbind(rnorm(10), rep(1,10))
 y <- circular(2*atan(c(x\%*\%c(5,1))))+rvonmises(10, mu=circular(0), kappa=100)
 lm.circular(y=y, x=x, init=c(5,1), type='c-l', verbose=TRUE)
+plot(y)
+lmC <- lm.circular(y=y, x=x, init=c(5,1), type='c-l', verbose=TRUE)
+p <- circular(lmC$mu+2*atan(x\%*\%lmC$coefficients))
+points(p, col=2, pch= "+")
 }
 
 \keyword{models}

@@ -1,5 +1,11 @@
 Library circular
 =================
+Version 0.5
+Added an example to RosediagRad (thanks to Hugo Flávio).
+Added an example to lm.circular (thanks to Dirk Walther).
+Drop personList() and citEntry().
+axis.circular() is no longer an S3 method, just a standalone function.
+
 Version 0.4-95
 Maintainer change to avoid archiving.
 Fixed documentation typos.

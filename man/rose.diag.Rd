@@ -91,8 +91,21 @@ points(x, plot.info=y, stack=TRUE)
 # Add the rose diag to a plot
 plot(x)
 rose.diag(x, bins=12, add=TRUE, col=2)
+
+# Examples on using radii.scale and prop with a dummy dataset where 
+# highest proportion is 50\% in bin 2
+x <- c(2, 2, 2, 2, 5, 5, 10, 20)
+circ.x <- circular::circular(x, units = "hours", template = "clock24")
+old_par <- par(mfrow = c(2, 2))
+rose.diag(circ.x, bins=24, main="radii.scale=linear, prop=1",
+          radii.scale="linear", prop=1)
+rose.diag(circ.x, bins=24, main = "radii.scale=linear, prop=2",
+          radii.scale="linear", prop=2)
+rose.diag(circ.x, bins=24, main = "radii.scale=sqrt, prop=1",
+          radii.scale="sqrt", prop=1)
+rose.diag(circ.x, bins=24, main = "radii.scale=sqrt, prop=sqrt(2)",
+          radii.scale="sqrt", prop=sqrt(2))
+par(old_par)
 }
-
-
 
 \keyword{hplot}

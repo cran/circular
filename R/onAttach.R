@@ -6,9 +6,9 @@
   if(interactive())
   {
     meta <- packageDescription("circular")
-    packageStartupMessage(
-         "Package 'circular', ", meta$Version, " (", meta$Date, "). ",
-         "Type 'help(Circular)' for summary information.")
+    # packageStartupMessage(
+    #      "Package 'circular', ", meta$Version, " (", meta$Date, "). ",
+    #      "Type 'help(Circular)' for summary information.")
   }
   invisible()
 }

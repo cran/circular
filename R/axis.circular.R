@@ -11,7 +11,7 @@
 #                                                           #
 #############################################################
  
-axis.circular <- function(at=NULL, labels=NULL,  units = NULL, template=NULL, modulo=NULL, zero=NULL, rotation=NULL, tick=TRUE, lty, lwd, cex, col, font, tcl=0.025, tcl.text=0.125, digits=2) {
+axis.circular <- function(at=NULL, labels=NULL, units = NULL, template=NULL, modulo=NULL, zero=NULL, rotation=NULL, tick=TRUE, lty, lwd, cex, col, font, tcl=0.025, tcl.text=0.125, digits=2) {
 
   if (missing(cex)) cex <- par("cex.axis")
   if (missing(col)) col <- par("col.axis")
