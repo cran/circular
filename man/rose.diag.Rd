@@ -59,7 +59,7 @@ a list with information on the plot: zero, rotation and next.points.
 }
 
 
-\note{some codes from \code{\link{eqscplot}} in MASS is used. Since
+\note{some codes from \code{\link[MASS]{eqscplot}} in MASS is used. Since
   version 0.4-1 the meaning of the \code{col} parameter is changed.}
 
 \details{

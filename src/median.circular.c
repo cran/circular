@@ -28,7 +28,7 @@ void MedianCircularRad(double *x,int *n,double *result,double *medians,int *lMed
 {
 	double valueOfDev;
 	int i,k=0;
-	double minimum = PI;
+	double minimum = M_PI;
 	for(i=0;i<(*n);i++)
 	{
 		valueOfDev = dev(x,x[i],n);
@@ -54,10 +54,10 @@ double dev(double *theta,double xv,int *n)
 	int j;
 	for(j=0;j<(*n);j++)
 	{
-		values += fabs(PI-fabs(theta[j]-xv));
+		values += fabs(M_PI-fabs(theta[j]-xv));
 	}
 	values = values / (*n);
-	values = PI - values;
+	values = M_PI - values;
 	return(values);
 }
 

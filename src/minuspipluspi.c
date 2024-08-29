@@ -14,7 +14,7 @@
 void MinusPiPlusPiRad(double *x,int *n) {
   int i;
   for (i=0;i<(*n);i++) {
-     x[i] = (x[i] < -PI)?(x[i] + (2 * PI)):(x[i]);
-     x[i] = (x[i] > PI)?(x[i] - (2 * PI)):(x[i]);
+     x[i] = (x[i] < -M_PI)?(x[i] + (2 * M_PI)):(x[i]);
+     x[i] = (x[i] > M_PI)?(x[i] - (2 * M_PI)):(x[i]);
   }
 }

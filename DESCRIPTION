@@ -2,24 +2,45 @@ Title: Circular Statistics
 LazyLoad: yes
 LazyData: yes
 Package: circular
-Version: 0.5-0
-Author: Ulric Lund <ulund@calpoly.edu> [aut],
-  Claudio Agostinelli <claudio.agostinelli@unitn.it> [aut],
-  Hiroyoshi Arai <h_arai@aoni.waseda.jp> [ctb],
-  Alessando Gagliardi <gagliardi@stud.unive.it> [ctb],
-  Eduardo García-Portugués <edgarcia@est-econ.uc3m.es> [ctb, cre],
-  Dimitri Giunchi <dimitri.giunchi@unipi.it> [ctb],
-  Jean-Olivier Irisson <irisson@normalesup.org> [ctb],
-  Matthew Pocernich <pocernic@ucar.edu> [ctb],
-  Federico Rotolo [ctb]
-Maintainer: Eduardo García-Portugués <edgarcia@est-econ.uc3m.es>
-Date: 2023-09-05
+Version: 0.5-1
+Authors@R: c(
+   person(given = "Ulric", family = "Lund", role = "aut",
+          email = "ulund@calpoly.edu"),
+   person(given = "Claudio", family = "Agostinelli", role = "aut",
+          email = "claudio.agostinelli@unitn.it",
+          comment = c(ORCID = "0000-0001-6702-4312")),
+   person(given = "Hiroyoshi", family = "Arai", role = "ctb",
+          email = "h_arai@aoni.waseda.jp"),
+   person(given = "Alessando", family = "Gagliardi", role = "ctb",
+          email = "gagliardi@stud.unive.it"),
+   person(given = "Eduardo", family = "García-Portugués",
+          role = c("ctb", "cre"), email = "edgarcia@est-econ.uc3m.es",
+          comment = c(ORCID = "0000-0002-9224-4111")),
+   person(given = "Dimitri", family = "Giunchi", role = "ctb",
+          email = "dimitri.giunchi@unipi.it"),
+   person(given = "Jean-Olivier", family = "Irisson", role = "ctb",
+          email = "irisson@normalesup.org"),
+   person(given = "Matthew", family = "Pocernich", role = "ctb",
+          email = "pocernic@ucar.edu"),
+   person(given = "Federico", family = "Rotolo", role = "ctb"))
+Date: 2024-08-28
 Depends: R (>= 3.0.0), stats
 Imports: boot, mvtnorm
 Description: Circular Statistics, from "Topics in circular Statistics" (2001) S. Rao Jammalamadaka and A. SenGupta, World Scientific.
 License: GPL-2
 NeedsCompilation: yes
 Encoding: UTF-8
-Packaged: 2023-09-05 18:36:24 UTC; Eduardo
+Packaged: 2024-08-29 07:14:46 UTC; Eduardo
+Author: Ulric Lund [aut],
+  Claudio Agostinelli [aut] (<https://orcid.org/0000-0001-6702-4312>),
+  Hiroyoshi Arai [ctb],
+  Alessando Gagliardi [ctb],
+  Eduardo García-Portugués [ctb, cre]
+    (<https://orcid.org/0000-0002-9224-4111>),
+  Dimitri Giunchi [ctb],
+  Jean-Olivier Irisson [ctb],
+  Matthew Pocernich [ctb],
+  Federico Rotolo [ctb]
+Maintainer: Eduardo García-Portugués <edgarcia@est-econ.uc3m.es>
 Repository: CRAN
-Date/Publication: 2023-09-05 19:50:18 UTC
+Date/Publication: 2024-08-29 07:50:02 UTC

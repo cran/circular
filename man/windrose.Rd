@@ -70,7 +70,7 @@
          \item{call}{the \code{\link[base]{match.call}} result.}
 }
 
-\note{some codes from \code{\link{eqscplot}} in 'MASS' is used.}
+\note{some codes from \code{\link[MASS]{eqscplot}} in 'MASS' is used.}
 	 
 \author{Matt Pocernich <pocernic@rap.ucar.edu>, ported in the package 'circular' by Claudio Agostinelli}
 

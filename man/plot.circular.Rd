@@ -57,7 +57,7 @@ When there are many closely distributed observations, stacking is
 recommended. When stacking the points, if there are many points in a particular bin, it may be necessary to shrink the plot of the circle so that all points fit. This is controlled with the parameter \code{shrink}. Generally the parameter \code{sep} does not need adjustment, however, when shrinking the plot, or for a very large number of observations, it may be helpful. Since version 0.3-9 the intervals are on the form [a,b).
 }
 
-\note{some codes from \code{\link{eqscplot}} in MASS is used.}
+\note{some codes from \code{\link[MASS]{eqscplot}} in MASS is used.}
 
 \author{Claudio Agostinelli and Ulric Lund}
 

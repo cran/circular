@@ -1,6 +1,11 @@
 Library circular
 =================
-Version 0.5
+Version 0.5-1
+Fix 'Additional issues' regarding the use of PI instead of M_PI.
+Fix \link's in documentation.
+Format authors into Authors@R.
+
+Version 0.5-0
 Added an example to RosediagRad (thanks to Hugo Flávio).
 Added an example to lm.circular (thanks to Dirk Walther).
 Drop personList() and citEntry().

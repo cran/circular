@@ -1,5 +1,5 @@
 0db8fb4a8a9148f3e8029eee41b77939 *COPYING
-46932cf99856e5427fd5dc857b8e7e7a *DESCRIPTION
+2f573caea6e34877316733969ddc2d8d *DESCRIPTION
 3f533d73d1a227bc64e2853295601148 *NAMESPACE
 cca22485e725dc1681e0f01723e1fd59 *R/A1.R
 d642acad73d30fd023af1e7cb5f53777 *R/A1FirstDerivative.R
@@ -142,7 +142,7 @@ bd47e4db763984f426323ae2b837994c *data/turtles.rda
 0b459167afcad0c183d820a93b085e71 *data/wind.rda
 d2dd290fba7bf3b92502da054c060289 *inst/CITATION
 08ee0db1331c304a3def2f9baa28aec8 *inst/COPYRIGHTS
-79513bbb401143cd9437458bf234e297 *inst/NEWS
+5ce9907711397be24b64a54fc88c3ffe *inst/NEWS
 c42c62f7601b5fed9fb658ce1ee1104c *man/A1.Rd
 5d600404e6ef69c891b62310a134a3b3 *man/A1FirstDerivative.Rd
 7d2317bea3e39eb5818204843016d4da *man/A1SecondDerivative.Rd
@@ -216,7 +216,7 @@ d4a6afee943c43899c6487c0b542df12 *man/mle.vonmises.Rd
 ae950fb081a4002320c0ee3eb85e4a70 *man/modal.region.Rd
 891f4e45fef6dd2b54a40604b2c848c1 *man/ncfrog.Rd
 ac0851168bf2e76008f9ff83953ed558 *man/pigeons.Rd
-74fdb8863293547e70011fe06bbbfbb9 *man/plot.circular.Rd
+c3f2635f61510b4178a8763ce7543aa8 *man/plot.circular.Rd
 544a54ee8e8fdd4596cf1ea7c0324c3f *man/plot.density.circular.Rd
 b46553d316a413fb34e83e7df251f610 *man/plot.edf.Rd
 1eb85bfc187dfad48330c919333612c8 *man/plot.lsfit.circle.Rd
@@ -232,7 +232,7 @@ ef104113efae32a4505d2f4a690f2975 *man/rao.spacing.test.Rd
 c1093d7ae40f08671e78c9e885180ed6 *man/rao.test.Rd
 d1154ff1c4963b355d3381e1ada57c29 *man/rayleigh.test.Rd
 3fb0a67b26668cce809f19dfad03127d *man/rho.circular.Rd
-ffad7036a2294f3f9a3dd37c0e95692e *man/rose.diag.Rd
+df950ddeeb23354e9f5f2bbaff466b7a *man/rose.diag.Rd
 0e5e87f83fcf523f643a5c0c2a64b633 *man/rstable.Rd
 c95734bb89e2cf00a56a2f7b427fdc3b *man/rwrappedstable.Rd
 80906a98e6536724de3cfafc54a98d2f *man/sd.circular.Rd
@@ -256,7 +256,7 @@ f077d1596cf993840fbed04bbc5da1af *man/watson.wheeler.test.Rd
 92f4448521b5e817d2f2ca298efe5251 *man/watson.williams.test.Rd
 5abdc3ac2287bb49bbad6f0931bf7557 *man/weighted.mean.circular.Rd
 95efc724fcf93917c50d961ad30eae25 *man/wind.Rd
-c4378684d293b1a5bd52988f2b984768 *man/windrose.Rd
+0a0769fe03330ebe94e9e1712f8b05b7 *man/windrose.Rd
 c222993763d5bf2658d673eb049dba69 *man/wrappedcauchy.Rd
 6108037a2da36e5a7e8e6daf649c19d5 *man/wrappednormal.Rd
 d54e1fc9cb2b17baf7d1e51ddc2e590b *src/distance.c
@@ -266,11 +266,11 @@ d24375b035ddc3f136a71f16e5c5f8bb *src/dwrappednormal.h
 94323f47b9d46611d240fc160c5b6afb *src/init.c
 1dcb58c68937336d22ec034306136df7 *src/mean.circular.c
 836d94c628d2c0b664cbcdad81a80571 *src/mean.circular.h
-cf57648f59185612560440f808888f43 *src/median.circular.c
+8b02eda912ea89a48ea26a9d479987af *src/median.circular.c
 3e1a6400a16b04bb3f53cbbec9dae466 *src/median.circular.h
 a19f516602d29d4534197fc6170c7cc1 *src/medianHL.circular.c
 ef3057d063263aefb1bb6ce14e1cceb7 *src/medianHL.circular.h
-43ac92ef871dcac69afb0bd44a694853 *src/minuspipluspi.c
+fa2f48306e9f282be1f4f6d1db08dbd6 *src/minuspipluspi.c
 229d5520b685ad7ceb949c7cd307b550 *src/minuspipluspi.h
 e25024492be7d8bac2c7a7cc37650cda *src/mle.wrappednormal.f
 56f758e4f332166765182796c8706eb0 *src/mle.wrappednormal.h
