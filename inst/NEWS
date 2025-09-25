@@ -1,5 +1,9 @@
 Library circular
 =================
+Version 0.5-2
+Fix bug in rcardioid() when rho is negative, as circular uniform was generated instead of (thanks to Arthur Pewsey)
+Add in rcardioid() a note on existence of non-acceptance-rejection algorithms
+
 Version 0.5-1
 Fix 'Additional issues' regarding the use of PI instead of M_PI.
 Fix \link's in documentation.

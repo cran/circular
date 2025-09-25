@@ -1,5 +1,5 @@
 0db8fb4a8a9148f3e8029eee41b77939 *COPYING
-2f573caea6e34877316733969ddc2d8d *DESCRIPTION
+ea6fa9c7638e7dcd04706f3f72fbb594 *DESCRIPTION
 3f533d73d1a227bc64e2853295601148 *NAMESPACE
 cca22485e725dc1681e0f01723e1fd59 *R/A1.R
 d642acad73d30fd023af1e7cb5f53777 *R/A1FirstDerivative.R
@@ -21,7 +21,7 @@ dd4344db14a225130ec1dba98b64961d *R/as.circular.R
 af0ede56a865552be4849a94000d6d32 *R/axialvonmises.R
 c4ea2fab3242862b7d192bbf7b0d296d *R/axis.circular.R
 efc3ab1f3ccfb2125dc80bc383dfb8cd *R/bw.circular.R
-b349fc64bf7cedd02c99574c56b9f231 *R/cardioid.R
+ad1902893bd19ab0f0a17f78334f391d *R/cardioid.R
 91df456953db048e805d615b05617880 *R/carthwrite.R
 aea39f4da980433a120ba43c2a207380 *R/change.point.R
 72b28abb97ee62515e08c3352fb16843 *R/circular.R
@@ -142,7 +142,7 @@ bd47e4db763984f426323ae2b837994c *data/turtles.rda
 0b459167afcad0c183d820a93b085e71 *data/wind.rda
 d2dd290fba7bf3b92502da054c060289 *inst/CITATION
 08ee0db1331c304a3def2f9baa28aec8 *inst/COPYRIGHTS
-5ce9907711397be24b64a54fc88c3ffe *inst/NEWS
+70bbc8724011d254ce38c23027487f03 *inst/NEWS
 c42c62f7601b5fed9fb658ce1ee1104c *man/A1.Rd
 5d600404e6ef69c891b62310a134a3b3 *man/A1FirstDerivative.Rd
 7d2317bea3e39eb5818204843016d4da *man/A1SecondDerivative.Rd
@@ -161,7 +161,7 @@ d97a0bc7a6b8b42b269439731caf4c7f *man/aov.circular.Rd
 fff84d9d43fef243b5dabafcdedc935d *man/axis.circular.Rd
 67443958640ffe709f0f666cceee3053 *man/bw.circular.Rd
 9f0033a855bef6a5661352971577bf5c *man/c.circular.Rd
-1c068a8debc26a0b37a2da4b065c0b63 *man/cardioid.Rd
+b743357b9097b54def5ff9edf227488c *man/cardioid.Rd
 b81dbedbb3f95b908adb653f2db37eaa *man/carthwrite.Rd
 2915255744b743794f90f62f58904842 *man/change.point.Rd
 287871f7877d54a9f1a4bc16ffd52c2d *man/circle.control.Rd

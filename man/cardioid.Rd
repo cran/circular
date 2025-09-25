@@ -24,10 +24,17 @@ rcardioid(n, mu = circular(0), rho = 0, control.circular=list())
 \code{dcardioid} gives the density and \code{rcardioid} generates random deviates.
 }
 
+\details{
+Random generation is done by rejection sampling. Prior versions (<0.5-1) had a bug in the simulation with negative rho's.
+
+See alternative and other cardioid-related functions at Pewsey (2025).
+}
+
 \author{Claudio Agostinelli and Ulric Lund}
 
 \references{
 Jammalamadaka, S. Rao and SenGupta, A. (2001). Topics in Circular Statistics, Section 2.2.2, World Scientific Press, Singapore.
+Pewsey, A. (2025). On Jeffreys’s cardioid distribution. Computational Statistics and Data Analysis.
 }
 
 \examples{

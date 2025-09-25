@@ -51,7 +51,7 @@ RcardioidRad <- function(n, mu, rho) {
    result <- rep(0, n)
    while (i <= n) {
       x <- runif(1, 0, 2 * pi)
-      y <- runif(1, 0, (1 + 2 * rho)/(2 * pi))
+      y <- runif(1, 0, (1 + 2 * abs(rho))/(2 * pi))
       f <- (1 + 2 * rho * cos(x - mu))/(2 * pi)
       if (y <= f) {
          result[i] <- x
